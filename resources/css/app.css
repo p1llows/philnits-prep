@@ -1,0 +1,33 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Base application styles */
+body {
+    @apply bg-gray-50 text-gray-900;
+}
+
+/* Professional, restrained styling for exam content */
+.prose {
+    @apply max-w-none;
+}
+
+.prose h2 {
+    @apply text-xl font-semibold mt-6 mb-3 text-primary-700;
+}
+
+.prose h3 {
+    @apply text-lg font-medium mt-4 mb-2 text-primary-600;
+}
+
+.prose p {
+    @apply mb-4 leading-relaxed;
+}
+
+.prose ul, .prose ol {
+    @apply mb-4 ml-6;
+}
+
+.prose li {
+    @apply mb-2;
+}

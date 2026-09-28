@@ -1,0 +1,36 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/html
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - philnits-network
+        depends_on:
+            - mysql
+
+    mysql:
+        image: mysql:8.0
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-secret}
+            MYSQL_DATABASE: ${DB_DATABASE:-philnits_prep}
+            MYSQL_USER: ${DB_USERNAME:-philnits}
+            MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+        volumes:
+            - mysql_data:/var/lib/mysql
+            - ./docker/mysql/init.sql:/etc/mysql/conf.d/init.sql
+        networks:
+            - philnits-network
+        ports:
+            - "3306:3306"
+
+networks:
+    philnits-network:
+        driver: bridge
+
+volumes:
+    mysql_data:
