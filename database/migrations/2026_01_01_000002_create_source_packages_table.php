@@ -47,7 +47,7 @@ return new class extends Migration
             $table->string('attribution_note')->nullable(); // Citation info
             
             // Audit trail
-            $table->foreignId('created_by')->constrained('users')->onDelete('set null');
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('imported_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('validated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('published_by')->nullable()->constrained('users')->onDelete('set null');

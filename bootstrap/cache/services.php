@@ -43,6 +43,7 @@
     39 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     40 => 'Termwind\\Laravel\\TermwindServiceProvider',
     41 => 'RyanChandler\\BladeCaptureDirective\\BladeCaptureDirectiveServiceProvider',
+    42 => 'App\\Providers\\AppServiceProvider',
   ),
   'eager' => 
   array (
@@ -72,6 +73,7 @@
     23 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     24 => 'Termwind\\Laravel\\TermwindServiceProvider',
     25 => 'RyanChandler\\BladeCaptureDirective\\BladeCaptureDirectiveServiceProvider',
+    26 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (

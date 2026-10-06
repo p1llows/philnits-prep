@@ -259,10 +259,10 @@ document.addEventListener('livewire:navigated', () => {
         new Chart(canvas, {
             type: 'line',
             data: {
-                labels: @json(getTrendGraphData().labels),
+                labels: @json($this->getTrendGraphData()['labels']),
                 datasets: [{
                     label: 'Assessment Score (%)',
-                    data: @json(getTrendGraphData().scores),
+                    data: @json($this->getTrendGraphData()['scores']),
                     borderColor: '#2563eb',
                     backgroundColor: 'rgba(37, 99, 235, 0.1)',
                     tension: 0.4,

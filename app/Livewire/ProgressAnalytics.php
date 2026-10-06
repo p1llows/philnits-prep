@@ -35,7 +35,6 @@ class ProgressAnalytics extends Component
         
         $this->assessmentHistory = Assessment::where('user_id', $userId)
             ->where('completed_at', '>=', $startDate)
-            ->with(['topicPerformance'])
             ->orderBy('started_at', 'desc')
             ->take(20)
             ->get()
@@ -92,7 +91,6 @@ class ProgressAnalytics extends Component
         // Get assessments with topic performance data
         $assessments = Assessment::where('user_id', $userId)
             ->whereNotNull('completed_at')
-            ->with(['topicPerformance'])
             ->get();
 
         if ($assessments->isEmpty()) {

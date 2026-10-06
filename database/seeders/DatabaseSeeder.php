@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Create admin user (for development only)
-        User::create([
+        $admin = User::create([
             'name' => 'Administrator',
             'email' => 'admin@philnitsprep.local',
             'password' => bcrypt('password'),
@@ -74,6 +74,7 @@ class DatabaseSeeder extends Seeder
             'source_date' => '2024-Q1',
             'attribution_note' => 'Based on official PhilNITS IP Passport examination materials',
             'status' => 'draft',
+            'created_by' => $admin->id,
         ]);
     }
 }

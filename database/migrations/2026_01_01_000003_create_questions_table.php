@@ -45,7 +45,7 @@ return new class extends Migration
             $table->enum('difficulty', ['easy', 'medium', 'hard'])->nullable();
             
             // Audit trail
-            $table->foreignId('created_by')->constrained('users')->onDelete('set null');
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('validated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('published_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('explanation_created_by')->nullable()->constrained('users')->onDelete('set null');

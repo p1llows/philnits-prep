@@ -130,6 +130,14 @@ class Question extends Model
     }
 
     /**
+     * Scope a query to only include unpublished questions (pending review).
+     */
+    public function scopeUnpublished($query)
+    {
+        return $query->where('status', '!=', 'published');
+    }
+
+    /**
      * Scope a query to exclude archived/deleted questions.
      */
     public function scopeActive($query)
