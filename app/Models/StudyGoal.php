@@ -48,13 +48,23 @@ class StudyGoal extends Model
         return !$this->is_achieved && now()->isAfter($this->target_date);
     }
 
+    public function getIsOverdueAttribute(): bool
+    {
+        return $this->isOverdue();
+    }
+
     /**
      * Check if goal is approaching deadline.
      */
     public function isApproachingDeadline(int $days = 7): bool
     {
         return !$this->is_achieved && 
-               now()->between($this->target_date->subDays($days), $this->target_date);
+               now()->between($this->target_date->copy()->subDays($days), $this->target_date);
+    }
+
+    public function is_approaching_deadline(int $days = 7): bool
+    {
+        return $this->isApproachingDeadline($days);
     }
 
     /**

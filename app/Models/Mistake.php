@@ -10,6 +10,14 @@ class Mistake extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        static::creating(function ($mistake) {
+            $mistake->first_mistaken_at ??= now();
+            $mistake->last_mistaken_at ??= now();
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *

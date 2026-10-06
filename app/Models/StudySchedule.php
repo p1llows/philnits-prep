@@ -39,7 +39,7 @@ class StudySchedule extends Model
      */
     public function sessions(): HasMany
     {
-        return $this->hasMany(StudySession::class);
+        return $this->hasMany(StudySession::class, 'schedule_id');
     }
 
     /**

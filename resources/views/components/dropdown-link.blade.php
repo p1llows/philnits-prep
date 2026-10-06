@@ -1,4 +1,4 @@
-@props(['href', 'active'])
+@props(['href' => '#', 'active' => false])
 
 @php
 $classes = $active

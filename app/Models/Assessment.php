@@ -11,6 +11,13 @@ class Assessment extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        static::creating(function ($assessment) {
+            $assessment->started_at ??= now();
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,6 +25,7 @@ class Assessment extends Model
      */
     protected $fillable = [
         'user_id',
+        'title',
         'assessment_type',
         'source_package_name',
         'total_questions',
@@ -25,11 +33,23 @@ class Assessment extends Model
         'selected_topic_id',
         'started_at',
         'submitted_at',
+        'completed_at',
         'time_spent_seconds',
         'correct_count',
         'incorrect_count',
+        'score',
         'score_percentage',
+        'topic_performance',
         'status',
+    ];
+
+    protected $casts = [
+        'started_at' => 'datetime',
+        'submitted_at' => 'datetime',
+        'completed_at' => 'datetime',
+        'topic_performance' => 'array',
+        'score_percentage' => 'float',
+        'score' => 'float',
     ];
 
     /**
@@ -128,6 +148,52 @@ class Assessment extends Model
         }
         
         return now()->diffInSeconds($this->started_at);
+    }
+
+    /**
+     * Get time spent in seconds.
+     */
+    public function timeSpentSeconds(): int
+    {
+        if ($this->time_spent_seconds) {
+            return (int) $this->time_spent_seconds;
+        }
+
+        if ($this->started_at && ($this->completed_at || $this->submitted_at)) {
+            $end = $this->completed_at ?? $this->submitted_at;
+            return (int) $this->started_at->diffInSeconds($end);
+        }
+
+        return 0;
+    }
+
+    /**
+     * Check if assessment score meets or exceeds pass threshold (60%).
+     */
+    public function passThreshold(): bool
+    {
+        return ($this->score ?? 0) >= 60.0;
+    }
+
+    public function getScoreAttribute(): float
+    {
+        return (float) ($this->attributes['score_percentage'] ?? $this->attributes['score'] ?? 0);
+    }
+
+    public function setScoreAttribute($value): void
+    {
+        $this->attributes['score_percentage'] = $value;
+        $this->attributes['score'] = $value;
+    }
+
+    public function getCompletedAtAttribute()
+    {
+        return $this->submitted_at;
+    }
+
+    public function setCompletedAtAttribute($value): void
+    {
+        $this->attributes['submitted_at'] = $value;
     }
 
     /**

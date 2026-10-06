@@ -37,7 +37,7 @@ class StudySession extends Model
      */
     public function schedule(): BelongsTo
     {
-        return $this->belongsTo(StudySchedule::class);
+        return $this->belongsTo(StudySchedule::class, 'schedule_id');
     }
 
     /**

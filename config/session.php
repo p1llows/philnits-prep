@@ -1,8 +1,41 @@
 <?php
 
-// Session handler workaround - this creates the session directory if it doesn't exist
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
-if (!Storage::exists(config('session.directory', 'sessions'))) {
-    Storage::put(str_replace('/', DIRECTORY_SEPARATOR, config('session.directory') . DIRECTORY_SEPARATOR), '');
-}
+return [
+
+    'driver' => env('SESSION_DRIVER', 'database'),
+
+    'lifetime' => (int) env('SESSION_LIFETIME', 120),
+
+    'expire_on_close' => (bool) env('SESSION_EXPIRE_ON_CLOSE', false),
+
+    'encrypt' => (bool) env('SESSION_ENCRYPT', false),
+
+    'files' => storage_path('framework/sessions'),
+
+    'connection' => env('SESSION_CONNECTION'),
+
+    'table' => env('SESSION_TABLE', 'sessions'),
+
+    'store' => env('SESSION_STORE'),
+
+    'cookie' => env(
+        'SESSION_COOKIE',
+        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+    ),
+
+    'path' => '/',
+
+    'domain' => env('SESSION_DOMAIN'),
+
+    'secure' => env('SESSION_SECURE_COOKIE'),
+
+    'http_only' => (bool) env('SESSION_HTTP_ONLY', true),
+
+    'same_site' => env('SESSION_SAME_SITE', 'lax'),
+
+    'partitioned' => (bool) env('SESSION_PARTITIONED_COOKIE', false),
+
+];
+

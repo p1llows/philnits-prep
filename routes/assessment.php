@@ -6,9 +6,11 @@ use App\Livewire\TakeAssessment;
 use App\Livewire\Assessments\ResultsPage;
 
 Route::middleware(['auth'])->group(function () {
-    // Initial assessment route
+    // Assessment routes
     Route::get('/assessment', [AssessmentController::class, 'index'])
         ->name('assessment.index');
+    Route::get('/assessments', [AssessmentController::class, 'index'])
+        ->name('assessments.index');
     
     // View active/partial assessment
     Route::get('/assessment/{assessment}', [AssessmentController::class, 'show'])
