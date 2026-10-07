@@ -5,18 +5,10 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-surface rounded-xl border border-line">
-                <div class="max-w-xl">
-                    <livewire:study-planner />
-                </div>
-            </div>
-            <div class="p-4 sm:p-8 bg-surface rounded-xl border border-line">
-                <div class="max-w-xl">
-                    <livewire:study-goals />
-                </div>
-            </div>
+    <div class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <livewire:study-planner />
+            <livewire:study-goals />
         </div>
     </div>
 </x-app-layout>

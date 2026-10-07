@@ -5,11 +5,9 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-surface rounded-xl border border-line p-5 md:p-6">
-                <livewire:assessment-interface :assessment-id="$assessment->id" />
-            </div>
+    <div class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <livewire:assessment-interface :assessment-id="$assessment->id" />
         </div>
     </div>
 </x-app-layout>
