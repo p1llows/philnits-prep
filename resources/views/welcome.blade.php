@@ -26,7 +26,7 @@
     </style>
 </head>
 <body class="bg-paper text-ink font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-accent-tint selection:text-accent">
-    <!-- Hero Section with Floating Navbar & App Preview -->
+    <!-- Hero Section with Floating Navbar & Wide App Preview -->
     <x-welcome.hero />
 
     <!-- Study Loop Section -->
