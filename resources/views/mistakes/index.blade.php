@@ -1,17 +1,11 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Review Mistakes') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             
             <!-- Page Header -->
-            <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">Review Your Mistakes</h1>
-                <p class="text-gray-600">
+            <div>
+                <h1 class="text-2xl font-semibold text-ink mb-1">Review your mistakes</h1>
+                <p class="text-sm text-stone">
                     Learn from your errors by practicing questions you answered incorrectly. Keep reviewing until you get them right!
                 </p>
             </div>
@@ -22,3 +16,4 @@
         </div>
     </div>
 </x-app-layout>
+

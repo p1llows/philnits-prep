@@ -2,26 +2,52 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* Base application styles */
-body {
-    @apply bg-gray-50 text-gray-900;
+:root {
+    --color-paper: #F6F4EF;
+    --color-surface: #FFFFFF;
+    --color-line: #E3DFD5;
+    --color-stone: #6E6A60;
+    --color-ink: #1B1A17;
+    --color-accent: #1F3A5F;
+    --color-accent-tint: #E6ECF4;
+    --color-correct: #2F6B4F;
+    --color-correct-surface: #E4F0E9;
+    --color-wrong: #A3392F;
+    --color-wrong-surface: #F6E4E1;
 }
 
-/* Professional, restrained styling for exam content */
+/* Base application styles */
+body {
+    @apply bg-paper text-ink font-sans antialiased;
+    background-color: #F6F4EF;
+    color: #1B1A17;
+}
+
+/* Accessible focus ring style */
+*:focus-visible {
+    outline: 2px solid #1F3A5F !important;
+    outline-offset: 2px !important;
+}
+
+/* Restrained typography for exam & prose content */
 .prose {
-    @apply max-w-none;
+    @apply max-w-none text-ink;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+    @apply text-ink font-semibold;
 }
 
 .prose h2 {
-    @apply text-xl font-semibold mt-6 mb-3 text-primary-700;
+    @apply text-xl mt-6 mb-3;
 }
 
 .prose h3 {
-    @apply text-lg font-medium mt-4 mb-2 text-primary-600;
+    @apply text-lg mt-4 mb-2;
 }
 
 .prose p {
-    @apply mb-4 leading-relaxed;
+    @apply mb-4 leading-relaxed text-ink;
 }
 
 .prose ul, .prose ol {
@@ -31,3 +57,4 @@ body {
 .prose li {
     @apply mb-2;
 }
+

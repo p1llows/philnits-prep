@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Admin - Questions Management') }}
+            <h2 class="font-semibold text-xl text-ink leading-tight">
+                {{ __('Questions management') }}
             </h2>
             <a href="{{ route('admin.questions.create') }}" 
-               class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 text-sm shadow-sm transition-colors">
-                + Add New Question
+               class="px-4 py-2 bg-ink text-surface font-medium rounded-lg hover:bg-stone text-sm transition-colors">
+                + Add new question
             </a>
         </div>
     </x-slot>
@@ -15,18 +15,18 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             @if(session('success'))
-                <div class="p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-lg">
+                <div class="p-4 bg-correct-surface border-l-4 border-correct text-correct rounded-lg">
                     {{ session('success') }}
                 </div>
             @endif
 
             <!-- Filters Bar -->
-            <div class="bg-white rounded-xl shadow-sm p-4 border border-gray-200">
+            <div class="bg-surface rounded-xl p-4 border border-line">
                 <form action="{{ route('admin.questions.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                        <label for="topic_id" class="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Topic</label>
-                        <select name="topic_id" id="topic_id" class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">All Topics</option>
+                        <label for="topic_id" class="block text-xs font-medium text-stone mb-1">Topic</label>
+                        <select name="topic_id" id="topic_id" class="w-full rounded-lg border-line shadow-sm text-sm text-ink focus:border-accent focus:ring-accent">
+                            <option value="">All topics</option>
                             @foreach($topics as $topic)
                                 <option value="{{ $topic->id }}" {{ request('topic_id') == $topic->id ? 'selected' : '' }}>
                                     {{ $topic->name }} ({{ $topic->code }})
@@ -36,9 +36,9 @@
                     </div>
 
                     <div>
-                        <label for="status" class="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Status</label>
-                        <select name="status" id="status" class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">All Statuses</option>
+                        <label for="status" class="block text-xs font-medium text-stone mb-1">Status</label>
+                        <select name="status" id="status" class="w-full rounded-lg border-line shadow-sm text-sm text-ink focus:border-accent focus:ring-accent">
+                            <option value="">All statuses</option>
                             <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>Published</option>
                             <option value="validated" {{ request('status') == 'validated' ? 'selected' : '' }}>Validated</option>
                             <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft</option>
@@ -46,16 +46,16 @@
                     </div>
 
                     <div>
-                        <label for="search" class="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Search</label>
+                        <label for="search" class="block text-xs font-medium text-stone mb-1">Search</label>
                         <input type="text" name="search" id="search" placeholder="Search question text..." value="{{ request('search') }}"
-                               class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500">
+                               class="w-full rounded-lg border-line shadow-sm text-sm text-ink focus:border-accent focus:ring-accent">
                     </div>
 
                     <div class="flex items-end space-x-2">
-                        <button type="submit" class="w-full px-4 py-2 bg-gray-800 text-white rounded-md text-sm font-medium hover:bg-gray-700">
+                        <button type="submit" class="w-full px-4 py-2 bg-ink text-surface rounded-lg text-sm font-medium hover:bg-stone">
                             Filter
                         </button>
-                        <a href="{{ route('admin.questions.index') }}" class="px-4 py-2 border border-gray-300 text-gray-600 rounded-md text-sm font-medium hover:bg-gray-50">
+                        <a href="{{ route('admin.questions.index') }}" class="px-4 py-2 border border-line text-stone rounded-lg text-sm font-medium hover:text-ink hover:bg-paper">
                             Reset
                         </a>
                     </div>
@@ -63,37 +63,37 @@
             </div>
 
             <!-- Questions Table -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                    <h3 class="text-lg font-semibold text-gray-900">Question Bank</h3>
-                    <span class="text-xs text-gray-500">Total: {{ $questions->total() }} questions</span>
+            <div class="bg-surface rounded-xl border border-line overflow-hidden">
+                <div class="px-6 py-4 border-b border-line flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-ink">Question bank</h3>
+                    <span class="text-xs text-stone">Total: {{ $questions->total() }} questions</span>
                 </div>
 
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+                    <table class="min-w-full divide-y divide-line">
+                        <thead class="bg-paper">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID / Topic</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Question Text</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ans</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-stone">ID / topic</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-stone">Question text</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-stone">Ans</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-stone">Status</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-stone">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-surface divide-y divide-line">
                             @forelse($questions as $question)
-                                <tr class="hover:bg-gray-50">
+                                <tr class="hover:bg-paper/50">
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="font-mono text-xs text-gray-500">#{{ $question->source_question_number ?? $question->id }}</div>
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 mt-1">
+                                        <div class="font-mono text-xs text-stone">#{{ $question->source_question_number ?? $question->id }}</div>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-accent-tint text-accent border border-accent/20 mt-1">
                                             {{ $question->topic->code ?? 'General' }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-gray-900 max-w-md">
-                                        <p class="line-clamp-2 font-medium">{{ $question->question_text }}</p>
+                                    <td class="px-6 py-4 text-sm text-ink max-w-md">
+                                        <p class="line-clamp-2 font-serif font-medium">{{ $question->question_text }}</p>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="w-7 h-7 rounded-md bg-green-600 text-white font-bold flex items-center justify-center text-xs">
+                                        <span class="w-7 h-7 rounded-lg bg-accent text-surface font-semibold flex items-center justify-center text-xs">
                                             {{ $question->correct_answer_code }}
                                         </span>
                                     </td>
@@ -101,20 +101,20 @@
                                         <form action="{{ route('admin.questions.publish', $question) }}" method="POST" class="inline">
                                             @csrf
                                             <button type="submit" 
-                                                    class="px-2.5 py-1 text-xs font-semibold rounded-full {{ $question->status === 'published' ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' }}">
+                                                    class="px-2.5 py-1 text-xs font-semibold rounded-full {{ $question->status === 'published' ? 'bg-correct-surface text-correct hover:opacity-90' : 'bg-accent-tint text-accent hover:opacity-90' }}">
                                                 {{ ucfirst($question->status) }}
                                             </button>
                                         </form>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                        <a href="{{ route('admin.questions.show', $question) }}" class="text-blue-600 hover:text-blue-900">View</a>
-                                        <a href="{{ route('admin.questions.edit', $question) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                        <a href="{{ route('admin.questions.show', $question) }}" class="text-accent hover:underline">View</a>
+                                        <a href="{{ route('admin.questions.edit', $question) }}" class="text-accent hover:underline">Edit</a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-12 text-center text-gray-500">
-                                        No questions found. Click "+ Add New Question" to create your first question.
+                                    <td colspan="5" class="px-6 py-12 text-center text-stone">
+                                        No questions found. Click "+ Add new question" to create your first question.
                                     </td>
                                 </tr>
                             @endforelse
@@ -123,7 +123,7 @@
                 </div>
 
                 @if($questions->hasPages())
-                    <div class="px-6 py-4 border-t border-gray-200">
+                    <div class="px-6 py-4 border-t border-line">
                         {{ $questions->links() }}
                     </div>
                 @endif

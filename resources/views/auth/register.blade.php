@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="mb-4 text-center">
-        <h2 class="text-2xl font-semibold text-gray-900">
+        <h2 class="text-2xl font-semibold text-ink">
             {{ __('Register') }}
         </h2>
     </div>
@@ -36,7 +36,7 @@
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" :value="__('Confirm password')" />
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
                             type="password"
@@ -46,7 +46,7 @@
         </div>
 
         <div class="flex items-center justify-between mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none" href="{{ route('login') }}">
+            <a class="underline text-sm text-stone hover:text-ink rounded-md focus:outline-none" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 
