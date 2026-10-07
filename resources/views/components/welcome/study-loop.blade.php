@@ -1,100 +1,118 @@
-<section id="study-loop" class="bg-paper border-t border-[#E3DFD5] py-16 sm:py-20">
+<section id="study-loop" class="relative py-20 sm:py-24 bg-paper border-t border-[#E3DFD5]">
     <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
-        <div class="mb-10 sm:mb-14 text-left">
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-medium text-ink tracking-[-0.02em]">A simple study loop</h2>
-            <p class="text-sm sm:text-base text-stone mt-2">Practice, go back over what you missed, then test yourself.</p>
+        <div class="mb-14 sm:mb-16 text-left">
+            <span class="font-mono text-xs sm:text-sm text-stone tracking-normal block mb-2">How it works</span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-ink tracking-tight mb-3">
+                A simple 3-step study loop
+            </h2>
+            <p class="max-w-2xl text-base sm:text-lg text-stone leading-relaxed">
+                Practice, go back over what you missed, then test yourself under realistic exam conditions.
+            </p>
         </div>
 
-        <!-- Timeline Desktop & Mobile Grid -->
-        <div class="relative">
-            <!-- Desktop Horizontal Connector Line -->
-            <div class="hidden md:block absolute top-[7px] left-[7px] right-[7px] border-t border-[#CFCABD] z-0" aria-hidden="true"></div>
-
-            <!-- Mobile Vertical Connector Line -->
-            <div class="md:hidden absolute top-[7px] bottom-[7px] left-[7px] border-l border-[#CFCABD] z-0" aria-hidden="true"></div>
-
-            <!-- 3 Columns Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 relative z-10 text-left">
-                <!-- Step 01 -->
-                <div class="flex flex-row md:flex-col items-start space-x-4 md:space-x-0 group">
-                    <!-- Dot -->
-                    <div class="w-[15px] h-[15px] rounded-full bg-accent shrink-0 mt-1 md:mt-0 md:mb-5 relative z-10 ring-4 ring-paper group-hover:scale-125 transition-transform duration-300"></div>
-                    
-                    <div class="grow space-y-2.5 w-full">
-                        <span class="font-mono text-xs sm:text-sm text-stone block group-hover:text-accent transition-colors duration-200">01</span>
-                        <h3 class="text-base sm:text-lg font-medium text-ink group-hover:text-accent transition-colors duration-200">Practice by topic</h3>
-                        <p class="text-xs sm:text-sm text-stone leading-relaxed">Answer questions with feedback after each one.</p>
-                        
-                        <!-- Sample Card 01 -->
-                        <div class="mt-4 bg-surface border border-[#D9D5C9] group-hover:border-accent/40 group-hover:-translate-y-1 group-hover:shadow-md rounded-xl p-4 space-y-2.5 transition-all duration-300 cursor-pointer">
-                            <div class="flex items-center justify-between text-xs sm:text-sm">
-                                <span class="font-medium text-ink truncate max-w-[170px]">Information Technology Fundamentals</span>
-                                <span class="font-mono text-xs text-stone">6 / 10</span>
-                            </div>
-                            <div class="w-full bg-[#E3DFD5] h-1.5 rounded-full overflow-hidden">
-                                <div class="bg-accent h-full w-[60%] group-hover:w-[75%] transition-all duration-500"></div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- 3 Open Grid Columns (No Nested Card Boxes) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 relative text-left">
+            
+            <!-- Step 01: Practice by Topic -->
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <span class="font-mono text-sm font-bold text-accent bg-accent-tint px-3 py-1 rounded-md">Step 01</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-ink">Practice by topic</h3>
                 </div>
+                
+                <p class="text-sm sm:text-base text-stone leading-relaxed">
+                    Answer questions categorized by official ITPEC modules with detailed feedback and explanations after every single answer.
+                </p>
 
-                <!-- Step 02 -->
-                <div class="flex flex-row md:flex-col items-start space-x-4 md:space-x-0 group">
-                    <!-- Dot -->
-                    <div class="w-[15px] h-[15px] rounded-full bg-paper border-2 border-accent shrink-0 mt-1 md:mt-0 md:mb-5 relative z-10 ring-4 ring-paper group-hover:scale-125 group-hover:bg-accent transition-all duration-300"></div>
-                    
-                    <div class="grow space-y-2.5 w-full">
-                        <span class="font-mono text-xs sm:text-sm text-stone block group-hover:text-accent transition-colors duration-200">02</span>
-                        <h3 class="text-base sm:text-lg font-medium text-ink group-hover:text-accent transition-colors duration-200">Mistake review</h3>
-                        <p class="text-xs sm:text-sm text-stone leading-relaxed">Every wrong answer is kept for later.</p>
-                        
-                        <!-- Sample Card 02 -->
-                        <div class="mt-4 bg-surface border border-[#D9D5C9] group-hover:border-accent/40 group-hover:-translate-y-1 group-hover:shadow-md rounded-xl p-4 space-y-2 text-xs sm:text-sm transition-all duration-300 cursor-pointer">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2.5">
-                                    <span class="font-mono text-xs text-stone">Q07</span>
-                                    <span class="text-ink font-medium">DNS</span>
-                                </div>
-                                <svg class="w-4 h-4 stroke-wrong" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </div>
-                            <div class="flex items-center justify-between border-t border-[#E3DFD5] pt-2">
-                                <div class="flex items-center space-x-2.5">
-                                    <span class="font-mono text-xs text-stone">Q12</span>
-                                    <span class="text-ink font-medium">RAID</span>
-                                </div>
-                                <svg class="w-4 h-4 stroke-wrong" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 03 -->
-                <div class="flex flex-row md:flex-col items-start space-x-4 md:space-x-0 group">
-                    <!-- Dot -->
-                    <div class="w-[15px] h-[15px] rounded-full bg-paper border-2 border-accent shrink-0 mt-1 md:mt-0 md:mb-5 relative z-10 ring-4 ring-paper group-hover:scale-125 group-hover:bg-accent transition-all duration-300"></div>
-                    
-                    <div class="grow space-y-2.5 w-full">
-                        <span class="font-mono text-xs sm:text-sm text-stone block group-hover:text-accent transition-colors duration-200">03</span>
-                        <h3 class="text-base sm:text-lg font-medium text-ink group-hover:text-accent transition-colors duration-200">Timed assessments</h3>
-                        <p class="text-xs sm:text-sm text-stone leading-relaxed">A timer, no hints, a score at the end.</p>
-                        
-                        <!-- Sample Card 03 -->
-                        <div class="mt-4 bg-surface border border-[#D9D5C9] group-hover:border-accent/40 group-hover:-translate-y-1 group-hover:shadow-md rounded-xl p-4 space-y-2.5 transition-all duration-300 cursor-pointer">
-                            <div class="font-mono text-xl font-medium text-ink tracking-wider group-hover:text-accent transition-colors duration-200">
-                                01:42:10
-                            </div>
-                            <div class="w-full bg-[#E3DFD5] h-1.5 rounded-full overflow-hidden">
-                                <div class="bg-accent h-full w-[15%] group-hover:w-[40%] transition-all duration-500"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ul class="space-y-2.5 text-xs sm:text-sm text-ink font-medium pt-2">
+                    <li class="flex items-center space-x-2.5">
+                        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Detailed feedback after each question</span>
+                    </li>
+                    <li class="flex items-center space-x-2.5">
+                        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Module-by-module progress tracking</span>
+                    </li>
+                    <li class="flex items-center space-x-2.5">
+                        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Verified ITPEC answer keys</span>
+                    </li>
+                </ul>
             </div>
+
+            <!-- Step 02: Mistake Review -->
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <span class="font-mono text-sm font-bold text-wrong bg-wrong-surface px-3 py-1 rounded-md">Step 02</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-ink">Mistake review</h3>
+                </div>
+
+                <p class="text-sm sm:text-base text-stone leading-relaxed">
+                    Every incorrect answer is stored automatically in your review queue so you can drill weak spots until completely mastered.
+                </p>
+
+                <ul class="space-y-2.5 text-xs sm:text-sm text-ink font-medium pt-2">
+                    <li class="flex items-center space-x-2.5">
+                        <svg class="w-4 h-4 text-wrong shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Automatic mistake logging</span>
+                    </li>
+                    <li class="flex items-center space-x-2.5">
+                        <svg class="w-4 h-4 text-wrong shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Targeted drill till 100% accuracy</span>
+                    </li>
+                    <li class="flex items-center space-x-2.5">
+                        <svg class="w-4 h-4 text-wrong shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Never repeat the same error</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Step 03: Timed Assessments -->
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <span class="font-mono text-sm font-bold text-accent bg-accent-tint px-3 py-1 rounded-md">Step 03</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-ink">Timed assessments</h3>
+                </div>
+
+                <p class="text-sm sm:text-base text-stone leading-relaxed">
+                    Test your readiness under realistic exam conditions with countdown timer, zero hints, and complete final scoring.
+                </p>
+
+                <ul class="space-y-2.5 text-xs sm:text-sm text-ink font-medium pt-2">
+                    <li class="flex items-center space-x-2.5">
+                        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Realistic countdown timer</span>
+                    </li>
+                    <li class="flex items-center space-x-2.5">
+                        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Zero hints during assessment</span>
+                    </li>
+                    <li class="flex items-center space-x-2.5">
+                        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Instant score breakdown</span>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </section>
