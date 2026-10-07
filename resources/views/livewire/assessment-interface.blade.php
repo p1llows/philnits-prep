@@ -41,25 +41,28 @@
     </div>
 
     <!-- Question Card -->
-    @if($this->getCurrentQuestion())
+    @if($currentQuestion = $this->getCurrentQuestion())
         <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 animate-fade-in">
             <!-- Question Text -->
             <h2 class="text-xl md:text-2xl font-semibold text-gray-900 mb-6 leading-relaxed">
-                {{ $this->getCurrentQuestion()['question_text'] }}
+                {{ $currentQuestion['question_text'] }}
             </h2>
 
             <!-- Choices -->
             <div class="space-y-3">
-                @foreach($this->getCurrentQuestion()['choices'] as $choice)
+                @foreach($currentQuestion['choices'] as $choice)
+                    @php
+                        $selectedAnswer = $answers[$currentQuestion['id']] ?? null;
+                    @endphp
                     <label 
-                        class="block cursor-pointer {{ $answers[$this->getCurrentQuestion()['id']] === $choice['code'] ? 'bg-blue-50 border-blue-300' : 'hover:bg-gray-50' }}"
+                        class="block cursor-pointer {{ $selectedAnswer === $choice['code'] ? 'bg-blue-50 border-blue-300' : 'hover:bg-gray-50' }}"
                     >
                         <input 
                             type="radio" 
-                            name="selected_answer_{{ $this->getCurrentQuestion()['id'] }}"
+                            name="selected_answer_{{ $currentQuestion['id'] }}"
                             value="{{ $choice['code'] }}"
-                            {{ $answers[$this->getCurrentQuestion()['id']] === $choice['code'] ? 'checked' : '' }}
-                            wire:click="selectAnswer({{ $this->getCurrentQuestion()['id'] }}, '{{ $choice['code'] }}')"
+                            {{ $selectedAnswer === $choice['code'] ? 'checked' : '' }}
+                            wire:click="selectAnswer({{ $currentQuestion['id'] }}, '{{ $choice['code'] }}')"
                             class="sr-only peer"
                         />
                         <div class="flex items-center p-4 border-2 border-gray-200 rounded-lg peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all">
