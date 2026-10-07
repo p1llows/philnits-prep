@@ -43,7 +43,7 @@ class AssessmentInterface extends Component
     public function selectAnswer(string $questionId, string $answerCode): void
     {
         $this->answers[$questionId] = strtoupper(trim($answerCode));
-        $this->dispatch('answer-selected')->to('parent');
+        $this->dispatch('answer-selected');
     }
 
     public function getCurrentQuestion(): ?array

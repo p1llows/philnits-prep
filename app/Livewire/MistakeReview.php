@@ -101,7 +101,7 @@ class MistakeReview extends Component
             $this->showingFeedback = false;
             $this->saveProgress();
         } else {
-            $this->dispatch('mistakes-review-completed')->to('parent');
+            $this->dispatch('mistakes-review-completed');
         }
     }
 

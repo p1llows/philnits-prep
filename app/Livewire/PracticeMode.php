@@ -156,7 +156,7 @@ class PracticeMode extends Component
                 'scorePercentage' => count($this->questions) > 0 
                     ? round(($this->correctCount / count($this->questions)) * 100, 1)
                     : 0,
-            ])->to('parent');
+            ]);
         }
     }
 
