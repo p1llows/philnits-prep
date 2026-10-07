@@ -6,11 +6,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#1F3A5F">
 
-    <title>{{ config('app.name', 'PhilNITS Prep') }}</title>
+    <title>{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'PhilNITS Prep') }}</title>
 
-    <!-- Favicon -->
+    <!-- Favicon & PWA -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

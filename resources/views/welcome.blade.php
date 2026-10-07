@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#1F3A5F">
-    <!-- Favicon -->
+    <!-- Favicon & PWA -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="mobile-web-app-capable" content="yes">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600|source-serif-4:400,600&display=swap" rel="stylesheet" />

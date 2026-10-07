@@ -1,0 +1,25 @@
+{
+    "name": "PhilNITS Prep",
+    "short_name": "PhilNITS Prep",
+    "description": "PhilNITS IP Passport Examination Reviewer & Practice Platform",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "any",
+    "background_color": "#F6F4EF",
+    "theme_color": "#1F3A5F",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/logo.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}

@@ -64,3 +64,12 @@ document.addEventListener('alpine:init', () => {
 });
 
 Alpine.start();
+
+// Register Service Worker for PWA support
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch((err) => {
+            console.warn('PWA service worker registration failed:', err);
+        });
+    });
+}
