@@ -202,17 +202,10 @@
                     ← Back to Dashboard
                 </a>
                 
-                <form action="{{ route('assessment.submit.confirm', ['confirmation' => 'true']) }}" method="POST" class="hidden" id="resubmit-form">
-                    @csrf
-                </form>
-                
-                <button 
-                    type="button"
-                    onclick="document.getElementById('resubmit-form').submit();"
-                    class="px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
-                >
-                    Take Another Assessment
-                </button>
+                <a href="{{ route('assessment.index') }}" 
+                   class="px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors">
+                    Take Another Assessment →
+                </a>
             </div>
 
         </div>

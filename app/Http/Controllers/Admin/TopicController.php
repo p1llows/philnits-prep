@@ -44,7 +44,7 @@ class TopicController extends Controller
             'name' => 'required|string|max:255',
             'code' => 'nullable|string|max:50|unique:topics,code',
             'description' => 'nullable|string',
-            'color' => 'required|string|size:6|pattern:/^[0-9a-fA-F]{6}$/',
+            'color' => 'required|string|size:6|regex:/^[0-9a-fA-F]{6}$/',
             'is_active' => 'boolean',
         ]);
 
@@ -61,7 +61,9 @@ class TopicController extends Controller
     {
         $this->authorize('adminAccess');
         
-        $topic->load(['questions.published']);
+        $topic->load(['questions' => function ($q) {
+            $q->published();
+        }]);
 
         return view('admin.topics.show', compact('topic'));
     }
@@ -87,7 +89,7 @@ class TopicController extends Controller
             'name' => 'required|string|max:255',
             'code' => 'nullable|string|max:50|unique:topics,code,' . $topic->id,
             'description' => 'nullable|string',
-            'color' => 'required|string|size:6|pattern:/^[0-9a-fA-F]{6}$/',
+            'color' => 'required|string|size:6|regex:/^[0-9a-fA-F]{6}$/',
             'is_active' => 'boolean',
         ]);
 

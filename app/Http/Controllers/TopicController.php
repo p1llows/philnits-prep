@@ -15,7 +15,9 @@ class TopicController extends Controller
      */
     public function index(Request $request)
     {
-        $topics = Topic::with(['questions.published'])
+        $topics = Topic::with(['questions' => function ($q) {
+                $q->published();
+            }])
             ->active()
             ->ordered()
             ->get()

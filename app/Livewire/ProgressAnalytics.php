@@ -149,6 +149,8 @@ class ProgressAnalytics extends Component
 
     public function render()
     {
-        return view('livewire.progress-analytics');
+        return view('livewire.progress-analytics', [
+            'trendGraphData' => $this->getTrendGraphData(),
+        ]);
     }
 }

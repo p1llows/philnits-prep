@@ -161,7 +161,7 @@ class Question extends Model
     {
         return $this->status === 'published' 
             && $this->topic_id !== null 
-            && $this->deletedAt === null;
+            && $this->deleted_at === null;
     }
 
     /**
