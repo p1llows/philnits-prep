@@ -29,4 +29,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('questions', \App\Http\Controllers\Admin\QuestionController::class);
     Route::post('/questions/{question}/publish', [\App\Http\Controllers\Admin\QuestionController::class, 'publish'])
         ->name('questions.publish');
+
+    // Source Packages CRUD & Import
+    Route::resource('source-packages', \App\Http\Controllers\Admin\SourcePackageController::class);
+    Route::post('/source-packages/{sourcePackage}/import-questions', [\App\Http\Controllers\Admin\SourcePackageController::class, 'importQuestions'])
+        ->name('source-packages.import-questions');
 });
+
