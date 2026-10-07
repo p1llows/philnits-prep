@@ -26,7 +26,7 @@
                         </a>
 
                         <a href="{{ route('assessments.index') }}" 
-                           class="{{ request()->routeIs('assessments.*') ? 'inline-flex items-center px-1 pt-1 border-b-2 border-accent text-sm font-medium leading-5 text-ink' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-stone hover:text-ink hover:border-line' }}">
+                           class="{{ request()->routeIs('assessment*', 'assessments*') ? 'inline-flex items-center px-1 pt-1 border-b-2 border-accent text-sm font-medium leading-5 text-ink' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-stone hover:text-ink hover:border-line' }}">
                             {{ __('Assessments') }}
                         </a>
 
@@ -42,20 +42,31 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @if(Auth::check())
-                    <x-dropdown>
+                    <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-line text-sm leading-4 font-medium rounded-md text-stone bg-surface hover:text-ink hover:bg-paper focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
-
-                                <div class="ml-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
+                            <button class="relative flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 hover:opacity-90 transition duration-150">
+                                <span class="sr-only">Open user menu</span>
+                                <div class="w-9 h-9 rounded-full bg-accent text-surface font-semibold flex items-center justify-center text-xs overflow-hidden border border-line shadow-xs">
+                                    <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <span style="display:none;">{{ Auth::user()->initials }}</span>
                                 </div>
                             </button>
                         </x-slot>
 
                         <x-slot name="content">
+                            <div class="px-4 py-3 border-b border-line bg-paper/50">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-accent text-surface font-semibold flex items-center justify-center text-xs overflow-hidden shrink-0">
+                                        <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                        <span style="display:none;">{{ Auth::user()->initials }}</span>
+                                    </div>
+                                    <div class="truncate min-w-0">
+                                        <p class="text-sm font-medium text-ink truncate">{{ Auth::user()->name }}</p>
+                                        <p class="text-xs text-stone truncate">{{ Auth::user()->email }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
@@ -109,7 +120,7 @@
                     {{ __('Practice & Review') }}
                 </a>
     
-                <a href="{{ route('assessments.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('assessments.*') ? 'border-accent text-accent bg-accent-tint' : 'border-transparent text-stone hover:text-ink hover:bg-paper hover:border-line' }}">
+                <a href="{{ route('assessments.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('assessment*', 'assessments*') ? 'border-accent text-accent bg-accent-tint' : 'border-transparent text-stone hover:text-ink hover:bg-paper hover:border-line' }}">
                     {{ __('Assessments') }}
                 </a>
     
@@ -122,9 +133,15 @@
 
         @if(Auth::check())
             <div class="pt-4 pb-3 border-t border-line">
-                <div class="px-4">
-                    <div class="font-medium text-base text-ink">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-stone">{{ Auth::user()->email }}</div>
+                <div class="flex items-center px-4">
+                    <div class="w-10 h-10 rounded-full bg-accent text-surface font-semibold flex items-center justify-center text-sm overflow-hidden shrink-0 mr-3">
+                        <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span style="display:none;">{{ Auth::user()->initials }}</span>
+                    </div>
+                    <div class="truncate min-w-0">
+                        <div class="font-medium text-base text-ink truncate">{{ Auth::user()->name }}</div>
+                        <div class="font-medium text-sm text-stone truncate">{{ Auth::user()->email }}</div>
+                    </div>
                 </div>
 
                 <div class="mt-3 space-y-1">
