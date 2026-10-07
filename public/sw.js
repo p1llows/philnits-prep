@@ -1,8 +1,8 @@
-const CACHE_NAME = 'philnits-prep-v1';
+const CACHE_NAME = 'philnits-prep-v3';
 const urlsToCache = [
-    '/',
     '/favicon.svg',
     '/logo.svg',
+    '/logo-mark.svg',
     '/manifest.json'
 ];
 
@@ -33,16 +33,14 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     if (event.request.method !== 'GET') return;
     
+    // Network-first strategy for dynamic pages and Vite build assets
     event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            if (cachedResponse) {
-                return cachedResponse;
-            }
-            return fetch(event.request).then((networkResponse) => {
+        fetch(event.request)
+            .then((networkResponse) => {
                 return networkResponse;
-            }).catch(() => {
-                return caches.match('/');
-            });
-        })
+            })
+            .catch(() => {
+                return caches.match(event.request);
+            })
     );
 });

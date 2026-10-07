@@ -10,7 +10,12 @@ export default {
             colors: {
                 paper: '#F6F4EF',
                 surface: '#FFFFFF',
-                line: '#E3DFD5',
+                panel: '#FBFAF7',
+                line: {
+                    DEFAULT: '#E3DFD5',
+                    strong: '#D9D5C9',
+                    outline: '#CFCABD',
+                },
                 stone: {
                     DEFAULT: '#6E6A60',
                     50: '#F9F8F6',
@@ -35,6 +40,8 @@ export default {
                 accent: {
                     DEFAULT: '#1F3A5F',
                     tint: '#E6ECF4',
+                    light: '#A5B8D3',
+                    grid: '#2D4C7A',
                     50: '#F0F4F9',
                     100: '#E6ECF4',
                     200: '#C2D3E8',
@@ -82,6 +89,7 @@ export default {
             fontFamily: {
                 sans: ['Inter', 'system-ui', 'sans-serif'],
                 serif: ['"Source Serif 4"', 'Georgia', 'serif'],
+                mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
             },
         },
     },
