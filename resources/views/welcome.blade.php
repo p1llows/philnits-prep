@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#1F3A5F">
-    <title>{{ config('app.name', 'PhilNITS Prep') }}</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600|source-serif-4:400,600&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -12,8 +15,9 @@
 <body class="bg-paper text-ink font-sans antialiased min-h-screen flex flex-col justify-between">
     <!-- Header -->
     <header class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        <a href="/" class="font-bold text-xl text-accent tracking-tight">
-            {{ config('app.name', 'PhilNITS Prep') }}
+        <a href="/" class="flex items-center space-x-2.5 font-bold text-xl text-accent tracking-tight">
+            <img src="{{ asset('logo.svg') }}" alt="{{ config('app.name') }}" class="h-8 w-auto">
+            <span>{{ config('app.name', 'PhilNITS Prep') }}</span>
         </a>
 
         <div class="flex items-center space-x-3 text-sm font-medium">

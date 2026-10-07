@@ -8,6 +8,10 @@
 
     <title>{{ config('app.name', 'PhilNITS Prep') }}</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500|source-serif-4:400,500&display=swap" rel="stylesheet" />
@@ -18,7 +22,8 @@
 <body class="font-sans text-ink antialiased bg-paper">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-paper">
         <div>
-            <a href="/">
+            <a href="/" class="flex flex-col items-center space-y-3">
+                <img src="{{ asset('logo.svg') }}" alt="{{ config('app.name') }}" class="h-12 w-auto">
                 <h2 class="text-3xl font-bold text-accent">{{ config('app.name', 'PhilNITS Prep') }}</h2>
             </a>
         </div>
