@@ -24,4 +24,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('topics', TopicController::class);
     Route::post('/topics/{topic}/toggle-status', [TopicController::class, 'toggleStatus'])
         ->name('topics.toggle-status');
+
+    // Questions CRUD
+    Route::resource('questions', \App\Http\Controllers\Admin\QuestionController::class);
+    Route::post('/questions/{question}/publish', [\App\Http\Controllers\Admin\QuestionController::class, 'publish'])
+        ->name('questions.publish');
 });

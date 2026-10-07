@@ -39,20 +39,20 @@
                     </div>
                 </a>
 
-                <!-- Questions Management (Coming Soon) -->
-                <div class="block bg-gray-50 rounded-xl shadow-sm p-6 opacity-75 cursor-not-allowed"
-                     title="Feature coming in next phase">
+                <!-- Questions Management (Active) -->
+                <a href="{{ route('admin.questions.index') }}" 
+                   class="group block bg-white rounded-xl shadow-sm hover:shadow-md transition-all p-6 border-l-4 border-indigo-500">
                     <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-semibold text-gray-500">Questions</h3>
-                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-lg font-semibold text-gray-900 group-hover:text-indigo-600">Questions</h3>
+                        <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                         </svg>
                     </div>
-                    <p class="text-sm text-gray-500">Add or modify examination questions</p>
-                    <div class="mt-4 inline-flex items-center px-2 py-1 bg-gray-200 text-xs font-medium rounded text-gray-600">
-                        Coming Soon
+                    <p class="text-sm text-gray-600">Add or modify examination questions</p>
+                    <div class="mt-4 flex items-center text-sm text-indigo-600 font-medium">
+                        Manage Questions →
                     </div>
-                </div>
+                </a>
 
                 <!-- Source Packages (Coming Soon) -->
                 <div class="block bg-gray-50 rounded-xl shadow-sm p-6 opacity-75 cursor-not-allowed"

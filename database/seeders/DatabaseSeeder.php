@@ -76,5 +76,8 @@ class DatabaseSeeder extends Seeder
             'status' => 'draft',
             'created_by' => $admin->id,
         ]);
+
+        // Seed questions
+        $this->call(QuestionSeeder::class);
     }
 }
