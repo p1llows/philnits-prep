@@ -48,14 +48,14 @@
                         <div>
                             <div class="flex items-center space-x-2">
                                 <h3 class="text-lg sm:text-xl font-bold text-ink group-hover:text-accent transition-colors duration-200">Management</h3>
-                                <span class="font-mono text-[11px] bg-accent/10 text-accent font-bold px-2 py-0.5 rounded">~15% Weight</span>
+                                <span class="font-mono text-[11px] bg-accent/10 text-accent font-bold px-2 py-0.5 rounded">~25% Weight</span>
                             </div>
                             <p class="text-xs sm:text-sm text-stone mt-1">Field 02 · Development Techniques, Project Management & Service Management</p>
                         </div>
                     </div>
                     <div class="sm:text-right shrink-0">
                         <span class="inline-block text-xs font-mono font-medium text-stone bg-surface px-3 py-1.5 rounded-lg border border-[#E3DFD5]">
-                            15 Questions
+                            25 Questions
                         </span>
                     </div>
                 </div>
@@ -67,14 +67,14 @@
                         <div>
                             <div class="flex items-center space-x-2">
                                 <h3 class="text-lg sm:text-xl font-bold text-ink group-hover:text-accent transition-colors duration-200">Technology</h3>
-                                <span class="font-mono text-[11px] bg-accent/10 text-accent font-bold px-2 py-0.5 rounded">~50% Weight</span>
+                                <span class="font-mono text-[11px] bg-accent/10 text-accent font-bold px-2 py-0.5 rounded">~40% Weight</span>
                             </div>
                             <p class="text-xs sm:text-sm text-stone mt-1">Field 03 · Computer Systems, Hardware/Software, Networks, Security & Databases</p>
                         </div>
                     </div>
                     <div class="sm:text-right shrink-0">
                         <span class="inline-block text-xs font-mono font-medium text-stone bg-surface px-3 py-1.5 rounded-lg border border-[#E3DFD5]">
-                            50 Questions
+                            40 Questions
                         </span>
                     </div>
                 </div>
