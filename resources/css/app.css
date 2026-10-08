@@ -17,44 +17,60 @@
 }
 
 /* Base application styles */
+[x-cloak] { display: none !important; }
+
 body {
-    @apply bg-paper text-ink font-sans antialiased;
-    background-color: #F6F4EF;
-    color: #1B1A17;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Accessible focus ring style */
 *:focus-visible {
-    outline: 2px solid #1F3A5F !important;
+    outline: 2px solid var(--color-accent) !important;
     outline-offset: 2px !important;
 }
 
 /* Restrained typography for exam & prose content */
 .prose {
-    @apply max-w-none text-ink;
+    max-width: none;
+    color: var(--color-ink);
 }
 
 .prose h1, .prose h2, .prose h3, .prose h4 {
-    @apply text-ink font-semibold;
+    color: var(--color-ink);
+    font-weight: 600;
 }
 
 .prose h2 {
-    @apply text-xl mt-6 mb-3;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .prose h3 {
-    @apply text-lg mt-4 mb-2;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .prose p {
-    @apply mb-4 leading-relaxed text-ink;
+    margin-bottom: 1rem;
+    line-height: 1.625;
+    color: var(--color-ink);
 }
 
 .prose ul, .prose ol {
-    @apply mb-4 ml-6;
+    margin-bottom: 1rem;
+    margin-left: 1.5rem;
 }
 
 .prose li {
-    @apply mb-2;
+    margin-bottom: 0.5rem;
 }
+
 

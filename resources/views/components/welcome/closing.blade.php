@@ -1,5 +1,5 @@
-<section class="py-10 sm:py-14 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="bg-accent rounded-2xl px-8 sm:px-12 py-10 sm:py-12 relative overflow-hidden text-left shadow-lg hover:shadow-2xl transition-all duration-300 group">
+<section class="py-12 sm:py-16 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-accent rounded-3xl px-8 sm:px-12 py-10 sm:py-14 relative overflow-hidden text-left shadow-xl hover:shadow-2xl transition-all duration-300 group">
         <!-- Navy Grid Pattern Background -->
         <svg aria-hidden="true" class="pointer-events-none absolute inset-0 h-full w-full opacity-40 group-hover:opacity-50 transition-opacity duration-300">
             <defs>
@@ -14,16 +14,28 @@
 
         <!-- Content -->
         <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-            <div>
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-medium text-paper tracking-tight mb-2">Start with one topic.</h2>
-                <p class="text-xs sm:text-sm text-[#A5B8D3]">Made by Jewel Ramirez, ITPEC IT Passport certified.</p>
+            <div class="space-y-2 max-w-xl">
+                <span class="inline-flex items-center space-x-2 bg-[#2D4C7A] text-[#A5B8D3] text-xs font-mono px-3 py-1 rounded-full">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span>Ready to pass the IT Passport exam?</span>
+                </span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-paper tracking-tight">
+                    Start practicing today. One topic at a time.
+                </h2>
+                <p class="text-xs sm:text-sm text-[#A5B8D3]">
+                    Created by Jewel Ramirez, ITPEC IT Passport certified. Free for all examinees.
+                </p>
             </div>
 
-            <div>
-                <a href="{{ route('register') }}" class="inline-block bg-paper text-accent hover:bg-surface hover:scale-[1.03] active:scale-[0.98] text-sm sm:text-base font-medium px-6 py-3 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-paper focus:ring-offset-2 focus:ring-offset-accent shadow-sm">
-                    Create an account
+            <div class="shrink-0 flex items-center space-x-3">
+                <a href="{{ route('register') }}" class="inline-flex items-center space-x-2 bg-paper text-accent hover:bg-surface hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base font-bold px-7 py-3.5 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-paper shadow-md">
+                    <span>Create Free Account</span>
+                    <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
                 </a>
             </div>
         </div>
     </div>
 </section>
+
