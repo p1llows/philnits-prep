@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
+use App\Mail\SendOtpMail;
+use App\Services\OtpService;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -23,7 +28,7 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      */
-    public function store(Request $request)
+    public function store(Request $request, OtpService $otpService)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -41,6 +46,17 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect('/dashboard');
+        // Generate OTP and send email
+        $otpResult = $otpService->generate($user->email);
+        if ($otpResult['success']) {
+            try {
+                Mail::to($user->email)->send(new SendOtpMail($otpResult['code'], $user->name));
+            } catch (\Throwable $e) {
+                Log::warning("Failed to dispatch OTP email to {$user->email}: " . $e->getMessage());
+                Log::info("DEV FALLBACK OTP for {$user->email}: [ {$otpResult['code']} ]");
+            }
+        }
+
+        return redirect()->route('verification.notice');
     }
 }

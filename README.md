@@ -5,6 +5,7 @@ A web-based examination reviewer for the PhilNITS IP Passport Examination, built
 ## Features
 
 - **User Authentication**: Secure registration and login system
+- **Email OTP Verification**: 6-digit One-Time Password (OTP) email verification with expiration (10 mins), rate limiting (60s cooldown), and brute-force protection
 - **Role-Based Access**: Separate roles for Learners and Administrators
 - **Assessment System**: Initial assessment with score calculation
 - **Topic-Based Review**: Organized question review by topics
@@ -125,10 +126,13 @@ The seeder creates two test users for development:
 - `GET /forgot-password` - Password reset request
 
 ### Protected Routes (Require Authentication)
+- `GET /verify-otp` - OTP verification input screen
+- `POST /verify-otp` - Process 6-digit OTP verification
+- `POST /verify-otp/resend` - Resend OTP code with rate limit check
 - `GET /dashboard` - User dashboard
 - `GET /profile` - Profile management
-- `GET /assessment` - Assessment pages (to be implemented)
-- `GET /practice` - Practice mode (to be implemented)
+- `GET /assessment` - Assessment pages
+- `GET /practice` - Practice mode
 
 ### Admin Routes (Requires Admin Role)
 - Admin panel routes will be created using Filament in Phase 5
@@ -181,9 +185,13 @@ php artisan test tests/Feature/AuthTest.php
 
 ### Debugging Tips
 
-1. Check logs:
-```bash
-tail -f storage/logs/laravel.log
+1. Check logs / Find latest OTP code:
+```powershell
+# PowerShell (Windows)
+Get-Content storage/logs/laravel.log -Tail 150 | Select-String "otp-code|DEV FALLBACK" | Select-Object -Last 1
+
+# Bash / Linux / macOS
+grep -E "otp-code|DEV FALLBACK" storage/logs/laravel.log | tail -n 1
 ```
 
 2. Clear caches if needed:

@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\NewPasswordController;
 
+use App\Http\Controllers\Auth\OtpVerificationController;
+
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
@@ -31,6 +33,15 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('verify-otp', [OtpVerificationController::class, 'show'])
+                ->name('verification.notice');
+
+    Route::post('verify-otp', [OtpVerificationController::class, 'verify'])
+                ->name('verification.otp.verify');
+
+    Route::post('verify-otp/resend', [OtpVerificationController::class, 'resend'])
+                ->name('verification.otp.resend');
+
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });
