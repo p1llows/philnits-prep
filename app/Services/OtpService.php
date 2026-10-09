@@ -38,14 +38,16 @@ class OtpService
             ->first();
 
         if ($existing) {
-            $secondsSinceCreation = Carbon::now()->diffInSeconds($existing->created_at);
-            if ($secondsSinceCreation < self::RESEND_COOLDOWN_SECONDS) {
-                $cooldownRemaining = self::RESEND_COOLDOWN_SECONDS - $secondsSinceCreation;
-                return [
-                    'success' => false,
-                    'message' => "Please wait {$cooldownRemaining} seconds before requesting a new code.",
-                    'cooldown_remaining' => $cooldownRemaining,
-                ];
+            $nextAllowedAt = $existing->created_at->copy()->addSeconds(self::RESEND_COOLDOWN_SECONDS);
+            if (Carbon::now()->lt($nextAllowedAt)) {
+                $cooldownRemaining = (int) max(1, ceil(Carbon::now()->diffInSeconds($nextAllowedAt, false)));
+                if ($cooldownRemaining <= self::RESEND_COOLDOWN_SECONDS) {
+                    return [
+                        'success' => false,
+                        'message' => "Please wait {$cooldownRemaining} seconds before requesting a new code.",
+                        'cooldown_remaining' => $cooldownRemaining,
+                    ];
+                }
             }
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Services\OtpService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -26,7 +27,7 @@ class SendOtpMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your PhilNITS Prep Verification Code: ' . $this->otpCode,
+            subject: 'Your PhilNITS Prep verification code',
         );
     }
 
@@ -35,8 +36,15 @@ class SendOtpMail extends Mailable
      */
     public function content(): Content
     {
+        $firstName = explode(' ', trim($this->userName))[0] ?? $this->userName;
+
         return new Content(
             view: 'emails.otp',
+            with: [
+                'name' => $firstName,
+                'code' => $this->otpCode,
+                'minutes' => OtpService::EXPIRATION_MINUTES,
+            ],
         );
     }
 
