@@ -11,6 +11,7 @@ services:
             - philnits-network
         depends_on:
             - mysql
+            - redis
 
     mysql:
         image: mysql:8.0
@@ -28,9 +29,20 @@ services:
         ports:
             - "3307:3306"
 
+    redis:
+        image: redis:alpine
+        restart: unless-stopped
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis_data:/data
+        networks:
+            - philnits-network
+
 networks:
     philnits-network:
         driver: bridge
 
 volumes:
     mysql_data:
+    redis_data:

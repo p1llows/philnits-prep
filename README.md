@@ -19,6 +19,7 @@ A web-based examination reviewer for the PhilNITS IP Passport Examination, built
 - **Backend**: Laravel 11+
 - **Frontend**: Tailwind CSS, Alpine.js, Livewire
 - **Database**: MySQL (with Docker support)
+- **Cache & Queue**: Redis (via `predis/predis`)
 - **Admin Panel**: Filament (Phase 2+)
 
 ## Prerequisites
@@ -223,8 +224,13 @@ DB_DATABASE=philnits_prep
 DB_USERNAME=philnits
 DB_PASSWORD=secret
 
-QUEUE_CONNECTION=sync  # Change to 'database' for production
-SESSION_DRIVER=file    # Change to 'redis' for production
+QUEUE_CONNECTION=sync  # Change to 'redis' for production/queues
+SESSION_DRIVER=file    # Change to 'redis' for Redis session storage
+CACHE_DRIVER=file      # Change to 'redis' for Redis caching
+
+REDIS_CLIENT=predis
+REDIS_HOST=127.0.0.1   # Use 'redis' when using Docker
+REDIS_PORT=6379
 ```
 
 ## Security Considerations
