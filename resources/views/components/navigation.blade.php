@@ -14,7 +14,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-5 lg:space-x-8 md:-my-px md:ml-6 lg:ml-10 md:flex">
                     @if(Auth::check())
                         <a href="{{ route('dashboard') }}" 
                            class="{{ request()->routeIs('dashboard') ? 'inline-flex items-center px-1 pt-1 border-b-2 border-accent text-sm font-medium leading-5 text-ink' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-stone hover:text-ink hover:border-line' }}">
@@ -41,7 +41,7 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+            <div class="hidden md:flex md:items-center md:ml-6">
                 @if(Auth::check())
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
@@ -98,7 +98,7 @@
             </div>
 
             <!-- Hamburger -->
-            <div class="-mr-2 flex items-center sm:hidden">
+            <div class="-mr-2 flex items-center md:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-stone hover:text-ink hover:bg-paper focus:outline-none focus:bg-paper transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -110,7 +110,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-line bg-surface">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden md:hidden border-t border-line bg-surface">
         <div class="pt-2 pb-3 space-y-1">
             @if(Auth::check())
                 <a href="{{ route('dashboard') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('dashboard') ? 'border-accent text-accent bg-accent-tint' : 'border-transparent text-stone hover:text-ink hover:bg-paper hover:border-line' }}">
