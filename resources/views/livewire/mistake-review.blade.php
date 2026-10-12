@@ -64,25 +64,41 @@
                     @endforeach
                 </div>
 
+                <!-- Paxi Companion Thinking Hint -->
+                <div class="mt-4 flex items-center space-x-3 p-3.5 rounded-xl bg-paper border border-[#E3DFD5] text-xs">
+                    <x-mascot variant="avatar" :size="32" class="w-8 h-8 rounded-full shrink-0 shadow-xs" label="Paxi companion" />
+                    <span class="text-stone leading-relaxed">
+                        Take your time! Think through why your previous choice 
+                        @if($this->getCurrentMistake()['selected_answer_code'])
+                            (<strong class="font-mono text-ink">{{ $this->getCurrentMistake()['selected_answer_code'] }}</strong>)
+                        @endif
+                        was incorrect before picking again.
+                    </span>
+                </div>
+
             @else
                 <!-- Feedback Display State -->
                 <div>
-                    <!-- Feedback Banner -->
-                    <div class="mb-6 p-5 rounded-xl border {{ $isCorrect ? 'bg-correct-surface/40 border-correct/40 text-correct' : 'bg-wrong-surface/40 border-wrong/40 text-wrong' }}">
-                        <div class="flex items-start">
-                            <span class="mr-3 shrink-0 text-xl font-bold">
-                                @if($isCorrect) ✓ @else ✕ @endif
-                            </span>
+                    <!-- Feedback Banner with Paxi Companion Reaction -->
+                    <div class="mb-6 p-5 rounded-2xl border {{ $isCorrect ? 'bg-correct-surface/40 border-correct/40 text-correct' : 'bg-wrong-surface/40 border-wrong/40 text-wrong' }}">
+                        <div class="flex items-center space-x-4">
+                            <div class="shrink-0">
+                                @if($isCorrect)
+                                    <x-mascot variant="passed" :size="48" class="w-12 h-12" label="Paxi passed" />
+                                @else
+                                    <x-mascot variant="oops" :size="48" class="w-12 h-12" label="Paxi oops" />
+                                @endif
+                            </div>
                             
                             <div class="flex-1">
-                                <h4 class="font-semibold text-base">
-                                    {{ $isCorrect ? '✓ Correct! Mistake cleared' : '✕ Still Incorrect' }}
+                                <h4 class="font-bold text-sm sm:text-base">
+                                    {{ $isCorrect ? 'Paxi: Excellent work! That mistake is cleared!' : 'Paxi: Not quite, but mistakes are how we learn!' }}
                                 </h4>
                                 
                                 @if(!$isCorrect)
-                                    <p class="text-xs mt-1">
-                                        Your previous answer was <strong class="font-mono font-bold">{{ $this->getCurrentMistake()['selected_answer_code'] }}</strong>.
-                                        The correct answer is <strong class="font-mono font-bold">{{ $this->getCurrentMistake()['correct_answer_code'] }}</strong>.
+                                    <p class="text-xs text-stone mt-1">
+                                        Your previous answer was <strong class="font-mono font-bold text-ink">{{ $this->getCurrentMistake()['selected_answer_code'] }}</strong>.
+                                        The correct answer is <strong class="font-mono font-bold text-correct">{{ $this->getCurrentMistake()['correct_answer_code'] }}</strong>.
                                     </p>
                                 @endif
                             </div>
@@ -159,23 +175,32 @@
             @endif
         </div>
     @else
-        <div class="p-8 text-center bg-surface">
+        <div class="p-8 sm:p-12 text-center bg-surface">
             @if($this->getResolvedCount() > 0 && $this->getUnresolvedCount() === 0)
                 <div class="mb-4 flex justify-center">
-                    <x-mascot variant="passed" :size="120" />
+                    <x-mascot variant="passed" :size="130" label="Paxi passed all mistakes" />
                 </div>
-                <h3 class="text-lg font-serif font-bold text-ink mb-1">Excellent work!</h3>
-                <p class="text-xs text-stone mb-4">You have reviewed and cleared all recorded mistakes.</p>
+                <h3 class="text-xl font-bold text-ink mb-1">Paxi: Excellent work!</h3>
+                <p class="text-xs sm:text-sm text-stone max-w-sm mx-auto mb-6">
+                    You have cleared all recorded mistakes from your bank. Your exam mastery just leveled up!
+                </p>
             @else
                 <div class="mb-4 flex justify-center">
-                    <x-mascot variant="avatar" :size="96" />
+                    <x-mascot variant="default" :size="110" label="Paxi companion" />
                 </div>
-                <h3 class="text-lg font-serif font-bold text-ink mb-1">No mistakes recorded</h3>
-                <p class="text-xs text-stone mb-4">You have no mistakes to review right now.</p>
+                <h3 class="text-xl font-bold text-ink mb-1">Your Mistake Bank is empty!</h3>
+                <p class="text-xs sm:text-sm text-stone max-w-sm mx-auto mb-6">
+                    No active mistakes to review right now. Complete more study sessions or assessments and Paxi will collect any tricky questions here for you.
+                </p>
             @endif
-            <a href="{{ route('dashboard') }}" class="inline-flex items-center space-x-2 px-6 py-2.5 bg-accent text-surface hover:bg-accent/90 rounded-xl font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-xs">
-                <span>Back to dashboard</span>
-            </a>
+            <div class="flex items-center justify-center space-x-3">
+                <a href="{{ route('topics.index') }}" class="inline-flex items-center space-x-2 px-5 py-2.5 bg-paper border border-[#D9D5C9] text-accent hover:bg-surface rounded-xl font-semibold text-xs shadow-xs transition-all">
+                    <span>Study topics</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="inline-flex items-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 rounded-xl font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-xs">
+                    <span>Back to dashboard</span>
+                </a>
+            </div>
         </div>
     @endif
 </div>

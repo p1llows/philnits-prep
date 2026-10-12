@@ -9,10 +9,10 @@
                 </div>
                 <div>
                     <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-2 shadow-xs">
-                        <span>STUDY COMPANION</span>
+                        <span>PAXI REVIEW COMPANION</span>
                     </div>
-                    <h1 class="text-2xl sm:text-3xl font-serif font-bold text-ink mb-1">Study planner</h1>
-                    <p class="text-xs sm:text-sm text-stone">Plan your exam preparation with personalized schedules and goals.</p>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-ink mb-1">Study Planner</h1>
+                    <p class="text-xs sm:text-sm text-stone">Plan your IT Passport exam preparation with personalized schedules and milestones.</p>
                 </div>
             </div>
             

@@ -9,12 +9,15 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="Paxi Dashboard">
                         <x-mascot variant="avatar" :size="32" class="w-8 h-8 rounded-full shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-105" />
-                        <span class="font-extrabold text-accent text-xl tracking-tight">Paxi</span>
+                        <div class="flex flex-col text-left">
+                            <span class="font-extrabold text-accent text-lg leading-tight tracking-tight">Paxi</span>
+                            <span class="text-[9px] font-mono text-stone tracking-wider uppercase font-semibold leading-none">Companion</span>
+                        </div>
                     </a>
                 </div>
 
                 <!-- Clean Nav Links matching Design System -->
-                <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-medium">
+                <div class="hidden md:flex items-center space-x-5 lg:space-x-7 text-xs lg:text-sm font-medium">
                     @if(Auth::check())
                         <a href="{{ route('dashboard') }}" 
                            class="transition-colors duration-200 {{ request()->routeIs('dashboard') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
@@ -22,8 +25,18 @@
                         </a>
 
                         <a href="{{ route('topics.index') }}" 
-                           class="transition-colors duration-200 {{ request()->routeIs('topics.*', 'practice.*', 'mistakes.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
+                           class="transition-colors duration-200 {{ request()->routeIs('topics.*', 'practice.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
                             {{ __('Study') }}
+                        </a>
+
+                        <a href="{{ route('planner.index') }}" 
+                           class="transition-colors duration-200 {{ request()->routeIs('planner.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
+                            {{ __('Planner') }}
+                        </a>
+
+                        <a href="{{ route('mistakes.index') }}" 
+                           class="transition-colors duration-200 {{ request()->routeIs('mistakes.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
+                            {{ __('Mistake Bank') }}
                         </a>
 
                         <a href="{{ route('assessments.index') }}" 
@@ -33,7 +46,7 @@
 
                         <a href="{{ route('analytics.index') }}" 
                            class="transition-colors duration-200 {{ request()->routeIs('analytics.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
-                            {{ __('Progress & Analytics') }}
+                            {{ __('Analytics') }}
                         </a>
 
                         @if(Auth::user()->isAdmin())
@@ -120,8 +133,16 @@
                 {{ __('Dashboard') }}
             </a>
 
-            <a href="{{ route('topics.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('topics.*', 'practice.*', 'mistakes.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
-                {{ __('Study') }}
+            <a href="{{ route('topics.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('topics.*', 'practice.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
+                {{ __('Study Topics') }}
+            </a>
+
+            <a href="{{ route('planner.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('planner.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
+                {{ __('Study Planner') }}
+            </a>
+
+            <a href="{{ route('mistakes.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('mistakes.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
+                {{ __('Mistake Bank') }}
             </a>
 
             <a href="{{ route('assessments.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('assessment*', 'assessments*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
@@ -129,7 +150,7 @@
             </a>
 
             <a href="{{ route('analytics.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('analytics.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
-                {{ __('Progress & Analytics') }}
+                {{ __('Analytics') }}
             </a>
 
             @if(Auth::user()->isAdmin())

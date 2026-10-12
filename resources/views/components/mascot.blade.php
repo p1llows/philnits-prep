@@ -18,7 +18,7 @@
     src="{{ asset('mascot/' . $filename) }}"
     width="{{ $size }}"
     height="{{ $size }}"
-    alt="{{ $label ?? '' }}"
+    alt="{{ $label ?? 'Paxi mascot' }}"
     @if(empty($label)) aria-hidden="true" @endif
     {{ $attributes->merge(['class' => 'inline-block select-none']) }}
 />

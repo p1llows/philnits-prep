@@ -6,7 +6,7 @@
             <div class="max-w-xl space-y-4">
                 <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs shadow-xs">
                     <span class="w-2 h-2 rounded-full bg-correct animate-pulse"></span>
-                    <span>IT Passport Reviewer · Paxi</span>
+                    <span>Your Review Companion · Paxi</span>
                 </div>
                 
                 <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-ink tracking-tight">
@@ -14,23 +14,50 @@
                 </h1>
                 
                 <p class="text-sm sm:text-base text-stone leading-relaxed">
-                    Ready to continue your IT Passport journey? Keep going, you're doing great!
+                    Paxi is ready to study with you. Consistent daily practice is the fastest path to passing the IT Passport exam!
                 </p>
 
-                <div class="pt-2">
+                <div class="flex flex-wrap items-center gap-2.5 pt-2">
                     <a href="{{ route('topics.index') }}" 
-                       class="inline-flex items-center space-x-2 px-6 py-3 bg-accent text-surface hover:bg-accent/90 text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                       class="inline-flex items-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 text-xs sm:text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
                         <span>Continue studying</span>
                         <span aria-hidden="true">&rarr;</span>
                     </a>
+
+                    <a href="{{ route('planner.index') }}" 
+                       class="inline-flex items-center space-x-1.5 px-4 py-2.5 bg-paper border border-[#D9D5C9] text-accent hover:bg-surface text-xs sm:text-sm font-semibold rounded-xl shadow-xs hover:-translate-y-0.5 transition-all">
+                        <span>Study Planner</span>
+                    </a>
+
+                    @if($activeMistakes->count() > 0)
+                        <a href="{{ route('mistakes.index') }}" 
+                           class="inline-flex items-center space-x-1.5 px-4 py-2.5 bg-wrong-surface border border-wrong/30 text-wrong hover:bg-wrong hover:text-surface text-xs sm:text-sm font-semibold rounded-xl shadow-xs hover:-translate-y-0.5 transition-all">
+                            <span>Mistake Bank</span>
+                            <span class="px-1.5 py-0.2 bg-wrong text-surface text-[10px] rounded-full font-bold">{{ $activeMistakes->count() }}</span>
+                        </a>
+                    @endif
                 </div>
             </div>
 
-            <!-- Paxi Hero Mascot -->
+            <!-- Paxi Hero Mascot with Speech Bubble -->
             <div class="flex shrink-0 items-center justify-center lg:justify-end py-2">
-                <div class="relative">
-                    <div class="absolute -inset-4 bg-accent-tint/40 rounded-full blur-xl pointer-events-none"></div>
-                    <x-mascot variant="default" :size="140" label="Paxi study companion" class="relative z-10 drop-shadow-sm hover:scale-105 transition-transform duration-300" />
+                <div class="relative flex flex-col sm:flex-row items-center gap-3">
+                    <!-- Companion Speech Bubble -->
+                    <div class="bg-paper border border-[#D9D5C9] rounded-2xl px-4 py-2.5 shadow-xs max-w-[210px] text-xs text-ink relative">
+                        <span class="font-bold text-accent block mb-0.5">Paxi says:</span>
+                        @if($activeMistakes->count() > 0)
+                            <span class="text-stone leading-snug">Let's clear those {{ $activeMistakes->count() }} mistake{{ $activeMistakes->count() > 1 ? 's' : '' }} today!</span>
+                        @elseif($progressPercentage > 0)
+                            <span class="text-stone leading-snug">You're making steady progress. Keep going! ✨</span>
+                        @else
+                            <span class="text-stone leading-snug">Small daily steps lead to IT Passport mastery!</span>
+                        @endif
+                    </div>
+
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-accent-tint/40 rounded-full blur-xl pointer-events-none"></div>
+                        <x-mascot variant="default" :size="130" label="Paxi study companion" class="relative z-10 drop-shadow-sm hover:scale-105 transition-transform duration-300" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,21 +119,21 @@
     </div>
 
     @if(!$hasCompletedInitialAssessment)
-        <!-- Empty State (matching mockup design) -->
+        <!-- Empty State (Companion Welcome) -->
         <div class="bg-surface border border-[#E3DFD5] rounded-3xl p-8 sm:p-12 text-center shadow-xs">
             <div class="flex justify-center mb-5">
                 <x-mascot variant="default" :size="130" label="Paxi Ready to Study" class="hover:scale-105 transition-transform" />
             </div>
             <h3 class="text-xl sm:text-2xl font-bold text-ink tracking-tight mb-2">
-                No assessment history yet
+                Paxi is ready to build your study roadmap!
             </h3>
             <p class="text-xs sm:text-sm text-stone max-w-md mx-auto leading-relaxed mb-6">
-                Start your first practice test to track your progress and see your results here.
+                Take a quick baseline assessment so Paxi can diagnose your strengths, identify focus topics, and build your personalized review plan.
             </p>
             <div>
                 <a href="{{ route('assessment.index') }}" 
                    class="inline-flex items-center space-x-2 px-6 py-3 bg-accent text-surface hover:bg-accent/90 text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                    <span>Start a practice test</span>
+                    <span>Start baseline practice</span>
                     <span aria-hidden="true">&rarr;</span>
                 </a>
             </div>
@@ -175,6 +202,57 @@
                 @else
                     <span class="text-xs font-mono text-correct font-medium">No unresolved mistakes!</span>
                 @endif
+            </div>
+        </div>
+
+        <!-- Paxi's Companion Hub (Tips & Recommendations) -->
+        <div class="bg-paper border border-[#E3DFD5] rounded-3xl p-6 sm:p-7 shadow-xs">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div class="flex items-start space-x-4">
+                    <x-mascot variant="avatar" :size="48" class="w-12 h-12 rounded-2xl shrink-0 shadow-xs mt-1" label="Paxi companion avatar" />
+                    <div class="space-y-1 max-w-xl">
+                        <div class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-accent-tint text-accent text-[11px] font-mono font-semibold">
+                            <span>PAXI'S COMPANION ADVICE</span>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-ink">
+                            @if($activeMistakes->count() > 0)
+                                Prioritize: Clear your {{ $activeMistakes->count() }} question mistake bank!
+                            @elseif(count($weakTopics) > 0)
+                                Recommendation: Drill your focus area "{{ $weakTopics->first()->name }}"
+                            @else
+                                Keep up the great work: Ready for a mock assessment?
+                            @endif
+                        </h3>
+                        <p class="text-xs sm:text-sm text-stone leading-relaxed">
+                            @if($activeMistakes->count() > 0)
+                                Paxi tracks every incorrect answer so you can master them without repeating errors on exam day.
+                            @elseif(count($weakTopics) > 0)
+                                Spending 15 minutes reviewing this topic will give you the biggest boost in your IT Passport readiness score.
+                            @else
+                                Consistent practice cements concepts in your memory. Try reviewing daily study goals in your planner!
+                            @endif
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3 shrink-0 w-full md:w-auto">
+                    @if($activeMistakes->count() > 0)
+                        <a href="{{ route('mistakes.index') }}" class="w-full md:w-auto text-center inline-flex items-center justify-center space-x-2 px-5 py-2.5 bg-wrong text-surface hover:bg-wrong/90 text-xs font-semibold rounded-xl shadow-xs transition-all">
+                            <span>Open Mistake Bank</span>
+                            <span>&rarr;</span>
+                        </a>
+                    @elseif(count($weakTopics) > 0)
+                        <a href="{{ route('topics.show', $weakTopics->first()) }}" class="w-full md:w-auto text-center inline-flex items-center justify-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 text-xs font-semibold rounded-xl shadow-xs transition-all">
+                            <span>Practice Focus Topic</span>
+                            <span>&rarr;</span>
+                        </a>
+                    @else
+                        <a href="{{ route('planner.index') }}" class="w-full md:w-auto text-center inline-flex items-center justify-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 text-xs font-semibold rounded-xl shadow-xs transition-all">
+                            <span>View Study Planner</span>
+                            <span>&rarr;</span>
+                        </a>
+                    @endif
+                </div>
             </div>
         </div>
 
