@@ -2,15 +2,22 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         
         <!-- Page Header -->
-        <div>
-            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-surface text-accent font-mono text-xs mb-3 shadow-xs">
-                <span class="w-2 h-2 rounded-full bg-correct"></span>
-                <span>Official ITPEC Syllabus</span>
+        <div class="bg-surface border border-[#CFCABD] rounded-2xl p-6 sm:p-7 shadow-xs overflow-hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div class="max-w-xl">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-3 shadow-xs">
+                        <span class="w-2 h-2 rounded-full bg-correct"></span>
+                        <span>Official ITPEC Syllabus</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-1">Review by topic</h1>
+                    <p class="text-xs sm:text-sm text-stone">
+                        Browse examination questions organized by topic to strengthen your understanding in specific areas.
+                    </p>
+                </div>
+                <div class="hidden sm:flex shrink-0 items-center justify-center">
+                    <x-mascot variant="default" :size="96" label="Passy syllabus guide" />
+                </div>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-1">Review by topic</h1>
-            <p class="text-xs sm:text-sm text-stone max-w-xl">
-                Browse examination questions organized by topic to strengthen your understanding in specific areas.
-            </p>
         </div>
 
         <!-- Topics Grid -->

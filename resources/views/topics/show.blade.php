@@ -91,6 +91,9 @@
                     </div>
                 @else
                     <div class="text-center py-12">
+                        <div class="mb-4 flex justify-center">
+                            <x-mascot variant="avatar" :size="96" />
+                        </div>
                         <p class="text-xs text-stone">No published questions found for this topic yet.</p>
                     </div>
                 @endif

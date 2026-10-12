@@ -3,12 +3,17 @@
     <!-- Practice Header -->
     <div class="bg-surface border border-[#CFCABD] rounded-2xl p-6 shadow-xs">
         <div class="flex items-center justify-between mb-4">
-            <div>
-                <div class="inline-flex items-center space-x-2 px-3 py-0.5 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-2">
-                    <span>PRACTICE MODE</span>
+            <div class="flex items-center space-x-3.5">
+                <div class="shrink-0 hidden sm:block">
+                    <x-mascot variant="default" :size="56" label="Passy practice guide" />
                 </div>
-                <h2 class="text-2xl font-serif font-bold text-ink">Topic Practice</h2>
-                <p class="text-xs text-stone mt-0.5">Immediate feedback — Learn through active recall</p>
+                <div>
+                    <div class="inline-flex items-center space-x-2 px-3 py-0.5 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-2">
+                        <span>PRACTICE MODE</span>
+                    </div>
+                    <h2 class="text-2xl font-serif font-bold text-ink">Topic Practice</h2>
+                    <p class="text-xs text-stone mt-0.5">Immediate feedback — Learn through active recall</p>
+                </div>
             </div>
             
             <div class="flex items-center space-x-4">
@@ -89,10 +94,14 @@
                     
                     <!-- Feedback Banner -->
                     <div class="mb-6 p-5 rounded-xl border {{ $this->isCorrect ? 'bg-correct-surface/40 border-correct/40 text-correct' : 'bg-wrong-surface/40 border-wrong/40 text-wrong' }}">
-                        <div class="flex items-start">
-                            <span class="mr-3 shrink-0 text-xl font-bold">
-                                @if($this->isCorrect) ✓ @else ✕ @endif
-                            </span>
+                        <div class="flex items-center gap-4">
+                            <div class="shrink-0">
+                                @if($this->isCorrect)
+                                    <x-mascot variant="passed" :size="48" />
+                                @else
+                                    <x-mascot variant="oops" :size="48" />
+                                @endif
+                            </div>
                             
                             <div class="flex-1">
                                 <h4 class="font-semibold text-base">

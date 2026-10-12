@@ -23,13 +23,21 @@
 
             <!-- Score Card -->
             <div class="bg-surface rounded-2xl border border-[#CFCABD] overflow-hidden p-6 md:p-8 shadow-xs">
+                @php
+                    $score = $assessment->score_percentage ?? 0;
+                    $isAboveBenchmark = $score >= 60;
+                @endphp
+
                 <div class="text-center mb-8">
+                    <div class="mb-4 flex justify-center">
+                        @if($isAboveBenchmark)
+                            <x-mascot variant="passed" :size="120" />
+                        @else
+                            <x-mascot variant="oops" :size="120" />
+                        @endif
+                    </div>
+
                     <h3 class="text-xs font-mono font-medium text-stone uppercase tracking-wider mb-2">Overall Score</h3>
-                    
-                    @php
-                        $score = $assessment->score_percentage ?? 0;
-                        $isAboveBenchmark = $score >= 60;
-                    @endphp
                     
                     <div class="flex items-baseline justify-center">
                         <span class="text-6xl md:text-7xl font-serif font-bold text-accent">{{ number_format($score, 1) }}</span>

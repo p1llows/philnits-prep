@@ -76,6 +76,9 @@
                             @empty
                                 <tr>
                                     <td colspan="6" class="px-6 py-12 text-center text-xs text-stone">
+                                        <div class="mb-4 flex justify-center">
+                                            <x-mascot variant="avatar" :size="96" />
+                                        </div>
                                         No assessment history yet. <a href="{{ route('assessment.index') }}" class="text-accent font-semibold hover:underline">Take your first assessment</a>.
                                     </td>
                                 </tr>

@@ -1,9 +1,13 @@
-const CACHE_NAME = 'philnits-prep-v3';
+const CACHE_NAME = 'philnits-prep-v4';
 const urlsToCache = [
     '/favicon.svg',
     '/logo.svg',
     '/logo-mark.svg',
-    '/manifest.json'
+    '/manifest.json',
+    '/mascot/passy.svg',
+    '/mascot/passy-avatar.svg',
+    '/mascot/passy-passed.svg',
+    '/mascot/passy-oops.svg'
 ];
 
 self.addEventListener('install', (event) => {

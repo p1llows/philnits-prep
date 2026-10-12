@@ -1,33 +1,45 @@
 <div class="space-y-6 sm:space-y-8">
     
     <!-- Welcome Message Banner -->
-    <div class="bg-surface border border-[#CFCABD] rounded-2xl p-6 sm:p-7 shadow-xs">
-        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-3 shadow-xs">
-            <span class="w-2 h-2 rounded-full bg-correct animate-pulse"></span>
-            <span>Study Loop · IT Passport Candidate</span>
+    <div class="bg-surface border border-[#CFCABD] rounded-2xl p-6 sm:p-7 shadow-xs overflow-hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="max-w-xl">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-3 shadow-xs">
+                    <span class="w-2 h-2 rounded-full bg-correct animate-pulse"></span>
+                    <span>Study Loop · IT Passport Candidate</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-1">Welcome back, {{ Auth::user()->name }}!</h2>
+                <p class="text-sm text-stone">Continue your examination preparation journey.</p>
+            </div>
+            <div class="hidden sm:flex shrink-0 items-center justify-center">
+                <x-mascot variant="default" :size="96" label="Passy study companion" />
+            </div>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-1">Welcome back, {{ Auth::user()->name }}!</h2>
-        <p class="text-sm text-stone">Continue your examination preparation journey.</p>
     </div>
 
     @if(!$hasCompletedInitialAssessment)
         <!-- Primary CTA: Take Initial Assessment -->
         <div class="bg-surface border border-[#CFCABD] rounded-2xl overflow-hidden p-6 sm:p-8 shadow-sm">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-                <div class="space-y-2 max-w-xl">
-                    <span class="text-xs font-mono font-semibold text-accent uppercase tracking-wider block">Diagnostic Benchmark</span>
-                    <h3 class="text-xl sm:text-2xl font-bold text-ink">Take your initial assessment</h3>
-                    <p class="text-sm text-stone leading-relaxed">
-                        Start with our comprehensive initial assessment to determine your current knowledge level and identify areas for improvement.
-                    </p>
-                    
-                    <div class="pt-2 flex items-center space-x-4 text-xs font-mono text-stone">
-                        <span class="inline-flex items-center bg-paper px-2.5 py-1 rounded-md border border-[#E3DFD5]">
-                            <svg class="w-3.5 h-3.5 mr-1.5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                            </svg>
-                            {{ $recentAssessments->count() }} previous assessments
-                        </span>
+                <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 max-w-xl text-center sm:text-left">
+                    <div class="shrink-0">
+                        <x-mascot variant="default" :size="96" />
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-xs font-mono font-semibold text-accent uppercase tracking-wider block">Diagnostic Benchmark</span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-ink">Take your initial assessment</h3>
+                        <p class="text-sm text-stone leading-relaxed">
+                            Start with our comprehensive initial assessment to determine your current knowledge level and identify areas for improvement.
+                        </p>
+                        
+                        <div class="pt-2 flex items-center justify-center sm:justify-start space-x-4 text-xs font-mono text-stone">
+                            <span class="inline-flex items-center bg-paper px-2.5 py-1 rounded-md border border-[#E3DFD5]">
+                                <svg class="w-3.5 h-3.5 mr-1.5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                                {{ $recentAssessments->count() }} previous assessments
+                            </span>
+                        </div>
                     </div>
                 </div>
                 

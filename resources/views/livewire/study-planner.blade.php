@@ -1,23 +1,30 @@
 <div class="space-y-6">
     
     <!-- Header Section -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-surface text-accent font-mono text-xs mb-2 shadow-xs">
-                <span>STUDY COMPANION</span>
+    <div class="bg-surface border border-[#CFCABD] rounded-2xl p-6 sm:p-7 shadow-xs overflow-hidden mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="hidden sm:flex shrink-0">
+                    <x-mascot variant="default" :size="72" label="Passy study companion" />
+                </div>
+                <div>
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-2 shadow-xs">
+                        <span>STUDY COMPANION</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-serif font-bold text-ink mb-1">Study planner</h1>
+                    <p class="text-xs sm:text-sm text-stone">Plan your exam preparation with personalized schedules and goals.</p>
+                </div>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-serif font-bold text-ink mb-1">Study planner</h1>
-            <p class="text-sm text-stone">Plan your exam preparation with personalized schedules and goals.</p>
+            
+            <button 
+                wire:click="openCreateModal"
+                class="inline-flex items-center justify-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-xs sm:text-sm font-semibold shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+                <span>Create schedule</span>
+            </button>
         </div>
-        
-        <button 
-            wire:click="openCreateModal"
-            class="inline-flex items-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-sm font-semibold shrink-0">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-            </svg>
-            <span>Create schedule</span>
-        </button>
     </div>
 
     <!-- Quick Stats -->
@@ -203,16 +210,19 @@
                 
             @endforeach
         </div>
-        
-        @if(count($mySchedules) === 0)
-            <div class="text-center py-12 bg-surface rounded-xl border border-line">
-                <svg class="mx-auto h-12 w-12 text-stone mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
-                <h3 class="text-lg font-medium text-ink">No study schedules yet</h3>
-                <p class="text-stone mt-1">Create your first schedule to start planning your study time!</p>
+    @else
+        <div class="text-center py-12 bg-surface rounded-2xl border border-[#CFCABD] p-8 shadow-xs">
+            <div class="mb-4 flex justify-center">
+                <x-mascot variant="default" :size="96" />
             </div>
-        @endif
+            <h3 class="text-lg font-serif font-bold text-ink mb-1">No study schedules yet</h3>
+            <p class="text-xs text-stone max-w-sm mx-auto mb-4">Create your first schedule to start planning your study time with Passy!</p>
+            <button 
+                wire:click="openCreateModal"
+                class="inline-flex items-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-xs font-semibold">
+                <span>Create your first schedule</span>
+            </button>
+        </div>
     @endif
 
     <!-- Create/Edit Modal -->

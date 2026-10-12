@@ -1,43 +1,42 @@
 <div class="bg-surface rounded-2xl border border-[#CFCABD] overflow-hidden shadow-xs">
-    
-    <!-- Mistake Review Header -->
-    <div class="p-6 border-b border-[#E3DFD5] bg-panel">
-        <div class="flex items-center justify-between mb-3">
-            <div>
-                <div class="inline-flex items-center space-x-2 px-3 py-0.5 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-1">
-                    <span>MISTAKE REVIEW</span>
-                </div>
-                <h3 class="text-lg font-serif font-bold text-ink">Mistake #{{ $this->getCurrentMistake()['id'] }}</h3>
-            </div>
-            
-            <div class="text-right">
-                <div class="text-xs font-mono text-stone uppercase">Attempt</div>
-                <div class="text-base font-mono font-bold text-accent">{{ $this->getCurrentMistake()['attempt_number'] ?? 1 }}</div>
-            </div>
-        </div>
-
-        @if($this->getCurrentMistake()['topic'])
-            <div class="mb-4">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono bg-paper border border-[#D9D5C9] text-stone">
-                    {{ $this->getCurrentMistake()['topic']['name'] }}
-                </span>
-            </div>
-        @endif
-
-        <!-- Progress Indicator -->
-        <div class="w-full bg-[#E3DFD5] rounded-full h-2.5 overflow-hidden">
-            <div 
-                class="bg-accent h-2.5 rounded-full transition-all duration-300" 
-                style="width: {{ (($this->getTotalMistakes() - $this->getUnresolvedCount()) / max(1, $this->getTotalMistakes())) * 100 }}%"
-            ></div>
-        </div>
-        <div class="mt-2 text-xs font-mono text-stone flex justify-between">
-            <span class="text-correct font-semibold">{{ $this->getTotalMistakes() - $this->getUnresolvedCount() }} resolved</span>
-            <span class="text-wrong font-semibold">{{ $this->getUnresolvedCount() }} remaining</span>
-        </div>
-    </div>
-
     @if($this->getCurrentMistake())
+        <!-- Mistake Review Header -->
+        <div class="p-6 border-b border-[#E3DFD5] bg-panel">
+            <div class="flex items-center justify-between mb-3">
+                <div>
+                    <div class="inline-flex items-center space-x-2 px-3 py-0.5 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-1">
+                        <span>MISTAKE REVIEW</span>
+                    </div>
+                    <h3 class="text-lg font-serif font-bold text-ink">Mistake #{{ $this->getCurrentMistake()['id'] }}</h3>
+                </div>
+                
+                <div class="text-right">
+                    <div class="text-xs font-mono text-stone uppercase">Attempt</div>
+                    <div class="text-base font-mono font-bold text-accent">{{ $this->getCurrentMistake()['attempt_number'] ?? 1 }}</div>
+                </div>
+            </div>
+
+            @if($this->getCurrentMistake()['topic'])
+                <div class="mb-4">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono bg-paper border border-[#D9D5C9] text-stone">
+                        {{ $this->getCurrentMistake()['topic']['name'] }}
+                    </span>
+                </div>
+            @endif
+
+            <!-- Progress Indicator -->
+            <div class="w-full bg-[#E3DFD5] rounded-full h-2.5 overflow-hidden">
+                <div 
+                    class="bg-accent h-2.5 rounded-full transition-all duration-300" 
+                    style="width: {{ (($this->getTotalMistakes() - $this->getUnresolvedCount()) / max(1, $this->getTotalMistakes())) * 100 }}%"
+                ></div>
+            </div>
+            <div class="mt-2 text-xs font-mono text-stone flex justify-between">
+                <span class="text-correct font-semibold">{{ $this->getTotalMistakes() - $this->getUnresolvedCount() }} resolved</span>
+                <span class="text-wrong font-semibold">{{ $this->getUnresolvedCount() }} remaining</span>
+            </div>
+        </div>
+
         <!-- Question Section -->
         <div class="p-6 md:p-8">
             <!-- Question Text (Source Serif 4) -->
@@ -129,8 +128,8 @@
                         </div>
                     @elseif($isCorrect && $this->getUnresolvedCount() === 0)
                         <div class="text-center bg-surface p-8 rounded-2xl border border-[#CFCABD] shadow-xs">
-                            <div class="w-12 h-12 rounded-full bg-correct-surface border border-correct/30 text-correct flex items-center justify-center mx-auto mb-3 text-xl font-bold">
-                                ✓
+                            <div class="mb-4 flex justify-center">
+                                <x-mascot variant="passed" :size="120" />
                             </div>
                             <h3 class="text-lg font-serif font-bold text-ink mb-1">Excellent work!</h3>
                             <p class="text-xs text-stone mb-4">You have reviewed and cleared all recorded mistakes.</p>
@@ -159,6 +158,24 @@
                 </div>
             @endif
         </div>
+    @else
+        <div class="p-8 text-center bg-surface">
+            @if($this->getResolvedCount() > 0 && $this->getUnresolvedCount() === 0)
+                <div class="mb-4 flex justify-center">
+                    <x-mascot variant="passed" :size="120" />
+                </div>
+                <h3 class="text-lg font-serif font-bold text-ink mb-1">Excellent work!</h3>
+                <p class="text-xs text-stone mb-4">You have reviewed and cleared all recorded mistakes.</p>
+            @else
+                <div class="mb-4 flex justify-center">
+                    <x-mascot variant="avatar" :size="96" />
+                </div>
+                <h3 class="text-lg font-serif font-bold text-ink mb-1">No mistakes recorded</h3>
+                <p class="text-xs text-stone mb-4">You have no mistakes to review right now.</p>
+            @endif
+            <a href="{{ route('dashboard') }}" class="inline-flex items-center space-x-2 px-6 py-2.5 bg-accent text-surface hover:bg-accent/90 rounded-xl font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-xs">
+                <span>Back to dashboard</span>
+            </a>
+        </div>
     @endif
 </div>
-
