@@ -1,7 +1,8 @@
 <footer class="border-t border-[#E3DFD5] text-xs sm:text-sm text-stone py-8 px-4 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
     <div class="flex items-center space-x-2">
-        <span class="font-bold text-accent">PhilNITS Prep</span>
-        <span>&copy; {{ date('Y') }} · All rights reserved</span>
+        <x-mascot variant="avatar" :size="20" class="w-5 h-5 rounded-full inline-block" />
+        <span class="font-bold text-accent">Passy</span>
+        <span>&copy; {{ date('Y') }} · IT Passport Study Companion</span>
     </div>
 
     <div class="flex items-center space-x-6 text-xs text-stone font-medium">

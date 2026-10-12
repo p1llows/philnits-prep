@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#1F3A5F">
     
-    <title>Practice the IT Passport exam - {{ config('app.name', 'PhilNITS Prep') }}</title>
-    <meta name="description" content="Prepare for the PhilNITS / ITPEC IT Passport examination with topic practice, mistake review, and timed assessments.">
+    <title>Practice the IT Passport exam - {{ config('app.name', 'Passy') }}</title>
+    <meta name="description" content="Prepare for the IT Passport examination with Passy: topic practice, mistake review, and timed assessments.">
     
     <!-- Favicon & PWA -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">

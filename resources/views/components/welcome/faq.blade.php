@@ -14,7 +14,7 @@
                     <div class="w-8 h-8 rounded-lg bg-accent-tint text-accent flex items-center justify-center font-bold text-sm shrink-0">
                         ?
                     </div>
-                    <h3 class="text-base sm:text-lg font-bold text-ink">Is PhilNITS Prep completely free?</h3>
+                    <h3 class="text-base sm:text-lg font-bold text-ink">Is Passy completely free?</h3>
                 </div>
                 <p class="text-xs sm:text-sm text-stone leading-relaxed pl-11">
                     Yes, 100% free! All practice questions, mistake tracking, and timed mock assessments are available without any paywalls or subscriptions.
@@ -30,7 +30,7 @@
                     <h3 class="text-base sm:text-lg font-bold text-ink">Where do the practice questions come from?</h3>
                 </div>
                 <p class="text-xs sm:text-sm text-stone leading-relaxed pl-11">
-                    Questions are sourced and modeled directly after official ITPEC IT Passport past examination papers and the official PhilNITS syllabus standards.
+                    Questions are sourced and modeled directly after official ITPEC IT Passport past examination papers and the official syllabus standards.
                 </p>
             </div>
 
@@ -43,7 +43,7 @@
                     <h3 class="text-base sm:text-lg font-bold text-ink">Is it affiliated with PhilNITS or ITPEC?</h3>
                 </div>
                 <p class="text-xs sm:text-sm text-stone leading-relaxed pl-11">
-                    No. PhilNITS Prep is an independent community study tool created to help examinees prepare effectively. It is not officially endorsed by PhilNITS or ITPEC.
+                    No. Passy is an independent community study companion created to help examinees prepare effectively. It is not officially endorsed by PhilNITS or ITPEC.
                 </p>
             </div>
 
@@ -56,7 +56,7 @@
                     <h3 class="text-base sm:text-lg font-bold text-ink">Can I install this on my mobile phone?</h3>
                 </div>
                 <p class="text-xs sm:text-sm text-stone leading-relaxed pl-11">
-                    Yes! PhilNITS Prep is built as a Progressive Web App (PWA). Tap "Install App" or "Add to Home Screen" in your mobile browser to use it offline anytime.
+                    Yes! Passy is built as a Progressive Web App (PWA). Tap "Install App" or "Add to Home Screen" in your mobile browser to use it offline anytime.
                 </p>
             </div>
         </div>

@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#1F3A5F">
 
-    <title>{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'PhilNITS Prep') }}</title>
+    <title>{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Passy') }}</title>
 
     <!-- Favicon & PWA -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
@@ -51,13 +51,14 @@
     <!-- Cohesive Minimal App Footer -->
     <footer class="relative z-10 border-t border-[#E3DFD5] text-xs text-stone py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-3 bg-paper/80 backdrop-blur-xs">
         <div class="flex items-center space-x-2">
-            <span class="font-bold text-accent">PhilNITS Prep</span>
-            <span>&copy; {{ date('Y') }} · All rights reserved</span>
+            <x-mascot variant="avatar" :size="20" class="w-5 h-5 rounded-full inline-block" />
+            <span class="font-bold text-accent">Passy</span>
+            <span>&copy; {{ date('Y') }} · IT Passport Study Companion</span>
         </div>
 
         <div class="flex items-center space-x-6 text-xs text-stone font-medium">
             <a href="{{ route('dashboard') }}" class="hover:text-ink transition-colors">Dashboard</a>
-            <a href="{{ route('topics.index') }}" class="hover:text-ink transition-colors">Practice</a>
+            <a href="{{ route('topics.index') }}" class="hover:text-ink transition-colors">Study</a>
             <a href="{{ route('assessments.index') }}" class="hover:text-ink transition-colors">Assessments</a>
             <a href="{{ route('analytics.index') }}" class="hover:text-ink transition-colors">Analytics</a>
         </div>

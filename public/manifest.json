@@ -1,7 +1,7 @@
 {
-    "name": "PhilNITS Prep",
-    "short_name": "PhilNITS Prep",
-    "description": "PhilNITS IP Passport Examination Reviewer & Practice Platform",
+    "name": "Passy - IT Passport Study Companion",
+    "short_name": "Passy",
+    "description": "Passy — IT Passport Examination Practice Platform & Study Companion",
     "start_url": "/",
     "scope": "/",
     "display": "standalone",

@@ -73,6 +73,14 @@ class Question extends Model
     }
 
     /**
+     * Get assessment answers for this question.
+     */
+    public function assessmentAnswers(): HasMany
+    {
+        return $this->hasMany(AssessmentAnswer::class);
+    }
+
+    /**
      * Get the user who created this question.
      */
     public function createdBy(): ?BelongsTo

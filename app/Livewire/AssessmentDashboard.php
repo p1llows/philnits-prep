@@ -15,6 +15,11 @@ class AssessmentDashboard extends Component
     public $recentAssessments = [];
     public $activeMistakes = [];
     public $hasCompletedInitialAssessment = false;
+    public $totalTopics = 0;
+    public $completedTopics = 0;
+    public $practiceQuestionsCount = 0;
+    public $averageScore = null;
+    public $progressPercentage = 0;
 
     public function mount()
     {
@@ -29,6 +34,38 @@ class AssessmentDashboard extends Component
         if ($latestAssessment) {
             $this->currentScore = $latestAssessment->score_percentage;
             $this->hasCompletedInitialAssessment = true;
+        }
+
+        // Compute average score across assessments
+        $avg = Assessment::where('user_id', $user->id)
+            ->whereNotNull('score_percentage')
+            ->avg('score_percentage');
+        $this->averageScore = $avg !== null ? round($avg) : null;
+
+        // Topics stats
+        $this->totalTopics = \App\Models\Topic::where('is_active', true)->count();
+        if ($this->totalTopics === 0) {
+            $this->totalTopics = \App\Models\Topic::count();
+        }
+
+        // Count questions answered by this user
+        $this->practiceQuestionsCount = \App\Models\AssessmentAnswer::whereHas('assessment', function ($q) use ($user) {
+            $q->where('user_id', $user->id);
+        })->count();
+
+        // Topics with answers
+        $practicedTopicIds = \App\Models\Topic::whereHas('questions.assessmentAnswers', function ($q) use ($user) {
+            $q->whereHas('assessment', function ($aq) use ($user) {
+                $aq->where('user_id', $user->id);
+            });
+        })->count();
+        $this->completedTopics = $practicedTopicIds;
+
+        // Progress percentage
+        if ($this->totalTopics > 0) {
+            $this->progressPercentage = min(100, (int) round(($this->completedTopics / $this->totalTopics) * 100));
+        } else {
+            $this->progressPercentage = 0;
         }
 
         // Get weak topics (topics where user has low performance)

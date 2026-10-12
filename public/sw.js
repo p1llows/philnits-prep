@@ -1,4 +1,4 @@
-const CACHE_NAME = 'philnits-prep-v4';
+const CACHE_NAME = 'passy-v1';
 const urlsToCache = [
     '/favicon.svg',
     '/logo.svg',

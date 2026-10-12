@@ -160,6 +160,11 @@ class PracticeMode extends Component
         }
     }
 
+    public function skipQuestion(): void
+    {
+        $this->nextQuestion();
+    }
+
     public function previousQuestion(): void
     {
         if ($this->currentIndex > 0) {

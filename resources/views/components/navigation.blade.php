@@ -5,15 +5,15 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <div class="flex items-center space-x-8">
-                <!-- Logo Matching Welcome Page -->
+                <!-- Logo Matching Brand -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="PhilNITS Prep Dashboard">
-                        <img src="{{ asset('logo-mark.svg') }}" alt="" class="w-7 h-7 shrink-0 transition-transform duration-200 group-hover:scale-105" aria-hidden="true">
-                        <span class="font-bold text-accent text-lg tracking-tight">PhilNITS <span class="text-ink font-normal">Prep</span></span>
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="Passy Dashboard">
+                        <x-mascot variant="avatar" :size="32" class="w-8 h-8 rounded-full shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-105" />
+                        <span class="font-extrabold text-accent text-xl tracking-tight">Passy</span>
                     </a>
                 </div>
 
-                <!-- Clean Nav Links matching Welcome Page navigation -->
+                <!-- Clean Nav Links matching Design System -->
                 <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-medium">
                     @if(Auth::check())
                         <a href="{{ route('dashboard') }}" 
@@ -23,7 +23,7 @@
 
                         <a href="{{ route('topics.index') }}" 
                            class="transition-colors duration-200 {{ request()->routeIs('topics.*', 'practice.*', 'mistakes.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
-                            {{ __('Practice & Review') }}
+                            {{ __('Study') }}
                         </a>
 
                         <a href="{{ route('assessments.index') }}" 
@@ -33,7 +33,7 @@
 
                         <a href="{{ route('analytics.index') }}" 
                            class="transition-colors duration-200 {{ request()->routeIs('analytics.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
-                            {{ __('Analytics') }}
+                            {{ __('Progress & Analytics') }}
                         </a>
 
                         @if(Auth::user()->isAdmin())
@@ -121,7 +121,7 @@
             </a>
 
             <a href="{{ route('topics.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('topics.*', 'practice.*', 'mistakes.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
-                {{ __('Practice & Review') }}
+                {{ __('Study') }}
             </a>
 
             <a href="{{ route('assessments.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('assessment*', 'assessments*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
@@ -129,7 +129,7 @@
             </a>
 
             <a href="{{ route('analytics.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('analytics.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
-                {{ __('Analytics') }}
+                {{ __('Progress & Analytics') }}
             </a>
 
             @if(Auth::user()->isAdmin())

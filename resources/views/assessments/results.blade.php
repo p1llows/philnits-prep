@@ -21,93 +21,71 @@
                 </div>
             </div>
 
-            <!-- Score Card -->
-            <div class="bg-surface rounded-2xl border border-[#CFCABD] overflow-hidden p-6 md:p-8 shadow-xs">
+            <!-- Passy Score Card (matching Assessment Results mockup) -->
+            <div class="bg-surface rounded-3xl border border-[#E3DFD5] overflow-hidden p-6 sm:p-10 shadow-xs text-center">
                 @php
                     $score = $assessment->score_percentage ?? 0;
                     $isAboveBenchmark = $score >= 60;
+                    $timeFormatted = sprintf('%02d:%02d', floor(($assessment->time_spent_seconds ?? 0) / 60), ($assessment->time_spent_seconds ?? 0) % 60);
                 @endphp
 
-                <div class="text-center mb-8">
-                    <div class="mb-4 flex justify-center">
-                        @if($isAboveBenchmark)
-                            <x-mascot variant="passed" :size="120" />
-                        @else
-                            <x-mascot variant="oops" :size="120" />
-                        @endif
+                <!-- Mascot (success or oops) -->
+                <div class="mb-5 flex justify-center">
+                    @if($isAboveBenchmark)
+                        <x-mascot variant="passed" :size="140" class="hover:scale-105 transition-transform" label="Passy Success" />
+                    @else
+                        <x-mascot variant="oops" :size="140" class="hover:scale-105 transition-transform" label="Passy Try Again" />
+                    @endif
+                </div>
+
+                <!-- Main Greeting & Feedback -->
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight mb-1.5">
+                    {{ $isAboveBenchmark ? 'Great job, you passed!' : 'Keep practicing, you can do it!' }}
+                </h2>
+                
+                <p class="text-sm sm:text-base text-stone mb-8">
+                    You got <strong class="text-ink font-bold">{{ $assessment->correct_count }}</strong> out of <strong class="text-ink font-bold">{{ $assessment->total_questions }}</strong> questions correct.
+                </p>
+
+                <!-- 3 Stats Tiles (mockup style: Score, Time, Correct) -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto mb-8">
+                    <div class="bg-paper/70 border border-[#E3DFD5] rounded-2xl p-4 sm:p-5 text-center">
+                        <span class="text-xs font-mono uppercase tracking-wider text-stone block mb-1">Score</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-accent">
+                            {{ number_format($score, 0) }}%
+                        </div>
                     </div>
 
-                    <h3 class="text-xs font-mono font-medium text-stone uppercase tracking-wider mb-2">Overall Score</h3>
-                    
-                    <div class="flex items-baseline justify-center">
-                        <span class="text-6xl md:text-7xl font-serif font-bold text-accent">{{ number_format($score, 1) }}</span>
-                        <span class="text-2xl font-mono text-stone ml-1.5">%</span>
+                    <div class="bg-paper/70 border border-[#E3DFD5] rounded-2xl p-4 sm:p-5 text-center">
+                        <span class="text-xs font-mono uppercase tracking-wider text-stone block mb-1">Time</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-ink font-mono">
+                            {{ $timeFormatted }}
+                        </div>
                     </div>
-                    
-                    <div class="mt-4 flex justify-center items-center">
-                        @if($isAboveBenchmark)
-                            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-mono font-semibold bg-correct-surface/50 text-correct border border-correct/30 shadow-xs">
-                                <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                </svg>
-                                ABOVE PREPARATION BENCHMARK (60%)
-                            </span>
-                        @else
-                            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-mono font-semibold bg-wrong-surface/50 text-wrong border border-wrong/30 shadow-xs">
-                                <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                </svg>
-                                BELOW PREPARATION BENCHMARK (60%)
-                            </span>
-                        @endif
+
+                    <div class="bg-paper/70 border border-[#E3DFD5] rounded-2xl p-4 sm:p-5 text-center">
+                        <span class="text-xs font-mono uppercase tracking-wider text-stone block mb-1">Correct</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-correct font-mono">
+                            {{ $assessment->correct_count }} / {{ $assessment->total_questions }}
+                        </div>
                     </div>
                 </div>
 
-                <!-- Summary Statistics Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div class="text-center p-4 bg-correct-surface/30 border border-correct/30 rounded-xl">
-                        <div class="text-2xl font-mono font-bold text-correct">{{ $assessment->correct_count }}</div>
-                        <div class="text-xs font-mono text-correct mt-1">Correct answers</div>
-                    </div>
-                    
-                    <div class="text-center p-4 bg-wrong-surface/30 border border-wrong/30 rounded-xl">
-                        <div class="text-2xl font-mono font-bold text-wrong">{{ $assessment->incorrect_count }}</div>
-                        <div class="text-xs font-mono text-wrong mt-1">Incorrect answers</div>
-                    </div>
-                    
-                    <div class="text-center p-4 bg-paper/70 border border-[#E3DFD5] rounded-xl">
-                        <div class="text-2xl font-mono font-bold text-ink">{{ $assessment->total_questions }}</div>
-                        <div class="text-xs font-mono text-stone mt-1">Total questions</div>
-                    </div>
-                    
-                    <div class="text-center p-4 bg-paper/70 border border-[#E3DFD5] rounded-xl">
-                        <div class="text-2xl font-mono font-bold text-ink">{{ floor($assessment->time_spent_seconds / 60) }}m</div>
-                        <div class="text-xs font-mono text-stone mt-1">Time spent</div>
-                    </div>
-                </div>
+                <!-- Action Buttons (matching mockup) -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto">
+                    <a href="#detailed-breakdown" 
+                       class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-accent text-surface hover:bg-accent/90 text-xs sm:text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                        <span>View detailed answers</span>
+                    </a>
 
-                <!-- Benchmark Comparison -->
-                <div class="pt-6 border-t border-[#E3DFD5] text-center">
-                    <div class="flex items-center justify-center mb-2">
-                        <svg class="w-4 h-4 text-accent mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
-                        <span class="text-sm font-semibold text-ink">Preparation Benchmark</span>
-                    </div>
-                    <p class="text-xs text-stone mb-2">
-                        Your score of <strong class="text-ink font-semibold">{{ number_format($score, 1) }}%</strong> is 
-                        @if($isAboveBenchmark)
-                            <span class="text-correct font-semibold">above</span>
-                        @else
-                            <span class="text-wrong font-semibold">below</span>
-                        @endif
-                        the PhilNITS preparation benchmark of <strong class="text-ink font-semibold">60%</strong>.
-                    </p>
-                    <p class="text-xs text-stone/80">
-                        Note: This benchmark is for internal preparation tracking and should not be considered a guarantee of official examination results.
-                    </p>
+                    <a href="{{ route('dashboard') }}" 
+                       class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-surface border border-[#D9D5C9] text-accent hover:bg-paper text-xs sm:text-sm font-semibold rounded-xl transition-all shadow-xs hover:border-accent/40">
+                        <span>Back to dashboard</span>
+                    </a>
                 </div>
             </div>
+
+            <div id="detailed-breakdown"></div>
 
             <!-- Topic Performance -->
             @if(count($topicPerformance) > 0)

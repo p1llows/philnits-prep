@@ -15,7 +15,7 @@
         ignores border-radius and shows small squares instead; everything still reads fine.
 --}}
 @php
-    $app = config('app.name', 'PhilNITS Prep');
+    $app = config('app.name', 'Passy');
     $font = "Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif";
     $mono = "'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace";
     $filled = [2, 5, 8, 10]; // which of the 12 bubbles are filled in
