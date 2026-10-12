@@ -1,12 +1,12 @@
 <div class="space-y-6 sm:space-y-8">
     
-    <!-- Passy Hero Card (matches design system) -->
+    <!-- Paxi Hero Card (matches design system) -->
     <div class="bg-surface border border-[#E3DFD5] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden transition-all">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div class="max-w-xl space-y-4">
                 <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs shadow-xs">
                     <span class="w-2 h-2 rounded-full bg-correct animate-pulse"></span>
-                    <span>IT Passport Reviewer · Passy</span>
+                    <span>IT Passport Reviewer · Paxi</span>
                 </div>
                 
                 <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-ink tracking-tight">
@@ -26,11 +26,11 @@
                 </div>
             </div>
 
-            <!-- Passy Hero Mascot -->
+            <!-- Paxi Hero Mascot -->
             <div class="flex shrink-0 items-center justify-center lg:justify-end py-2">
                 <div class="relative">
                     <div class="absolute -inset-4 bg-accent-tint/40 rounded-full blur-xl pointer-events-none"></div>
-                    <x-mascot variant="default" :size="140" label="Passy study companion" class="relative z-10 drop-shadow-sm hover:scale-105 transition-transform duration-300" />
+                    <x-mascot variant="default" :size="140" label="Paxi study companion" class="relative z-10 drop-shadow-sm hover:scale-105 transition-transform duration-300" />
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
         <!-- Empty State (matching mockup design) -->
         <div class="bg-surface border border-[#E3DFD5] rounded-3xl p-8 sm:p-12 text-center shadow-xs">
             <div class="flex justify-center mb-5">
-                <x-mascot variant="default" :size="130" label="Passy Ready to Study" class="hover:scale-105 transition-transform" />
+                <x-mascot variant="default" :size="130" label="Paxi Ready to Study" class="hover:scale-105 transition-transform" />
             </div>
             <h3 class="text-xl sm:text-2xl font-bold text-ink tracking-tight mb-2">
                 No assessment history yet

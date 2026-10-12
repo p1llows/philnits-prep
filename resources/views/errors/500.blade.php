@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="text-center space-y-4 py-4">
         <div class="flex justify-center mb-2">
-            <x-mascot variant="oops" :size="140" label="Passy Error" />
+            <x-mascot variant="oops" :size="140" label="Paxi Error" />
         </div>
         <div>
             <h1 class="text-2xl font-extrabold text-ink tracking-tight">Something went wrong</h1>

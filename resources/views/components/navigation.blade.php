@@ -7,9 +7,9 @@
             <div class="flex items-center space-x-8">
                 <!-- Logo Matching Brand -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="Passy Dashboard">
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="Paxi Dashboard">
                         <x-mascot variant="avatar" :size="32" class="w-8 h-8 rounded-full shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-105" />
-                        <span class="font-extrabold text-accent text-xl tracking-tight">Passy</span>
+                        <span class="font-extrabold text-accent text-xl tracking-tight">Paxi</span>
                     </a>
                 </div>
 

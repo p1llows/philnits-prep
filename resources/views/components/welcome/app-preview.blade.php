@@ -11,7 +11,7 @@
                     <span class="w-3 h-3 rounded-full bg-[#E3DFD5] hover:bg-amber-400 transition-colors duration-200 inline-block"></span>
                     <span class="w-3 h-3 rounded-full bg-[#E3DFD5] hover:bg-emerald-400 transition-colors duration-200 inline-block"></span>
                 </div>
-                <span class="font-mono text-xs text-stone truncate hidden sm:inline-block">passy.app</span>
+                <span class="font-mono text-xs text-stone truncate hidden sm:inline-block">paxi.app</span>
             </div>
 
             <!-- Tab Switchers -->

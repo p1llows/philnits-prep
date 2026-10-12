@@ -10,9 +10,9 @@
                 </p>
             </div>
 
-            <!-- Passy Contextual Guidance Speech Bubble (matching mockup) -->
+            <!-- Paxi Contextual Guidance Speech Bubble (matching mockup) -->
             <div class="flex items-center space-x-3 bg-surface border border-[#E3DFD5] rounded-2xl p-3 sm:px-4 sm:py-3 shadow-xs shrink-0 max-w-sm">
-                <x-mascot variant="avatar" :size="44" class="w-11 h-11 rounded-full shrink-0 shadow-xs" label="Passy avatar" />
+                <x-mascot variant="avatar" :size="44" class="w-11 h-11 rounded-full shrink-0 shadow-xs" label="Paxi avatar" />
                 <div class="text-xs">
                     <p class="font-bold text-ink">You got this!</p>
                     <p class="text-stone">Small steps lead to big progress.</p>

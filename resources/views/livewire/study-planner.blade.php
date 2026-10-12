@@ -5,7 +5,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center space-x-4">
                 <div class="hidden sm:flex shrink-0">
-                    <x-mascot variant="default" :size="72" label="Passy study companion" />
+                    <x-mascot variant="default" :size="72" label="Paxi study companion" />
                 </div>
                 <div>
                     <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-2 shadow-xs">
@@ -216,7 +216,7 @@
                 <x-mascot variant="default" :size="96" />
             </div>
             <h3 class="text-lg font-serif font-bold text-ink mb-1">No study schedules yet</h3>
-            <p class="text-xs text-stone max-w-sm mx-auto mb-4">Create your first schedule to start planning your study time with Passy!</p>
+            <p class="text-xs text-stone max-w-sm mx-auto mb-4">Create your first schedule to start planning your study time with Paxi!</p>
             <button 
                 wire:click="openCreateModal"
                 class="inline-flex items-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-xs font-semibold">

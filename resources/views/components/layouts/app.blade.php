@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#1F3A5F">
 
-    <title>{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Passy') }}</title>
+    <title>{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Paxi') }}</title>
 
     <!-- Favicon & PWA -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">

@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#1F3A5F">
 
-    <title>{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Passy') }}</title>
+    <title>{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Paxi') }}</title>
 
     <!-- Favicon & PWA -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
@@ -52,7 +52,7 @@
     <footer class="relative z-10 border-t border-[#E3DFD5] text-xs text-stone py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-3 bg-paper/80 backdrop-blur-xs">
         <div class="flex items-center space-x-2">
             <x-mascot variant="avatar" :size="20" class="w-5 h-5 rounded-full inline-block" />
-            <span class="font-bold text-accent">Passy</span>
+            <span class="font-bold text-accent">Paxi</span>
             <span>&copy; {{ date('Y') }} · IT Passport Study Companion</span>
         </div>
 

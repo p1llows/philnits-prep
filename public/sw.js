@@ -1,4 +1,4 @@
-const CACHE_NAME = 'passy-v1';
+const CACHE_NAME = 'paxi-v1';
 const urlsToCache = [
     '/favicon.svg',
     '/logo.svg',

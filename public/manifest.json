@@ -1,7 +1,7 @@
 {
-    "name": "Passy - IT Passport Study Companion",
-    "short_name": "Passy",
-    "description": "Passy — IT Passport Examination Practice Platform & Study Companion",
+    "name": "Paxi - IT Passport Study Companion",
+    "short_name": "Paxi",
+    "description": "Paxi — IT Passport Examination Practice Platform & Study Companion",
     "start_url": "/",
     "scope": "/",
     "display": "standalone",

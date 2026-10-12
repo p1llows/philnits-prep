@@ -95,10 +95,10 @@
                 @endforeach
             </div>
 
-            <!-- Passy Mascot Hint Box (matching mockup) -->
+            <!-- Paxi Mascot Hint Box (matching mockup) -->
             @if(!$this->showingFeedback)
                 <div class="flex items-start sm:items-center space-x-3.5 p-3.5 sm:p-4 rounded-2xl bg-paper/70 border border-[#E3DFD5] text-xs">
-                    <x-mascot variant="avatar" :size="36" class="w-9 h-9 rounded-full shrink-0 shadow-xs" label="Passy hint" />
+                    <x-mascot variant="avatar" :size="36" class="w-9 h-9 rounded-full shrink-0 shadow-xs" label="Paxi hint" />
                     <div class="space-y-0.5">
                         <span class="font-bold text-accent block">Need a hint?</span>
                         <p class="text-stone leading-relaxed">
@@ -107,7 +107,7 @@
                     </div>
                 </div>
             @else
-                <!-- Feedback Box with Passy Mascot -->
+                <!-- Feedback Box with Paxi Mascot -->
                 <div class="p-4 sm:p-5 rounded-2xl border {{ $this->isCorrect ? 'bg-correct-surface/40 border-correct/40' : 'bg-wrong-surface/40 border-wrong/40' }} space-y-3">
                     <div class="flex items-center space-x-3">
                         <div class="shrink-0">

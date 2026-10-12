@@ -21,9 +21,9 @@
     <!-- Fixed Top Navbar with Mobile Menu Support -->
     <nav x-data="{ mobileMenuOpen: false }" class="fixed top-0 z-50 w-full bg-paper/90 backdrop-blur-md border-b border-[#E3DFD5] transition-all duration-200">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="/" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="Passy Home">
+            <a href="/" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="Paxi Home">
                 <x-mascot variant="avatar" :size="32" class="w-8 h-8 rounded-full shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-105" />
-                <span class="font-extrabold text-accent text-xl tracking-tight">Passy</span>
+                <span class="font-extrabold text-accent text-xl tracking-tight">Paxi</span>
             </a>
 
             <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-medium">
@@ -72,7 +72,7 @@
         <!-- Eyebrow Pill -->
         <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-[#D9D5C9] bg-surface/90 text-accent font-mono text-xs mb-4 sm:mb-6 shadow-xs">
             <span class="w-2 h-2 rounded-full bg-correct animate-pulse"></span>
-            <span>Passy · IT Passport Study Companion</span>
+            <span>Paxi · IT Passport Study Companion</span>
         </div>
 
         <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 lg:gap-12">

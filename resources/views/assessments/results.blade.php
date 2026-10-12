@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <!-- Passy Score Card (matching Assessment Results mockup) -->
+            <!-- Paxi Score Card (matching Assessment Results mockup) -->
             <div class="bg-surface rounded-3xl border border-[#E3DFD5] overflow-hidden p-6 sm:p-10 shadow-xs text-center">
                 @php
                     $score = $assessment->score_percentage ?? 0;
@@ -32,9 +32,9 @@
                 <!-- Mascot (success or oops) -->
                 <div class="mb-5 flex justify-center">
                     @if($isAboveBenchmark)
-                        <x-mascot variant="passed" :size="140" class="hover:scale-105 transition-transform" label="Passy Success" />
+                        <x-mascot variant="passed" :size="140" class="hover:scale-105 transition-transform" label="Paxi Success" />
                     @else
-                        <x-mascot variant="oops" :size="140" class="hover:scale-105 transition-transform" label="Passy Try Again" />
+                        <x-mascot variant="oops" :size="140" class="hover:scale-105 transition-transform" label="Paxi Try Again" />
                     @endif
                 </div>
 
