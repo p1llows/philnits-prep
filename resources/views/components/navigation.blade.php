@@ -1,53 +1,59 @@
 @props(['user'])
 
-<nav x-data="{ open: false }" class="bg-surface border-b border-line">
+<nav x-data="{ open: false }" class="sticky top-0 z-40 bg-paper/90 backdrop-blur-md border-b border-[#E3DFD5] transition-all duration-200">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center space-x-8">
+                <!-- Logo Matching Welcome Page -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5">
-                        <img src="{{ asset('logo.svg') }}" alt="{{ config('app.name') }}" class="h-8 w-auto">
-                        <span class="font-semibold text-xl text-accent">{{ config('app.name', 'PhilNITS Prep') }}</span>
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="PhilNITS Prep Dashboard">
+                        <img src="{{ asset('logo-mark.svg') }}" alt="" class="w-7 h-7 shrink-0 transition-transform duration-200 group-hover:scale-105" aria-hidden="true">
+                        <span class="font-bold text-accent text-lg tracking-tight">PhilNITS <span class="text-ink font-normal">Prep</span></span>
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-5 lg:space-x-8 md:-my-px md:ml-6 lg:ml-10 md:flex">
+                <!-- Clean Nav Links matching Welcome Page navigation -->
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-medium">
                     @if(Auth::check())
                         <a href="{{ route('dashboard') }}" 
-                           class="{{ request()->routeIs('dashboard') ? 'inline-flex items-center px-1 pt-1 border-b-2 border-accent text-sm font-medium leading-5 text-ink' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-stone hover:text-ink hover:border-line' }}">
+                           class="transition-colors duration-200 {{ request()->routeIs('dashboard') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
                             {{ __('Dashboard') }}
                         </a>
 
                         <a href="{{ route('topics.index') }}" 
-                           class="{{ request()->routeIs('topics.*', 'practice.*', 'mistakes.*') ? 'inline-flex items-center px-1 pt-1 border-b-2 border-accent text-sm font-medium leading-5 text-ink' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-stone hover:text-ink hover:border-line' }}">
+                           class="transition-colors duration-200 {{ request()->routeIs('topics.*', 'practice.*', 'mistakes.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
                             {{ __('Practice & Review') }}
                         </a>
 
                         <a href="{{ route('assessments.index') }}" 
-                           class="{{ request()->routeIs('assessment*', 'assessments*') ? 'inline-flex items-center px-1 pt-1 border-b-2 border-accent text-sm font-medium leading-5 text-ink' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-stone hover:text-ink hover:border-line' }}">
+                           class="transition-colors duration-200 {{ request()->routeIs('assessment*', 'assessments*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
                             {{ __('Assessments') }}
                         </a>
 
                         <a href="{{ route('analytics.index') }}" 
-                           class="{{ request()->routeIs('analytics.*') ? 'inline-flex items-center px-1 pt-1 border-b-2 border-accent text-sm font-medium leading-5 text-ink' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-stone hover:text-ink hover:border-line' }}">
+                           class="transition-colors duration-200 {{ request()->routeIs('analytics.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
                             {{ __('Analytics') }}
                         </a>
 
+                        @if(Auth::user()->isAdmin())
+                            <a href="{{ route('admin.dashboard') }}" 
+                               class="transition-colors duration-200 {{ request()->routeIs('admin.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
+                                {{ __('Admin') }}
+                            </a>
+                        @endif
                     @endif
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden md:flex md:items-center md:ml-6">
+            <div class="hidden md:flex md:items-center">
                 @if(Auth::check())
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="relative flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 hover:opacity-90 transition duration-150">
+                            <button class="relative flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 hover:opacity-90 transition duration-150 p-0.5 border border-[#D9D5C9] bg-surface">
                                 <span class="sr-only">Open user menu</span>
-                                <div class="w-9 h-9 rounded-full bg-accent text-surface font-semibold flex items-center justify-center text-xs overflow-hidden border border-line shadow-xs">
+                                <div class="w-8 h-8 rounded-full bg-accent text-surface font-semibold flex items-center justify-center text-xs overflow-hidden">
                                     <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                                     <span style="display:none;">{{ Auth::user()->initials }}</span>
                                 </div>
@@ -55,27 +61,27 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <div class="px-4 py-3 border-b border-line bg-paper/50">
+                            <div class="px-4 py-3 border-b border-[#E3DFD5] bg-panel">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-9 h-9 rounded-full bg-accent text-surface font-semibold flex items-center justify-center text-xs overflow-hidden shrink-0">
+                                    <div class="w-8 h-8 rounded-full bg-accent text-surface font-semibold flex items-center justify-center text-xs overflow-hidden shrink-0">
                                         <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                                         <span style="display:none;">{{ Auth::user()->initials }}</span>
                                     </div>
                                     <div class="truncate min-w-0">
-                                        <p class="text-sm font-medium text-ink truncate">{{ Auth::user()->name }}</p>
+                                        <p class="text-sm font-semibold text-ink truncate">{{ Auth::user()->name }}</p>
                                         <p class="text-xs text-stone truncate">{{ Auth::user()->email }}</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
+                            <x-dropdown-link :href="route('profile.edit')" class="text-xs font-medium">
+                                {{ __('Profile Settings') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <x-dropdown-link :href="route('logout')"
+                                <x-dropdown-link :href="route('logout')" class="text-xs font-medium text-wrong hover:text-wrong"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                     {{ __('Log Out') }}
@@ -84,23 +90,21 @@
                         </x-slot>
                     </x-dropdown>
                 @else
-                    <div class="ml-3">
-                        <a href="{{ route('login') }}" class="text-stone hover:text-ink text-sm font-medium">
-                            Login
+                    <div class="flex items-center space-x-2 text-xs font-medium">
+                        <a href="{{ route('login') }}" class="text-stone hover:text-ink px-3 py-2">
+                            Log in
                         </a>
-                    </div>
-                    <div class="ml-3">
-                        <a href="{{ route('register') }}" class="text-stone hover:text-ink text-sm font-medium">
-                            Register
+                        <a href="{{ route('register') }}" class="bg-accent text-surface hover:bg-accent/90 rounded-xl px-4 py-2 font-medium shadow-xs">
+                            Get Started
                         </a>
                     </div>
                 @endif
             </div>
 
-            <!-- Hamburger -->
+            <!-- Hamburger for Mobile -->
             <div class="-mr-2 flex items-center md:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-stone hover:text-ink hover:bg-paper focus:outline-none focus:bg-paper transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-xl text-stone hover:text-ink hover:bg-surface border border-[#E3DFD5] focus:outline-none transition duration-150" aria-label="Toggle Navigation">
+                    <svg class="h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -110,56 +114,54 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden md:hidden border-t border-line bg-surface">
-        <div class="pt-2 pb-3 space-y-1">
-            @if(Auth::check())
-                <a href="{{ route('dashboard') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('dashboard') ? 'border-accent text-accent bg-accent-tint' : 'border-transparent text-stone hover:text-ink hover:bg-paper hover:border-line' }}">
-                    {{ __('Dashboard') }}
-                </a>
-    
-                <a href="{{ route('topics.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('topics.*', 'practice.*', 'mistakes.*') ? 'border-accent text-accent bg-accent-tint' : 'border-transparent text-stone hover:text-ink hover:bg-paper hover:border-line' }}">
-                    {{ __('Practice & Review') }}
-                </a>
-    
-                <a href="{{ route('assessments.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('assessment*', 'assessments*') ? 'border-accent text-accent bg-accent-tint' : 'border-transparent text-stone hover:text-ink hover:bg-paper hover:border-line' }}">
-                    {{ __('Assessments') }}
-                </a>
-    
-                <a href="{{ route('analytics.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('analytics.*') ? 'border-accent text-accent bg-accent-tint' : 'border-transparent text-stone hover:text-ink hover:bg-paper hover:border-line' }}">
-                    {{ __('Analytics') }}
-                </a>
-                
-            @endif
-        </div>
-
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden md:hidden border-t border-[#E3DFD5] bg-paper px-4 py-3 space-y-2">
         @if(Auth::check())
-            <div class="pt-4 pb-3 border-t border-line">
-                <div class="flex items-center px-4">
-                    <div class="w-10 h-10 rounded-full bg-accent text-surface font-semibold flex items-center justify-center text-sm overflow-hidden shrink-0 mr-3">
+            <a href="{{ route('dashboard') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('dashboard') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
+                {{ __('Dashboard') }}
+            </a>
+
+            <a href="{{ route('topics.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('topics.*', 'practice.*', 'mistakes.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
+                {{ __('Practice & Review') }}
+            </a>
+
+            <a href="{{ route('assessments.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('assessment*', 'assessments*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
+                {{ __('Assessments') }}
+            </a>
+
+            <a href="{{ route('analytics.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('analytics.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
+                {{ __('Analytics') }}
+            </a>
+
+            @if(Auth::user()->isAdmin())
+                <a href="{{ route('admin.dashboard') }}" class="block px-3.5 py-2 rounded-xl text-sm font-semibold {{ request()->routeIs('admin.*') ? 'bg-accent text-surface shadow-xs' : 'text-accent hover:bg-surface' }}">
+                    {{ __('Admin Area') }}
+                </a>
+            @endif
+
+            <div class="pt-3 border-t border-[#E3DFD5]">
+                <div class="flex items-center px-2 py-1 mb-2">
+                    <div class="w-8 h-8 rounded-full bg-accent text-surface font-semibold flex items-center justify-center text-xs overflow-hidden shrink-0 mr-3">
                         <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                         <span style="display:none;">{{ Auth::user()->initials }}</span>
                     </div>
                     <div class="truncate min-w-0">
-                        <div class="font-medium text-base text-ink truncate">{{ Auth::user()->name }}</div>
-                        <div class="font-medium text-sm text-stone truncate">{{ Auth::user()->email }}</div>
+                        <div class="font-semibold text-sm text-ink truncate">{{ Auth::user()->name }}</div>
+                        <div class="text-xs text-stone truncate">{{ Auth::user()->email }}</div>
                     </div>
                 </div>
 
-                <div class="mt-3 space-y-1">
-                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-stone hover:text-ink hover:bg-paper">
-                        {{ __('Profile') }}
-                    </a>
+                <a href="{{ route('profile.edit') }}" class="block px-3.5 py-2 rounded-xl text-sm text-stone hover:text-ink hover:bg-surface">
+                    {{ __('Profile Settings') }}
+                </a>
 
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <a href="{{ route('logout') }}"
-                           class="block px-4 py-2 text-sm text-stone hover:text-ink hover:bg-paper"
-                           onclick="event.preventDefault();
-                                       this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </a>
-                    </form>
-                </div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <a href="{{ route('logout') }}"
+                       class="block px-3.5 py-2 rounded-xl text-sm text-wrong hover:bg-wrong-surface"
+                       onclick="event.preventDefault(); this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </a>
+                </form>
             </div>
         @endif
     </div>

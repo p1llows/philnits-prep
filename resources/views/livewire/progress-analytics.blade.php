@@ -231,33 +231,34 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             <!-- Empty Trend Card -->
-            <div class="bg-surface rounded-xl border border-line p-8 text-center flex flex-col justify-center items-center min-h-[260px]">
-                <div class="w-12 h-12 rounded-full bg-paper border border-line flex items-center justify-center text-stone mb-4">
+            <div class="bg-surface rounded-2xl border border-[#CFCABD] p-8 text-center flex flex-col justify-center items-center min-h-[260px] shadow-xs">
+                <div class="w-12 h-12 rounded-full bg-paper border border-[#D9D5C9] flex items-center justify-center text-accent mb-4 shadow-xs">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
                 </div>
-                <h3 class="text-base font-semibold text-ink mb-1">Assessment performance trend</h3>
+                <h3 class="text-base font-serif font-bold text-ink mb-1">Assessment performance trend</h3>
                 <p class="text-xs text-stone max-w-sm mb-5 leading-relaxed">
                     Complete your first assessment to track your score progression over time.
                 </p>
-                <a href="{{ route('assessment.index') }}" class="px-5 py-2.5 bg-ink text-surface text-xs font-medium rounded-lg hover:bg-stone transition-colors inline-flex items-center">
-                    Take assessment →
+                <a href="{{ route('assessment.index') }}" class="px-5 py-2.5 bg-accent text-surface text-xs font-semibold rounded-xl hover:bg-accent/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 inline-flex items-center space-x-1.5">
+                    <span>Take assessment</span>
+                    <span>→</span>
                 </a>
             </div>
 
             <!-- Empty Topic Performance Card -->
-            <div class="bg-surface rounded-xl border border-line p-8 text-center flex flex-col justify-center items-center min-h-[260px]">
-                <div class="w-12 h-12 rounded-full bg-paper border border-line flex items-center justify-center text-stone mb-4">
+            <div class="bg-surface rounded-2xl border border-[#CFCABD] p-8 text-center flex flex-col justify-center items-center min-h-[260px] shadow-xs">
+                <div class="w-12 h-12 rounded-full bg-paper border border-[#D9D5C9] flex items-center justify-center text-accent mb-4 shadow-xs">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                     </svg>
                 </div>
-                <h3 class="text-base font-semibold text-ink mb-1">Topic performance breakdown</h3>
+                <h3 class="text-base font-serif font-bold text-ink mb-1">Topic performance breakdown</h3>
                 <p class="text-xs text-stone max-w-sm mb-5 leading-relaxed">
                     Topic insights and category strengths will appear here after taking assessments.
                 </p>
-                <a href="{{ route('topics.index') }}" class="px-5 py-2.5 border border-line text-stone hover:text-ink hover:bg-paper text-xs font-medium rounded-lg transition-colors inline-flex items-center">
+                <a href="{{ route('topics.index') }}" class="px-5 py-2.5 border border-[#D9D5C9] bg-surface text-accent hover:bg-paper text-xs font-medium rounded-xl transition-all shadow-xs inline-flex items-center">
                     Browse topics
                 </a>
             </div>

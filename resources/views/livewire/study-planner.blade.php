@@ -1,16 +1,19 @@
 <div class="space-y-6">
     
     <!-- Header Section -->
-    <div class="flex justify-between items-start mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-            <h1 class="text-3xl font-bold text-ink mb-2">Study planner</h1>
-            <p class="text-stone">Plan your exam preparation with personalized schedules and goals.</p>
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-surface text-accent font-mono text-xs mb-2 shadow-xs">
+                <span>STUDY COMPANION</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-serif font-bold text-ink mb-1">Study planner</h1>
+            <p class="text-sm text-stone">Plan your exam preparation with personalized schedules and goals.</p>
         </div>
         
         <button 
             wire:click="openCreateModal"
-            class="px-6 py-3 bg-ink text-surface rounded-lg hover:bg-stone transition-colors shadow-sm flex items-center space-x-2 text-sm font-medium">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="inline-flex items-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-sm font-semibold shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
             </svg>
             <span>Create schedule</span>
@@ -18,54 +21,62 @@
     </div>
 
     <!-- Quick Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         
-        <div class="bg-surface rounded-xl p-4 border border-line">
+        <div class="bg-surface rounded-2xl p-5 border border-[#CFCABD] shadow-xs">
             <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-medium text-stone">Active schedules</span>
-                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                </svg>
+                <span class="text-xs font-mono font-medium text-stone uppercase">Active schedules</span>
+                <div class="w-8 h-8 rounded-xl bg-accent-tint/60 border border-accent/20 flex items-center justify-center text-accent">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                </div>
             </div>
-            <p class="text-2xl font-bold text-ink">{{ count($mySchedules) }}</p>
+            <p class="text-2xl font-mono font-bold text-ink">{{ count($mySchedules) }}</p>
             <p class="text-xs text-stone mt-1">Currently planned</p>
         </div>
 
-        <div class="bg-surface rounded-xl p-4 border border-line">
+        <div class="bg-surface rounded-2xl p-5 border border-[#CFCABD] shadow-xs">
             <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-medium text-stone">This week</span>
-                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
+                <span class="text-xs font-mono font-medium text-stone uppercase">This week</span>
+                <div class="w-8 h-8 rounded-xl bg-accent-tint/60 border border-accent/20 flex items-center justify-center text-accent">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
             </div>
-            <p class="text-2xl font-bold text-ink">
+            <p class="text-2xl font-mono font-bold text-ink">
                 {{ collect($mySchedules)->filter(fn($s) => $s['is_committed'])->sum('weekly_hours') }} hrs
             </p>
             <p class="text-xs text-stone mt-1">Committed study time</p>
         </div>
 
-        <div class="bg-surface rounded-xl p-4 border border-line">
+        <div class="bg-surface rounded-2xl p-5 border border-[#CFCABD] shadow-xs">
             <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-medium text-stone">Completed</span>
-                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
+                <span class="text-xs font-mono font-medium text-stone uppercase">Completed</span>
+                <div class="w-8 h-8 rounded-xl bg-correct-surface border border-correct/30 flex items-center justify-center text-correct">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
             </div>
-            <p class="text-2xl font-bold text-ink">
+            <p class="text-2xl font-mono font-bold text-ink">
                 {{ collect($mySchedules)->sum('completed_sessions') }}
             </p>
             <p class="text-xs text-stone mt-1">Sessions completed</p>
         </div>
 
-        <div class="bg-surface rounded-xl p-4 border border-line">
+        <div class="bg-surface rounded-2xl p-5 border border-[#CFCABD] shadow-xs">
             <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-medium text-stone">Next session</span>
-                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
+                <span class="text-xs font-mono font-medium text-stone uppercase">Cadence</span>
+                <div class="w-8 h-8 rounded-xl bg-accent-tint/60 border border-accent/20 flex items-center justify-center text-accent">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
             </div>
-            <p class="text-lg font-bold text-ink">Today</p>
-            <p class="text-xs text-accent mt-1">Check upcoming sessions</p>
+            <p class="text-lg font-bold text-ink">Daily Routine</p>
+            <p class="text-xs text-accent mt-1">Structured schedule</p>
         </div>
     </div>
 
@@ -75,7 +86,7 @@
             
             @foreach($mySchedules as $schedule)
                 
-                <div class="bg-surface rounded-xl border border-line overflow-hidden">
+                <div class="bg-surface rounded-2xl border border-[#CFCABD] overflow-hidden shadow-xs">
                     
                     <!-- Card Header with Color Bar -->
                     <div class="h-1.5 bg-accent"></div>
@@ -182,7 +193,7 @@
                             @if(!$schedule['is_committed'])
                                 <button 
                                     wire:click="commitToSchedule({{ $schedule['id'] }})"
-                                    class="px-3 py-2 bg-ink text-surface rounded-lg hover:bg-stone transition-colors font-medium text-sm">
+                                    class="px-3 py-2 bg-accent text-surface rounded-xl hover:bg-accent/90 transition-all font-semibold text-xs shadow-xs">
                                     Commit to schedule
                                 </button>
                             @endif
@@ -205,10 +216,10 @@
     @endif
 
     <!-- Create/Edit Modal -->
-    <div x-data="{ show: @entangle('showCreateModal') }" x-show="show" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" style="display: none;">
-        <div class="bg-surface rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-line">
-            <div class="px-6 py-4 border-b border-line">
-                <h2 class="text-xl font-semibold text-ink">{{ $editingScheduleId ? 'Edit study schedule' : 'Create new study schedule' }}</h2>
+    <div x-data="{ show: @entangle('showCreateModal') }" x-show="show" class="fixed inset-0 bg-ink/60 backdrop-blur-xs flex items-center justify-center z-50 p-4" style="display: none;">
+        <div class="bg-surface rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-[#CFCABD] shadow-2xl">
+            <div class="px-6 py-4 border-b border-[#E3DFD5] bg-panel">
+                <h2 class="text-xl font-serif font-bold text-ink">{{ $editingScheduleId ? 'Edit study schedule' : 'Create new study schedule' }}</h2>
             </div>
             
             <form wire:submit="saveSchedule" class="p-6 space-y-4">
@@ -279,9 +290,9 @@
                 </div>
 
                 <!-- Modal Actions -->
-                <div class="flex justify-end space-x-3 pt-4 border-t border-line">
-                    <button type="button" wire:click="closeModals" class="px-4 py-2 border border-line text-stone hover:text-ink hover:bg-paper rounded-lg transition-colors text-sm font-medium">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-ink text-surface rounded-lg hover:bg-stone transition-colors text-sm font-medium">Save schedule</button>
+                <div class="flex justify-end space-x-3 pt-4 border-t border-[#E3DFD5]">
+                    <button type="button" wire:click="closeModals" class="px-5 py-2.5 border border-[#D9D5C9] text-stone hover:text-ink hover:bg-paper rounded-xl transition-colors text-xs font-medium shadow-xs">Cancel</button>
+                    <button type="submit" class="px-6 py-2.5 bg-accent text-surface rounded-xl hover:bg-accent/90 transition-all text-xs font-semibold shadow-md hover:shadow-lg">Save schedule</button>
                 </div>
             </form>
         </div>
