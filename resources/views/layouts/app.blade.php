@@ -21,8 +21,9 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500|source-serif-4:400,500&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
+    <!-- Scripts & Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 <body class="font-sans antialiased bg-paper text-ink min-h-screen flex flex-col justify-between selection:bg-accent-tint selection:text-accent relative overflow-x-hidden">
     <!-- Graph Paper Grid Background matching Welcome Page -->
@@ -82,5 +83,6 @@
             });
         </script>
     @endif
+    @livewireScripts
 </body>
 </html>
