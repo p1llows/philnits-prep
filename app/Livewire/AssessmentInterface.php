@@ -16,8 +16,11 @@ class AssessmentInterface extends Component
     
     protected $listeners = ['submitAssessment', 'answerChanged'];
 
-    public function mount(Assessment $assessment)
+    public function mount(Assessment|int|string $assessment)
     {
+        if (!$assessment instanceof Assessment) {
+            $assessment = Assessment::findOrFail($assessment);
+        }
         $this->assessment = $assessment->load(['answers.question']);
         
         // Get all questions for this assessment

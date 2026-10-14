@@ -1,5 +1,3 @@
-import Alpine from 'alpinejs';
-
 // Modal utilities
 const modalPlugin = () => ({
     modals: {},
@@ -86,14 +84,16 @@ const pwaInstallPlugin = () => ({
     }
 });
 
+// In Livewire 3, Livewire automatically bundles and starts Alpine.
 document.addEventListener('alpine:init', () => {
-    Alpine.data('modal', modalPlugin);
-    Alpine.data('dropdown', dropdownPlugin);
-    Alpine.data('form', formPlugin);
-    Alpine.data('pwaInstall', pwaInstallPlugin);
+    const alpine = window.Alpine;
+    if (alpine) {
+        alpine.data('modal', modalPlugin);
+        alpine.data('dropdown', dropdownPlugin);
+        alpine.data('form', formPlugin);
+        alpine.data('pwaInstall', pwaInstallPlugin);
+    }
 });
-
-Alpine.start();
 
 // Register Service Worker for PWA support
 if ('serviceWorker' in navigator) {
