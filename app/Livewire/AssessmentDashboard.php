@@ -20,11 +20,15 @@ class AssessmentDashboard extends Component
     public $practiceQuestionsCount = 0;
     public $averageScore = null;
     public $progressPercentage = 0;
+    public $syllabusFields = [];
 
     public function mount()
     {
         $user = Auth::user();
         
+        // Load official ITPEC syllabus fields and topics
+        $this->loadSyllabusFields();
+
         // Get most recent assessment with a score
         $latestAssessment = Assessment::where('user_id', $user->id)
             ->whereNotNull('score_percentage')
@@ -105,6 +109,52 @@ class AssessmentDashboard extends Component
             ->with(['question.choices'])
             ->take(5)
             ->get();
+    }
+
+    protected function loadSyllabusFields(): void
+    {
+        $fields = [
+            'strategy' => [
+                'name' => 'Strategy Field',
+                'field_code' => 'Field 01',
+                'official_weight' => '~35% (35 Questions)',
+                'min_pass' => '30%',
+                'color' => '#854D0E',
+                'badge_color' => 'bg-amber-100 text-amber-800 border-amber-200',
+                'bar_color' => 'bg-amber-500',
+            ],
+            'management' => [
+                'name' => 'Management Field',
+                'field_code' => 'Field 02',
+                'official_weight' => '~25% (25 Questions)',
+                'min_pass' => '30%',
+                'color' => '#047857',
+                'badge_color' => 'bg-emerald-100 text-emerald-800 border-emerald-200',
+                'bar_color' => 'bg-emerald-500',
+            ],
+            'technology' => [
+                'name' => 'Technology Field',
+                'field_code' => 'Field 03',
+                'official_weight' => '~40% (40 Questions incl. Pseudocode)',
+                'min_pass' => '30%',
+                'color' => '#1E3A8A',
+                'badge_color' => 'bg-blue-100 text-blue-800 border-blue-200',
+                'bar_color' => 'bg-blue-600',
+            ],
+        ];
+
+        foreach ($fields as $key => $meta) {
+            $topics = \App\Models\Topic::where('field', $key)
+                ->withCount('questions')
+                ->orderBy('sort_order')
+                ->get();
+
+            $fields[$key]['topics'] = $topics;
+            $fields[$key]['topics_count'] = $topics->count();
+            $fields[$key]['total_questions'] = $topics->sum('questions_count');
+        }
+
+        $this->syllabusFields = $fields;
     }
 
     public function render()

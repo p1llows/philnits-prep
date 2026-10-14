@@ -59,9 +59,6 @@
                     <div class="px-3 py-2 rounded-lg text-stone hover:bg-paper transition-colors truncate">
                         Field 02: Management
                     </div>
-                    <div class="px-3 py-2 rounded-lg text-stone hover:bg-paper transition-colors truncate">
-                        Legal & Compliance
-                    </div>
                 </div>
             </div>
 
