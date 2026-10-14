@@ -26,8 +26,16 @@ class SendOtpMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        $subject = app(\App\Services\AppSettings::class)->get('mail_verification_subject', 'Your Paxi verification code');
+        // Ensure security rule: never put the code in the subject
+        $cleanSubject = str_replace($this->otpCode, '[CODE]', $subject);
+
+        $senderName = app(\App\Services\AppSettings::class)->get('mail_sender_name', config('mail.from.name', 'Paxi'));
+        $fromAddress = config('mail.from.address', 'hello@paxi.app');
+
         return new Envelope(
-            subject: 'Your Paxi verification code',
+            from: new \Illuminate\Mail\Mailables\Address($fromAddress, $senderName),
+            subject: $cleanSubject,
         );
     }
 
@@ -43,7 +51,7 @@ class SendOtpMail extends Mailable
             with: [
                 'name' => $firstName,
                 'code' => $this->otpCode,
-                'minutes' => OtpService::EXPIRATION_MINUTES,
+                'minutes' => OtpService::getExpirationMinutes(),
             ],
         );
     }

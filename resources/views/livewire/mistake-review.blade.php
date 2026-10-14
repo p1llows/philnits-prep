@@ -44,6 +44,18 @@
                 {{ $this->getCurrentMistake()['question_text'] }}
             </h4>
 
+            @if(!empty($this->getCurrentMistake()['question']['image_path'] ?? null))
+                <div class="mb-6 rounded-xl overflow-hidden border border-[#E3DFD5] bg-paper/50 flex justify-center p-2">
+                    <img src="{{ asset('storage/' . $this->getCurrentMistake()['question']['image_path']) }}" alt="Question illustration" class="max-h-96 w-auto object-contain rounded-lg" />
+                </div>
+            @endif
+
+            @if(!empty($this->getCurrentMistake()['question']['code_block'] ?? null))
+                <div class="mb-6 rounded-xl bg-gray-900 text-gray-100 p-4 font-mono text-xs md:text-sm overflow-x-auto border border-gray-800 shadow-inner">
+                    <pre><code>{{ $this->getCurrentMistake()['question']['code_block'] }}</code></pre>
+                </div>
+            @endif
+
             @if(!$showingFeedback)
                 <!-- Answer Selection State -->
                 <div class="space-y-3 mb-6">

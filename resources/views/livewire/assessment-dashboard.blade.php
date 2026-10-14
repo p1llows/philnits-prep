@@ -92,10 +92,13 @@
                         </div>
 
                         <!-- 3 ITPEC Syllabus Domains Breakdown with Real Topics -->
+                        @php
+                            $dashSettings = app(\App\Services\AppSettings::class);
+                        @endphp
                         <div class="space-y-3.5 pt-1">
                             <div class="text-[11px] font-mono text-stone font-semibold uppercase tracking-wider flex items-center justify-between">
                                 <span>3 Exam Fields & Topics</span>
-                                <span>Min. 30% Pass</span>
+                                <span>Min. {{ $dashSettings->fieldMinimumPercent() }}% Pass</span>
                             </div>
 
                             @foreach($syllabusFields as $fieldKey => $field)
@@ -129,8 +132,8 @@
 
                         <!-- Footer Rule -->
                         <div class="pt-2 border-t border-[#E3DFD5] flex items-center justify-between text-[10px] font-mono text-stone">
-                            <span>100 Qs · 120 Mins</span>
-                            <span class="font-semibold text-accent">Pass: Overall ≥60% & Each Field ≥30%</span>
+                            <span>{{ $dashSettings->pretestQuestionCount() }} Qs · {{ $dashSettings->timeLimitMinutes() }} Mins</span>
+                            <span class="font-semibold text-accent">Pass: Overall ≥{{ $dashSettings->passMarkPercent() }}% & Each Field ≥{{ $dashSettings->fieldMinimumPercent() }}%</span>
                         </div>
                     </div>
                 </div>

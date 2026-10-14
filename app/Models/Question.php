@@ -21,23 +21,42 @@ class Question extends Model
         'source_package_id',
         'source_question_number',
         'source_reference',
+        'source_page',
         'question_text',
+        'code_block',
+        'image_path',
         'explanation',
+        'explanation_status',
         'explanation_type',
         'explanation_approved',
         'correct_answer_code',
+        'answer_source',
         'status',
+        'review_note',
         'topic_id',
         'suggested_topic_id',
         'difficulty',
         'created_by',
         'validated_by',
         'published_by',
+        'approved_by',
         'explanation_created_by',
         'imported_at',
         'validated_at',
         'published_at',
+        'approved_at',
         'explanation_created_at',
+    ];
+
+    protected $casts = [
+        'explanation_approved' => 'boolean',
+        'source_page' => 'integer',
+        'source_question_number' => 'integer',
+        'imported_at' => 'datetime',
+        'validated_at' => 'datetime',
+        'published_at' => 'datetime',
+        'approved_at' => 'datetime',
+        'explanation_created_at' => 'datetime',
     ];
 
     /**
@@ -110,6 +129,14 @@ class Question extends Model
     public function explanationCreatedBy(): ?BelongsTo
     {
         return $this->belongsTo(User::class, 'explanation_created_by');
+    }
+
+    /**
+     * Get the user who approved this question.
+     */
+    public function approvedBy(): ?BelongsTo
+    {
+        return $this->belongsTo(User::class, 'approved_by');
     }
 
     /**

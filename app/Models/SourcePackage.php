@@ -18,7 +18,13 @@ class SourcePackage extends Model
      */
     protected $fillable = [
         'name',
+        'exam_session_label',
         'description',
+        'paper_path',
+        'answer_key_path',
+        'use',
+        'is_official',
+        'notes',
         'questions_file_path',
         'answers_file_path',
         'questions_file_hash',
@@ -39,6 +45,27 @@ class SourcePackage extends Model
         'validated_at',
         'published_at',
     ];
+
+    protected $casts = [
+        'is_official' => 'boolean',
+        'imported_at' => 'datetime',
+        'validated_at' => 'datetime',
+        'published_at' => 'datetime',
+    ];
+
+    protected static function booted(): void
+    {
+        static::saving(function ($package) {
+            if ($package->use === 'pretest') {
+                // Enforce in code: only one package may have use = pretest at a time
+                $otherQuery = static::where('use', 'pretest');
+                if ($package->exists) {
+                    $otherQuery->where('id', '!=', $package->id);
+                }
+                $otherQuery->update(['use' => 'practice']);
+            }
+        });
+    }
 
     /**
      * Get the source questions associated with this package.

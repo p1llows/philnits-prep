@@ -110,7 +110,7 @@ class QuestionController extends Controller
             }
         });
 
-        return redirect()->route('admin.questions.index')
+        return redirect('/admin/questions')
             ->with('success', 'Question created successfully.');
     }
 

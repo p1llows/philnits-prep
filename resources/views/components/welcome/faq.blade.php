@@ -11,59 +11,46 @@
             </div>
         </div>
 
-        <!-- 4 Grid Cards -->
+@php
+    $appSettings = app(\App\Services\AppSettings::class);
+    $customFaqs = $appSettings->get('welcome_faq_items');
+    $customDisclaimer = $appSettings->get('welcome_disclaimer_text');
+
+    $faqs = !empty($customFaqs) && is_array($customFaqs) ? $customFaqs : [
+        [
+            'question' => 'Is Paxi completely free?',
+            'answer' => 'Yes, 100% free! All practice questions, mistake tracking, and timed mock assessments are available without any paywalls or subscriptions.',
+        ],
+        [
+            'question' => 'Where do the practice questions come from?',
+            'answer' => 'Questions are sourced and modeled directly after official ITPEC IT Passport past examination papers and the official syllabus standards.',
+        ],
+        [
+            'question' => 'Is it affiliated with PhilNITS or ITPEC?',
+            'answer' => $customDisclaimer ?: 'No. Paxi is an independent community study companion created to help examinees prepare effectively. It is not officially endorsed by PhilNITS or ITPEC.',
+        ],
+        [
+            'question' => 'Can I install this on my mobile phone?',
+            'answer' => 'Yes! Paxi is built as a Progressive Web App (PWA). Tap "Install App" or "Add to Home Screen" in your mobile browser to use it offline anytime.',
+        ],
+    ];
+@endphp
+
+        <!-- Grid Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            <!-- FAQ 1 -->
-            <div class="bg-surface rounded-2xl border border-[#E3DFD5] p-6 sm:p-7 space-y-3 shadow-xs hover:border-accent/40 transition-colors duration-200">
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-lg bg-accent-tint text-accent flex items-center justify-center font-bold text-sm shrink-0">
-                        ?
+            @foreach($faqs as $faq)
+                <div class="bg-surface rounded-2xl border border-[#E3DFD5] p-6 sm:p-7 space-y-3 shadow-xs hover:border-accent/40 transition-colors duration-200">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-accent-tint text-accent flex items-center justify-center font-bold text-sm shrink-0">
+                            ?
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-ink">{{ $faq['question'] }}</h3>
                     </div>
-                    <h3 class="text-base sm:text-lg font-bold text-ink">Is Paxi completely free?</h3>
+                    <p class="text-xs sm:text-sm text-stone leading-relaxed pl-11">
+                        {{ $faq['answer'] }}
+                    </p>
                 </div>
-                <p class="text-xs sm:text-sm text-stone leading-relaxed pl-11">
-                    Yes, 100% free! All practice questions, mistake tracking, and timed mock assessments are available without any paywalls or subscriptions.
-                </p>
-            </div>
-
-            <!-- FAQ 2 -->
-            <div class="bg-surface rounded-2xl border border-[#E3DFD5] p-6 sm:p-7 space-y-3 shadow-xs hover:border-accent/40 transition-colors duration-200">
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-lg bg-accent-tint text-accent flex items-center justify-center font-bold text-sm shrink-0">
-                        ?
-                    </div>
-                    <h3 class="text-base sm:text-lg font-bold text-ink">Where do the practice questions come from?</h3>
-                </div>
-                <p class="text-xs sm:text-sm text-stone leading-relaxed pl-11">
-                    Questions are sourced and modeled directly after official ITPEC IT Passport past examination papers and the official syllabus standards.
-                </p>
-            </div>
-
-            <!-- FAQ 3 -->
-            <div class="bg-surface rounded-2xl border border-[#E3DFD5] p-6 sm:p-7 space-y-3 shadow-xs hover:border-accent/40 transition-colors duration-200">
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-lg bg-accent-tint text-accent flex items-center justify-center font-bold text-sm shrink-0">
-                        ?
-                    </div>
-                    <h3 class="text-base sm:text-lg font-bold text-ink">Is it affiliated with PhilNITS or ITPEC?</h3>
-                </div>
-                <p class="text-xs sm:text-sm text-stone leading-relaxed pl-11">
-                    No. Paxi is an independent community study companion created to help examinees prepare effectively. It is not officially endorsed by PhilNITS or ITPEC.
-                </p>
-            </div>
-
-            <!-- FAQ 4 -->
-            <div class="bg-surface rounded-2xl border border-[#E3DFD5] p-6 sm:p-7 space-y-3 shadow-xs hover:border-accent/40 transition-colors duration-200">
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-lg bg-accent-tint text-accent flex items-center justify-center font-bold text-sm shrink-0">
-                        ?
-                    </div>
-                    <h3 class="text-base sm:text-lg font-bold text-ink">Can I install this on my mobile phone?</h3>
-                </div>
-                <p class="text-xs sm:text-sm text-stone leading-relaxed pl-11">
-                    Yes! Paxi is built as a Progressive Web App (PWA). Tap "Install App" or "Add to Home Screen" in your mobile browser to use it offline anytime.
-                </p>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>

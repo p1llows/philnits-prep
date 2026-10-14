@@ -15,23 +15,21 @@ use App\Http\Controllers\Admin\TopicController;
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     
-    // Dashboard
+    // Dashboard - redirect to Filament panel
     Route::get('/dashboard', function () {
-        return view('admin.dashboard');
+        return redirect('/admin');
     })->name('dashboard');
 
-    // Topics CRUD
-    Route::resource('topics', TopicController::class);
+    // Legacy action hooks & store endpoints kept for backward compatibility
+    Route::post('/topics', [TopicController::class, 'store'])->name('topics.store');
     Route::post('/topics/{topic}/toggle-status', [TopicController::class, 'toggleStatus'])
         ->name('topics.toggle-status');
 
-    // Questions CRUD
-    Route::resource('questions', \App\Http\Controllers\Admin\QuestionController::class);
+    Route::post('/questions', [\App\Http\Controllers\Admin\QuestionController::class, 'store'])->name('questions.store');
     Route::post('/questions/{question}/publish', [\App\Http\Controllers\Admin\QuestionController::class, 'publish'])
         ->name('questions.publish');
 
-    // Source Packages CRUD & Import
-    Route::resource('source-packages', \App\Http\Controllers\Admin\SourcePackageController::class);
+    Route::post('/source-packages', [\App\Http\Controllers\Admin\SourcePackageController::class, 'store'])->name('source-packages.store');
     Route::post('/source-packages/{sourcePackage}/import-questions', [\App\Http\Controllers\Admin\SourcePackageController::class, 'importQuestions'])
         ->name('source-packages.import-questions');
 });

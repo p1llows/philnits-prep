@@ -163,15 +163,22 @@
                 <!-- Average Score -->
                 <div class="p-6 text-center">
                     <p class="text-xs font-mono uppercase tracking-wider text-stone font-semibold">Average score</p>
-                    @if(\App\Models\Assessment::count() > 0)
+                    @php
+                        $submittedAssessments = \App\Models\Assessment::whereIn('status', ['submitted', 'graded'])->whereNotNull('score_percentage');
+                        $avgScore = $submittedAssessments->avg('score_percentage');
+                        $passMark = app(\App\Services\AppSettings::class)->passMarkPercent();
+                        $passedCount = (clone $submittedAssessments)->where('score_percentage', '>=', $passMark)->count();
+                        $totalFinished = (clone $submittedAssessments)->count();
+                    @endphp
+                    @if($totalFinished > 0)
                         <p class="mt-2 text-4xl font-extrabold text-accent">
-                            {{ round(\App\Models\Assessment::avg('score'), 1) }}%
+                            {{ round($avgScore, 1) }}%
                         </p>
+                        <p class="text-xs text-stone mt-1">{{ $passedCount }} passed ({{ $passMark }}% mark)</p>
                     @else
                         <p class="mt-2 text-4xl font-extrabold text-ink">-</p>
-                        <p class="text-xs text-stone mt-1">Take first assessment</p>
+                        <p class="text-xs text-stone mt-1">No completed assessments</p>
                     @endif
-                    <p class="text-xs text-stone mt-1">{{ \App\Models\Assessment::where('score', '>=', 60)->count() }} passed (60%)</p>
                 </div>
 
             </div>

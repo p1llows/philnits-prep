@@ -40,9 +40,14 @@
 
                 <!-- Main Greeting & Feedback -->
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight mb-1.5">
+                    @php
+                        $appSettings = app(\App\Services\AppSettings::class);
+                        $passMark = $appSettings->passMarkPercent();
+                        $fieldMin = $appSettings->fieldMinimumPercent();
+                    @endphp
                     @if($passedExam)
                         Great job, you met all passing criteria!
-                    @elseif($score >= 60)
+                    @elseif($score >= $passMark)
                         Overall score passed, but check field minimums!
                     @else
                         Keep practicing, you can do it!
@@ -51,8 +56,8 @@
                 
                 <p class="text-sm sm:text-base text-stone mb-8">
                     You got <strong class="text-ink font-bold">{{ $assessment->correct_count }}</strong> out of <strong class="text-ink font-bold">{{ $assessment->total_questions }}</strong> questions correct.
-                    @if($score >= 60 && !$passedExam)
-                        <span class="block text-wrong font-semibold text-xs mt-1">ITPEC requirement: You must score at least 30% in each of Strategy, Management, and Technology.</span>
+                    @if($score >= $passMark && !$passedExam)
+                        <span class="block text-wrong font-semibold text-xs mt-1">ITPEC requirement: You must score at least {{ $fieldMin }}% in each of Strategy, Management, and Technology.</span>
                     @endif
                 </p>
 
@@ -108,17 +113,17 @@
                                 <span>OFFICIAL ITPEC GRADING</span>
                             </div>
                             <h3 class="text-xl font-bold text-ink tracking-tight">Field Requirement Breakdown</h3>
-                            <p class="text-xs text-stone">Official passing requirement: At least 30% in each of the three fields.</p>
+                            <p class="text-xs text-stone">Official passing requirement: At least {{ $fieldMin }}% in each of the three fields.</p>
                         </div>
                         <div class="text-xs font-mono text-stone sm:text-right">
-                            Threshold: <span class="font-bold text-accent">30% minimum</span>
+                            Threshold: <span class="font-bold text-accent">{{ $fieldMin }}% minimum</span>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
                         @foreach($fieldPerformance as $key => $f)
                             @php
-                                $fieldPassed = ($f['total'] === 0) || ($f['percentage'] >= 30.0);
+                                $fieldPassed = ($f['total'] === 0) || ($f['percentage'] >= (float)$fieldMin);
                                 $fieldLetter = match($key) {
                                     'strategy' => 'S',
                                     'management' => 'M',
@@ -138,7 +143,7 @@
                                         </div>
                                     </div>
                                     <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded-md {{ $fieldPassed ? 'bg-correct-surface text-correct' : 'bg-wrong text-surface' }}">
-                                        {{ $fieldPassed ? 'Pass (>=30%)' : 'Fail (<30%)' }}
+                                        {{ $fieldPassed ? 'Pass (>=' . $fieldMin . '%)' : 'Fail (<' . $fieldMin . '%)' }}
                                     </span>
                                 </div>
 

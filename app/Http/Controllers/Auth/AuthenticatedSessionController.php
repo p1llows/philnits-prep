@@ -27,12 +27,26 @@ class AuthenticatedSessionController extends Controller
             'password' => ['required'],
         ]);
 
-        if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+        $credentials = $request->only('email', 'password');
+
+        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
 
+        $user = Auth::user();
+        if (!$user->is_active) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            throw ValidationException::withMessages([
+                'email' => ['Your account has been deactivated. Please contact an administrator.'],
+            ]);
+        }
+
+        $user->update(['last_active_at' => now()]);
         $request->session()->regenerate();
 
         return redirect()->intended('/dashboard');
