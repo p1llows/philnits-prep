@@ -101,30 +101,71 @@
         </div>
     </div>
 
-    @if(!$hasCompletedInitialAssessment)
-        <!-- Empty State (Companion Welcome) -->
-        <div class="bg-surface border border-[#E3DFD5] rounded-3xl p-8 sm:p-12 text-center shadow-xs">
-            <div class="flex justify-center mb-5">
-                <x-mascot variant="inspect" :size="100" class="w-[75px] h-[75px] sm:w-[100px] sm:h-[100px]" />
-            </div>
-            <h3 class="text-xl sm:text-2xl font-bold text-ink tracking-tight mb-2">
-                Paxi is ready to build your study roadmap!
-            </h3>
-            <p class="text-xs sm:text-sm text-stone max-w-md mx-auto leading-relaxed mb-6">
-                Take a quick baseline assessment so Paxi can diagnose your strengths, identify focus topics, and build your personalized review plan.
-            </p>
+    <!-- Assessment Readiness Overview (Readiness for the Real Exam) -->
+    <div class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <div>
-                <a href="{{ route('assessment.index') }}" 
-                   class="inline-flex items-center space-x-2 px-6 py-3 bg-accent text-surface hover:bg-accent/90 text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                    <span>Start baseline practice</span>
-                    <span aria-hidden="true">&rarr;</span>
-                </a>
+                <h2 class="text-xl sm:text-2xl font-bold text-ink tracking-tight">Assessment Overview</h2>
+                <p class="text-xs sm:text-sm text-stone">Your score and benchmark readiness for the actual IT Passport exam.</p>
             </div>
+            @if($hasCompletedInitialAssessment)
+                <a href="{{ route('assessment.index') }}" class="inline-flex items-center space-x-1.5 text-xs font-semibold text-accent hover:underline self-start sm:self-auto">
+                    <span>Retake assessment</span>
+                    <span>&rarr;</span>
+                </a>
+            @endif
         </div>
 
-    @else
-        <!-- Score Summary Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @if(!$hasCompletedInitialAssessment)
+            <!-- Unassessed State: Invitation Banner with Benchmark Gauge -->
+            <div class="bg-surface border border-[#D9D5C9] rounded-3xl p-6 sm:p-8 shadow-xs">
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8">
+                    <div class="space-y-3 max-w-xl text-center sm:text-left">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs font-medium shadow-xs">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+                            <span>OFFICIAL BENCHMARK: {{ $benchmark }}% PASSING SCORE</span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-ink tracking-tight">
+                            Measure your exam readiness
+                        </h3>
+                        <p class="text-xs sm:text-sm text-stone leading-relaxed">
+                            Take the assessment to measure your readiness against the official 60% IT Passport passing threshold. Paxi will diagnose your strengths and pinpoint high-yield focus areas.
+                        </p>
+                        <div class="pt-2 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                            <a href="{{ route('assessment.index') }}" 
+                               class="inline-flex items-center space-x-2 px-6 py-3 bg-accent text-surface hover:bg-accent/90 text-xs sm:text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                                <span>Take Assessment</span>
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+                            <span class="text-xs font-mono text-stone">Takes ~10–15 mins</span>
+                        </div>
+                    </div>
+
+                    <!-- Readiness Benchmark Placeholder Gauge -->
+                    <div class="bg-paper/70 border border-[#E3DFD5] rounded-2xl p-5 sm:p-6 shrink-0 w-full sm:w-80 text-center space-y-3">
+                        <div class="flex items-center justify-between text-xs font-mono text-stone">
+                            <span>READINESS GAUGE</span>
+                            <span class="font-bold text-accent">TARGET: {{ $benchmark }}%</span>
+                        </div>
+                        <div class="py-2">
+                            <div class="text-4xl font-extrabold text-stone/50 font-mono">--.-<span class="text-xl">%</span></div>
+                            <p class="text-[11px] font-mono text-stone mt-1">Pending initial assessment</p>
+                        </div>
+                        <div class="w-full bg-[#E3DFD5] rounded-full h-2 overflow-hidden">
+                            <div class="bg-accent/30 h-2 rounded-full w-0"></div>
+                        </div>
+                        <div class="pt-1 flex items-center justify-between text-[10px] font-mono text-stone/80">
+                            <span>0%</span>
+                            <span class="font-bold text-accent">Pass: {{ $benchmark }}%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else
+            <!-- Score Summary Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             <!-- Current Score -->
             <div class="bg-surface border border-[#E3DFD5] rounded-2xl p-6 shadow-xs hover:shadow-md transition-shadow">
@@ -187,6 +228,7 @@
                 @endif
             </div>
         </div>
+    </div>
 
         <!-- Paxi's Companion Hub (Tips & Recommendations) -->
         <div class="bg-paper border border-[#E3DFD5] rounded-3xl p-6 sm:p-7 shadow-xs">
@@ -303,6 +345,5 @@
                 @endif
             </div>
         </div>
-
     @endif
 </div>
