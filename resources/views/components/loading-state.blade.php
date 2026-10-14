@@ -7,7 +7,7 @@
 <div {{ $attributes->merge(['class' => 'text-center py-12 px-4 space-y-4']) }}>
     <div class="flex justify-center mb-3">
         <div class="relative">
-            <x-mascot variant="avatar" :size="$size" label="Paxi loading" class="animate-pulse" />
+            <x-mascot variant="wave" :size="$size" label="Paxi loading" class="animate-pulse drop-shadow-sm" />
         </div>
     </div>
     

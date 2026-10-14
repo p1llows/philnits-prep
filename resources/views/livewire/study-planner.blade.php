@@ -4,12 +4,12 @@
     <div class="bg-surface border border-[#CFCABD] rounded-2xl p-6 sm:p-7 shadow-xs overflow-hidden mb-6">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center space-x-4">
-                <div class="hidden sm:flex shrink-0">
-                    <x-mascot variant="default" :size="72" label="Paxi study companion" />
+                <div class="flex shrink-0">
+                    <x-mascot variant="think" :size="56" class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 drop-shadow-sm" />
                 </div>
                 <div>
                     <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs mb-2 shadow-xs">
-                        <span>PAXI REVIEW COMPANION</span>
+                        <span>PAXI STUDY PLANNER</span>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-ink mb-1">Study Planner</h1>
                     <p class="text-xs sm:text-sm text-stone">Plan your IT Passport exam preparation with personalized schedules and milestones.</p>
@@ -213,7 +213,7 @@
     @else
         <div class="text-center py-12 bg-surface rounded-2xl border border-[#CFCABD] p-8 shadow-xs">
             <div class="mb-4 flex justify-center">
-                <x-mascot variant="default" :size="96" />
+                <x-mascot variant="sleepy" :size="112" class="w-[84px] h-[84px] sm:w-[112px] sm:h-[112px]" />
             </div>
             <h3 class="text-lg font-serif font-bold text-ink mb-1">No study schedules yet</h3>
             <p class="text-xs text-stone max-w-sm mx-auto mb-4">Create your first schedule to start planning your study time with Paxi!</p>

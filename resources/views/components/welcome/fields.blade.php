@@ -9,11 +9,19 @@
                 <h2 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-extrabold text-ink tracking-tight leading-tight">
                     Three fields, structured like the exam
                 </h2>
-                <p class="text-xs sm:text-sm lg:text-base text-stone leading-relaxed max-w-sm">
-                    Questions are organized strictly according to the official ITPEC IT Passport exam specification.
-                </p>
-                <div class="pt-2">
-                    <span class="inline-flex items-center space-x-2 text-xs font-mono text-stone bg-paper px-3 py-1.5 rounded-lg border border-[#E3DFD5]">
+                <!-- Description & Mascot Side-by-Side -->
+                <div class="relative flex items-end justify-between gap-4">
+                    <p class="text-xs sm:text-sm lg:text-base text-stone leading-relaxed max-w-[210px] sm:max-w-[230px]">
+                        Questions are organized according to the official ITPEC IT Passport exam specification.
+                    </p>
+                    <div class="shrink-0 -mb-2 sm:-mb-3 pointer-events-none drop-shadow-md">
+                        <x-mascot variant="inspect" :size="145" class="w-[115px] h-[115px] sm:w-[145px] sm:h-[145px]" />
+                    </div>
+                </div>
+
+                <!-- Exam Format Info Box -->
+                <div class="relative z-10 pt-1">
+                    <span class="inline-flex items-center space-x-2 text-xs font-mono text-stone bg-paper px-3.5 py-2 rounded-xl border border-[#E3DFD5] shadow-xs">
                         <span>Total: 100 Questions / 120 Minutes</span>
                     </span>
                 </div>

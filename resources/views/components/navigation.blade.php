@@ -8,11 +8,8 @@
                 <!-- Logo Matching Brand -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="Paxi Dashboard">
-                        <x-mascot variant="avatar" :size="32" class="w-8 h-8 rounded-full shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-105" />
-                        <div class="flex flex-col text-left">
-                            <span class="font-extrabold text-accent text-lg leading-tight tracking-tight">Paxi</span>
-                            <span class="text-[9px] font-mono text-stone tracking-wider uppercase font-semibold leading-none">Companion</span>
-                        </div>
+                        <img src="/paxi-mark.svg" width="24" height="24" alt="" class="h-6 w-auto shrink-0 transition-transform duration-200 group-hover:scale-105">
+                        <span class="font-extrabold text-accent text-xl leading-none tracking-tight">Paxi</span>
                     </a>
                 </div>
 

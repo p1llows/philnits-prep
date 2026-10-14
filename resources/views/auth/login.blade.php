@@ -1,4 +1,9 @@
 <x-guest-layout>
+    <!-- Mascot: wave, 96px (72px mobile), centered on card edge -->
+    <div class="relative -mt-14 sm:-mt-16 mb-2 flex justify-center pointer-events-none">
+        <x-mascot variant="wave" :size="96" class="w-[72px] h-[72px] sm:w-[96px] sm:h-[96px] drop-shadow-md" />
+    </div>
+
     <div class="text-left space-y-1">
         <h2 class="text-2xl font-bold text-ink tracking-tight">
             Log in to your account

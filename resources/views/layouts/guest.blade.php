@@ -9,7 +9,10 @@
     <title>{{ config('app.name', 'Paxi') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <meta name="theme-color" content="#1F3A5F">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -41,24 +44,30 @@
         </a>
     </div>
 
+@props([
+    'maxWidth' => 'sm:max-w-md',
+    'cardPadding' => 'p-6 sm:p-8',
+    'spaceY' => 'space-y-6',
+])
+
     <!-- Main Auth Center Card -->
-    <main class="relative z-10 flex-grow flex flex-col justify-center items-center px-4 py-8 sm:py-12">
-        <div class="w-full sm:max-w-md space-y-6">
+    <main class="relative z-10 flex-grow flex flex-col justify-center items-center px-4 py-3 sm:py-5">
+        <div class="w-full {{ $maxWidth }} space-y-3 sm:space-y-4">
             <!-- Brand Logo Header -->
-            <div class="text-center space-y-2">
-                <a href="/" class="inline-flex items-center space-x-2.5 group" aria-label="Paxi Home">
-                    <x-mascot variant="avatar" :size="40" class="w-10 h-10 rounded-full shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-105" />
-                    <span class="font-extrabold text-accent text-3xl tracking-tight">Paxi</span>
+            <div class="text-center space-y-1">
+                <a href="/" class="inline-flex items-center space-x-2 group" aria-label="Paxi Home">
+                    <img src="/paxi-mark.svg" width="28" height="28" alt="" class="h-7 w-auto shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-105">
+                    <span class="font-extrabold text-accent text-2xl sm:text-3xl tracking-tight">Paxi</span>
                 </a>
-                <p class="text-xs sm:text-sm text-stone">
+                <p class="text-xs text-stone">
                     IT Passport Examination Study Companion
                 </p>
             </div>
 
-            <!-- Card Container with Ambient Backglow -->
-            <div class="relative">
-                <div class="absolute -inset-1 bg-gradient-to-r from-accent/15 via-accent/5 to-correct/15 rounded-3xl blur-lg opacity-75 pointer-events-none"></div>
-                <div class="relative bg-surface border border-[#CFCABD] rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+            <!-- Card Container with Ambient Backglow and Headroom for Mascot -->
+            <div class="relative pt-5 sm:pt-6">
+                <div class="absolute -inset-1 top-5 sm:top-6 bg-gradient-to-r from-accent/15 via-accent/5 to-correct/15 rounded-3xl blur-lg opacity-75 pointer-events-none"></div>
+                <div class="relative bg-surface border border-[#CFCABD] rounded-2xl {{ $cardPadding }} shadow-xl {{ $spaceY }}">
                     {{ $slot }}
                 </div>
             </div>
@@ -67,7 +76,7 @@
 
     <!-- Simple Auth Footer -->
     <footer class="relative z-10 py-6 text-center text-xs text-stone border-t border-[#E3DFD5]/60 bg-paper/80 backdrop-blur-xs flex items-center justify-center space-x-2">
-        <x-mascot variant="avatar" :size="16" class="w-4 h-4 rounded-full inline-block" />
+        <img src="/paxi-mark.svg" width="16" height="16" alt="" class="h-4 w-auto inline-block">
         <span>&copy; {{ date('Y') }} Paxi · Free for all examinees</span>
     </footer>
 </body>

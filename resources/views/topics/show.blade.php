@@ -92,7 +92,7 @@
                 @else
                     <div class="text-center py-12">
                         <div class="mb-4 flex justify-center">
-                            <x-mascot variant="avatar" :size="96" />
+                            <x-mascot variant="inspect" :size="96" class="w-[72px] h-[72px] sm:w-[96px] sm:h-[96px]" />
                         </div>
                         <p class="text-xs text-stone">No published questions found for this topic yet.</p>
                     </div>

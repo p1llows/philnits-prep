@@ -1,9 +1,14 @@
 <section id="faq" class="bg-paper py-20 sm:py-24 border-t border-[#E3DFD5]">
     <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         <!-- Heading -->
-        <div class="mb-12 sm:mb-14">
-            <span class="font-mono text-xs sm:text-sm text-accent font-semibold tracking-wide uppercase block mb-2">Got questions?</span>
-            <h2 class="text-3xl sm:text-4xl font-bold text-ink tracking-tight">Frequently Asked Questions</h2>
+        <div class="mb-12 sm:mb-14 flex items-center justify-between gap-6">
+            <div>
+                <span class="font-mono text-xs sm:text-sm text-accent font-semibold tracking-wide uppercase block mb-2">Got questions?</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-ink tracking-tight">Frequently Asked Questions</h2>
+            </div>
+            <div class="hidden sm:block shrink-0">
+                <x-mascot variant="think" :size="96" class="w-[84px] h-[84px] md:w-[96px] md:h-[96px]" />
+            </div>
         </div>
 
         <!-- 4 Grid Cards -->

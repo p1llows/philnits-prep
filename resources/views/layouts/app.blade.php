@@ -9,8 +9,10 @@
     <title>{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Paxi') }}</title>
 
     <!-- Favicon & PWA -->
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <meta name="theme-color" content="#1F3A5F">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -51,7 +53,7 @@
     <!-- Cohesive Minimal App Footer -->
     <footer class="relative z-10 border-t border-[#E3DFD5] text-xs text-stone py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-3 bg-paper/80 backdrop-blur-xs">
         <div class="flex items-center space-x-2">
-            <x-mascot variant="avatar" :size="20" class="w-5 h-5 rounded-full inline-block" />
+            <img src="/paxi-mark.svg" width="16" height="16" alt="" class="h-4 w-auto inline-block">
             <span class="font-bold text-accent">Paxi</span>
             <span>&copy; {{ date('Y') }} · IT Passport Study Companion</span>
         </div>

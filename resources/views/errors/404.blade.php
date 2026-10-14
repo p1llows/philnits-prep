@@ -1,12 +1,12 @@
 <x-guest-layout>
     <div class="text-center space-y-4 py-4">
         <div class="flex justify-center mb-2">
-            <x-mascot variant="oops" :size="140" label="Paxi Not Found" />
+            <x-mascot variant="oops" :size="160" />
         </div>
         <div>
             <h1 class="text-2xl font-extrabold text-ink tracking-tight">Page not found</h1>
             <p class="text-xs sm:text-sm text-stone mt-1.5 max-w-sm mx-auto leading-relaxed">
-                We couldn't find the page you were looking for. Let's get you back on track!
+                We couldn't find the page you were looking for.
             </p>
         </div>
         <div class="pt-4 flex items-center justify-center gap-3">

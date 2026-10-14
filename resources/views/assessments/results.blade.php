@@ -32,9 +32,9 @@
                 <!-- Mascot (success or oops) -->
                 <div class="mb-5 flex justify-center">
                     @if($isAboveBenchmark)
-                        <x-mascot variant="passed" :size="140" class="hover:scale-105 transition-transform" label="Paxi Success" />
+                        <x-mascot variant="passed" :size="140" class="w-[105px] h-[105px] sm:w-[140px] sm:h-[140px] hover:scale-105 transition-transform" />
                     @else
-                        <x-mascot variant="oops" :size="140" class="hover:scale-105 transition-transform" label="Paxi Try Again" />
+                        <x-mascot variant="oops" :size="140" class="w-[105px] h-[105px] sm:w-[140px] sm:h-[140px] hover:scale-105 transition-transform" />
                     @endif
                 </div>
 

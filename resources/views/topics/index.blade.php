@@ -1,47 +1,53 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8" x-data="{ search: '' }">
         
-        <!-- Header & Mascot Contextual Guidance -->
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
-            <div>
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight mb-1">Study Topics</h1>
-                <p class="text-xs sm:text-sm text-stone">
-                    Choose a topic to start learning
-                </p>
-            </div>
+        <!-- Header & Mascot Banner (Clean Single-Card Layout, No Nested Cards) -->
+        <div class="relative bg-surface rounded-3xl border border-[#D9D5C9] p-6 sm:p-8 md:p-10 shadow-xs overflow-hidden">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 sm:gap-8">
+                <!-- Left Content: Title, description, and search -->
+                <div class="space-y-3 max-w-xl">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs font-medium shadow-xs">
+                        <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                        <span>IT PASSPORT SYLLABUS</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-ink tracking-tight">Study Topics</h1>
+                    <p class="text-xs sm:text-sm text-stone leading-relaxed">
+                        Select a knowledge domain to begin focused practice. Each topic contains verified IT Passport exam questions with full explanations.
+                    </p>
+                    
+                    <!-- Search Input Bar integrated directly -->
+                    <div class="relative max-w-md pt-1">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <input 
+                            type="text" 
+                            x-model="search"
+                            placeholder="Search topics by keyword..." 
+                            class="w-full pl-10 pr-9 py-2.5 bg-paper border border-[#D9D5C9] rounded-xl text-xs sm:text-sm text-ink placeholder-stone/70 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-xs"
+                        >
+                        <button 
+                            x-show="search.length > 0" 
+                            @click="search = ''" 
+                            type="button" 
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-stone hover:text-ink text-xs"
+                            aria-label="Clear search"
+                        >
+                            ✕
+                        </button>
+                    </div>
+                </div>
 
-            <!-- Paxi Contextual Guidance Speech Bubble (matching mockup) -->
-            <div class="flex items-center space-x-3 bg-surface border border-[#E3DFD5] rounded-2xl p-3 sm:px-4 sm:py-3 shadow-xs shrink-0 max-w-sm">
-                <x-mascot variant="avatar" :size="44" class="w-11 h-11 rounded-full shrink-0 shadow-xs" label="Paxi avatar" />
-                <div class="text-xs">
-                    <p class="font-bold text-ink">You got this!</p>
-                    <p class="text-stone">Small steps lead to big progress.</p>
+                <!-- Right Side: Big Paxi Cheer Mascot directly on banner (no nested card) -->
+                <div class="hidden sm:flex flex-col items-center justify-center shrink-0 text-center space-y-2">
+                    <x-mascot variant="cheer" :size="130" class="w-28 h-28 sm:w-32 sm:h-32 drop-shadow-md" />
+                    <div class="text-[11px] font-mono font-bold text-accent px-3 py-1 rounded-full bg-paper border border-[#D9D5C9] shadow-xs">
+                        {{ count($topics) }} TOPICS AVAILABLE
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Search Input Bar (matching mockup) -->
-        <div class="relative max-w-md">
-            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone">
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-            </div>
-            <input 
-                type="text" 
-                x-model="search"
-                placeholder="Search topics..." 
-                class="w-full pl-10 pr-4 py-2.5 bg-surface border border-[#E3DFD5] rounded-xl text-xs sm:text-sm text-ink placeholder-stone/70 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-xs"
-            >
-            <button 
-                x-show="search.length > 0" 
-                @click="search = ''" 
-                type="button" 
-                class="absolute inset-y-0 right-0 pr-3 flex items-center text-stone hover:text-ink text-xs"
-                aria-label="Clear search"
-            >
-                ✕
-            </button>
         </div>
 
         <!-- Topics Grid (matching mockup cards) -->

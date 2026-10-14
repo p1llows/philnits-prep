@@ -1,13 +1,23 @@
-const CACHE_NAME = 'paxi-v1';
+const CACHE_NAME = 'paxi-v2';
 const urlsToCache = [
     '/favicon.svg',
-    '/logo.svg',
-    '/logo-mark.svg',
+    '/favicon-32.png',
+    '/icon-192.png',
+    '/icon-512.png',
+    '/icon-maskable-512.png',
+    '/paxi-mark.svg',
+    '/paxi-lockup.svg',
     '/manifest.json',
-    '/mascot/passy.svg',
-    '/mascot/passy-avatar.svg',
-    '/mascot/passy-passed.svg',
-    '/mascot/passy-oops.svg'
+    '/images/email-logo.png',
+    '/mascot/paxi.svg',
+    '/mascot/paxi-think.svg',
+    '/mascot/paxi-cheer.svg',
+    '/mascot/paxi-sleepy.svg',
+    '/mascot/paxi-timer.svg',
+    '/mascot/paxi-inspect.svg',
+    '/mascot/paxi-passed.svg',
+    '/mascot/paxi-oops.svg',
+    '/mascot/paxi-avatar.svg'
 ];
 
 self.addEventListener('install', (event) => {

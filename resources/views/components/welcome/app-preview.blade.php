@@ -250,7 +250,11 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    <!-- Hero Mascot: wave, 140px, standing overlapping the bottom-right corner (hidden below 768px) -->
+    <div class="hidden md:block absolute -bottom-10 sm:-bottom-12 -right-4 sm:-right-6 md:-right-4 lg:-right-6 z-30 pointer-events-none drop-shadow-xl">
+        <x-mascot variant="wave" :size="140" class="w-[130px] h-[130px] lg:w-[145px] lg:h-[145px]" />
     </div>
 </div>
 

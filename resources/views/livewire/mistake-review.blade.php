@@ -16,10 +16,10 @@
                 </div>
             </div>
 
-            @if($this->getCurrentMistake()['topic'])
+            @if(data_get($this->getCurrentMistake(), 'topic'))
                 <div class="mb-4">
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono bg-paper border border-[#D9D5C9] text-stone">
-                        {{ $this->getCurrentMistake()['topic']['name'] }}
+                        {{ data_get($this->getCurrentMistake(), 'topic.name') }}
                     </span>
                 </div>
             @endif
@@ -66,7 +66,6 @@
 
                 <!-- Paxi Companion Thinking Hint -->
                 <div class="mt-4 flex items-center space-x-3 p-3.5 rounded-xl bg-paper border border-[#E3DFD5] text-xs">
-                    <x-mascot variant="avatar" :size="32" class="w-8 h-8 rounded-full shrink-0 shadow-xs" label="Paxi companion" />
                     <span class="text-stone leading-relaxed">
                         Take your time! Think through why your previous choice 
                         @if($this->getCurrentMistake()['selected_answer_code'])
@@ -79,17 +78,9 @@
             @else
                 <!-- Feedback Display State -->
                 <div>
-                    <!-- Feedback Banner with Paxi Companion Reaction -->
+                    <!-- Feedback Banner -->
                     <div class="mb-6 p-5 rounded-2xl border {{ $isCorrect ? 'bg-correct-surface/40 border-correct/40 text-correct' : 'bg-wrong-surface/40 border-wrong/40 text-wrong' }}">
                         <div class="flex items-center space-x-4">
-                            <div class="shrink-0">
-                                @if($isCorrect)
-                                    <x-mascot variant="passed" :size="48" class="w-12 h-12" label="Paxi passed" />
-                                @else
-                                    <x-mascot variant="oops" :size="48" class="w-12 h-12" label="Paxi oops" />
-                                @endif
-                            </div>
-                            
                             <div class="flex-1">
                                 <h4 class="font-bold text-sm sm:text-base">
                                     {{ $isCorrect ? 'Paxi: Excellent work! That mistake is cleared!' : 'Paxi: Not quite, but mistakes are how we learn!' }}
@@ -144,9 +135,6 @@
                         </div>
                     @elseif($isCorrect && $this->getUnresolvedCount() === 0)
                         <div class="text-center bg-surface p-8 rounded-2xl border border-[#CFCABD] shadow-xs">
-                            <div class="mb-4 flex justify-center">
-                                <x-mascot variant="passed" :size="120" />
-                            </div>
                             <h3 class="text-lg font-serif font-bold text-ink mb-1">Excellent work!</h3>
                             <p class="text-xs text-stone mb-4">You have reviewed and cleared all recorded mistakes.</p>
                             <a href="{{ route('dashboard') }}" class="inline-flex items-center space-x-2 px-6 py-2.5 bg-accent text-surface hover:bg-accent/90 rounded-xl font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-xs">
@@ -178,7 +166,7 @@
         <div class="p-8 sm:p-12 text-center bg-surface">
             @if($this->getResolvedCount() > 0 && $this->getUnresolvedCount() === 0)
                 <div class="mb-4 flex justify-center">
-                    <x-mascot variant="passed" :size="130" label="Paxi passed all mistakes" />
+                    <x-mascot variant="cheer" :size="120" class="w-[90px] h-[90px] sm:w-[120px] sm:h-[120px]" />
                 </div>
                 <h3 class="text-xl font-bold text-ink mb-1">Paxi: Excellent work!</h3>
                 <p class="text-xs sm:text-sm text-stone max-w-sm mx-auto mb-6">
@@ -186,7 +174,7 @@
                 </p>
             @else
                 <div class="mb-4 flex justify-center">
-                    <x-mascot variant="default" :size="110" label="Paxi companion" />
+                    <x-mascot variant="cheer" :size="110" class="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px]" />
                 </div>
                 <h3 class="text-xl font-bold text-ink mb-1">Your Mistake Bank is empty!</h3>
                 <p class="text-xs sm:text-sm text-stone max-w-sm mx-auto mb-6">

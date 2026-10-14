@@ -9,7 +9,10 @@
     <meta name="description" content="Prepare for the IT Passport examination with Paxi: topic practice, mistake review, and timed assessments.">
     
     <!-- Favicon & PWA -->
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <meta name="theme-color" content="#1F3A5F">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <meta name="mobile-web-app-capable" content="yes">
 

@@ -48,7 +48,7 @@
                             <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                                 <tr>
                                     <td style="vertical-align:middle; padding-right:8px;">
-                                        <img src="{{ asset('images/email-logo.png') }}" width="28" height="28" alt="" style="display:block; border:0; outline:none;">
+                                        <img src="{{ config('app.mail_logo_url') ?: asset('images/email-logo.png') }}" width="28" height="28" alt="" style="display:block; border:0; outline:none;">
                                     </td>
                                     <td style="vertical-align:middle; font-family:{!! $font !!}; font-size:15px; font-weight:500; color:#1F3A5F;">
                                         {{ $app }}

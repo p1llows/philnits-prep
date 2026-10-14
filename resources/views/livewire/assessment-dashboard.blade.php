@@ -10,7 +10,7 @@
                 </div>
                 
                 <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-ink tracking-tight">
-                    Welcome back, {{ Auth::user()->name }}! 👋
+                    Welcome back, {{ Auth::user()->name }}!
                 </h1>
                 
                 <p class="text-sm sm:text-base text-stone leading-relaxed">
@@ -39,26 +39,9 @@
                 </div>
             </div>
 
-            <!-- Paxi Hero Mascot with Speech Bubble -->
+            <!-- Paxi Hero Mascot -->
             <div class="flex shrink-0 items-center justify-center lg:justify-end py-2">
-                <div class="relative flex flex-col sm:flex-row items-center gap-3">
-                    <!-- Companion Speech Bubble -->
-                    <div class="bg-paper border border-[#D9D5C9] rounded-2xl px-4 py-2.5 shadow-xs max-w-[210px] text-xs text-ink relative">
-                        <span class="font-bold text-accent block mb-0.5">Paxi says:</span>
-                        @if($activeMistakes->count() > 0)
-                            <span class="text-stone leading-snug">Let's clear those {{ $activeMistakes->count() }} mistake{{ $activeMistakes->count() > 1 ? 's' : '' }} today!</span>
-                        @elseif($progressPercentage > 0)
-                            <span class="text-stone leading-snug">You're making steady progress. Keep going! ✨</span>
-                        @else
-                            <span class="text-stone leading-snug">Small daily steps lead to IT Passport mastery!</span>
-                        @endif
-                    </div>
-
-                    <div class="relative">
-                        <div class="absolute -inset-4 bg-accent-tint/40 rounded-full blur-xl pointer-events-none"></div>
-                        <x-mascot variant="default" :size="130" label="Paxi study companion" class="relative z-10 drop-shadow-sm hover:scale-105 transition-transform duration-300" />
-                    </div>
-                </div>
+                <x-mascot variant="wave" :size="120" class="w-[90px] h-[90px] sm:w-[120px] sm:h-[120px]" />
             </div>
         </div>
 
@@ -122,7 +105,7 @@
         <!-- Empty State (Companion Welcome) -->
         <div class="bg-surface border border-[#E3DFD5] rounded-3xl p-8 sm:p-12 text-center shadow-xs">
             <div class="flex justify-center mb-5">
-                <x-mascot variant="default" :size="130" label="Paxi Ready to Study" class="hover:scale-105 transition-transform" />
+                <x-mascot variant="inspect" :size="100" class="w-[75px] h-[75px] sm:w-[100px] sm:h-[100px]" />
             </div>
             <h3 class="text-xl sm:text-2xl font-bold text-ink tracking-tight mb-2">
                 Paxi is ready to build your study roadmap!
@@ -209,7 +192,6 @@
         <div class="bg-paper border border-[#E3DFD5] rounded-3xl p-6 sm:p-7 shadow-xs">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div class="flex items-start space-x-4">
-                    <x-mascot variant="avatar" :size="48" class="w-12 h-12 rounded-2xl shrink-0 shadow-xs mt-1" label="Paxi companion avatar" />
                     <div class="space-y-1 max-w-xl">
                         <div class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-accent-tint text-accent text-[11px] font-mono font-semibold">
                             <span>PAXI'S COMPANION ADVICE</span>

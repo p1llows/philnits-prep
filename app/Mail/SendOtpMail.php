@@ -27,7 +27,7 @@ class SendOtpMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your PhilNITS Prep verification code',
+            subject: 'Your Paxi verification code',
         );
     }
 

@@ -1,6 +1,6 @@
-<section x-data="pwaInstall" class="relative overflow-hidden pt-20 sm:pt-24 lg:pt-28 pb-10 sm:pb-14 lg:pb-20">
+<section x-data="pwaInstall" class="relative pt-20 sm:pt-24 lg:pt-28 pb-12 sm:pb-16 lg:pb-24">
     <!-- Graph Paper Grid Background with subtle radial fade -->
-    <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
         <svg aria-hidden="true" class="h-full w-full opacity-60">
             <defs>
                 <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
@@ -22,7 +22,7 @@
     <nav x-data="{ mobileMenuOpen: false }" class="fixed top-0 z-50 w-full bg-paper/90 backdrop-blur-md border-b border-[#E3DFD5] transition-all duration-200">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <a href="/" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="Paxi Home">
-                <x-mascot variant="avatar" :size="32" class="w-8 h-8 rounded-full shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-105" />
+                <img src="/paxi-mark.svg" width="24" height="24" alt="" class="h-6 w-auto shrink-0 transition-transform duration-200 group-hover:scale-105">
                 <span class="font-extrabold text-accent text-xl tracking-tight">Paxi</span>
             </a>
 
