@@ -34,8 +34,8 @@
                 <span class="inline-block px-2.5 py-0.5 rounded-md bg-paper border border-[#E3DFD5] text-accent text-xs font-mono font-semibold mb-3">
                     {{ $this->getCurrentQuestion()['topic']['name'] ?? 'IT Passport Question' }}
                 </span>
-                <h2 class="text-lg sm:text-xl font-bold text-ink leading-relaxed">
-                    {{ $this->getCurrentQuestion()['question_text'] }}
+                <h2 class="text-base sm:text-lg font-bold text-ink leading-relaxed">
+                    <x-question-text :text="$this->getCurrentQuestion()['question_text']" />
                 </h2>
             </div>
 

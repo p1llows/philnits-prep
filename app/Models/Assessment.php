@@ -39,6 +39,8 @@ class Assessment extends Model
         'incorrect_count',
         'score',
         'score_percentage',
+        'passed_exam',
+        'field_performance',
         'topic_performance',
         'status',
     ];
@@ -48,6 +50,8 @@ class Assessment extends Model
         'submitted_at' => 'datetime',
         'completed_at' => 'datetime',
         'topic_performance' => 'array',
+        'field_performance' => 'array',
+        'passed_exam' => 'boolean',
         'score_percentage' => 'float',
         'score' => 'float',
     ];
@@ -168,11 +172,33 @@ class Assessment extends Model
     }
 
     /**
-     * Check if assessment score meets or exceeds pass threshold (60%).
+     * Check if assessment score meets or exceeds official ITPEC pass thresholds:
+     * - Overall score >= 60%
+     * - Technology field >= 30%
+     * - Management field >= 30%
+     * - Strategy field >= 30%
      */
     public function passThreshold(): bool
     {
-        return ($this->score ?? 0) >= 60.0;
+        if ($this->passed_exam !== null) {
+            return (bool) $this->passed_exam;
+        }
+
+        $overallPass = ($this->score ?? 0) >= 60.0;
+        if (!$overallPass) {
+            return false;
+        }
+
+        // If field performance is available, check 30% minimum per field
+        if (!empty($this->field_performance)) {
+            foreach ($this->field_performance as $field) {
+                if (($field['total'] ?? 0) > 0 && ($field['percentage'] ?? 0) < 30.0) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public function getScoreAttribute(): float

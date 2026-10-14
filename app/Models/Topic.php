@@ -17,12 +17,34 @@ class Topic extends Model
      */
     protected $fillable = [
         'name',
+        'field', // 'technology', 'management', 'strategy'
         'code',
         'description',
         'color',
         'sort_order',
         'is_active',
     ];
+
+    /**
+     * Get official human-readable field label.
+     */
+    public function getFieldLabelAttribute(): string
+    {
+        return match($this->field) {
+            'strategy' => 'Strategy (S)',
+            'management' => 'Management (M)',
+            'technology' => 'Technology (T)',
+            default => 'Technology (T)',
+        };
+    }
+
+    /**
+     * Scope for a specific ITPEC field.
+     */
+    public function scopeField($query, string $field)
+    {
+        return $query->where('field', strtolower($field));
+    }
 
     /**
      * Get the questions associated with this topic.

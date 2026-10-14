@@ -1,49 +1,191 @@
 <div class="space-y-6 sm:space-y-8">
     
-    <!-- Paxi Hero Card (matches design system) -->
-    <div class="bg-surface border border-[#E3DFD5] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden transition-all">
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <div class="max-w-xl space-y-4">
-                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs shadow-xs">
+    @if(session('pretest_required') || session('warning'))
+        <div class="bg-surface border-2 border-accent/40 rounded-2xl p-4 sm:p-5 shadow-sm flex items-start space-x-3.5 animate-fadeIn">
+            <div class="w-9 h-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <div class="flex-1">
+                <h4 class="text-sm font-bold text-ink">Pre-Test Assessment Required</h4>
+                <p class="text-xs sm:text-sm text-stone mt-0.5">
+                    {{ session('warning') ?? 'To provide tailored review materials, you need to complete the initial pre-test exam first.' }}
+                </p>
+                <div class="mt-3">
+                    <a href="{{ route('assessment.index') }}" class="inline-flex items-center space-x-1.5 px-4 py-1.5 bg-accent text-surface text-xs font-semibold rounded-lg hover:bg-accent/90 transition-colors">
+                        <span>Begin Pre-Test Now</span>
+                        <span>&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <!-- Unified Top Assessment & Readiness Hero Card -->
+    <div class="bg-surface border border-[#D9D5C9] rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xs relative overflow-hidden transition-all">
+        <!-- Top Pill & Large Mascot Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div class="space-y-2">
+                <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs font-semibold shadow-xs">
                     <span class="w-2 h-2 rounded-full bg-correct animate-pulse"></span>
                     <span>Your Review Companion · Paxi</span>
                 </div>
-                
                 <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-ink tracking-tight">
                     Welcome back, {{ Auth::user()->name }}!
                 </h1>
-                
-                <p class="text-sm sm:text-base text-stone leading-relaxed">
-                    Paxi is ready to study with you. Consistent daily practice is the fastest path to passing the IT Passport exam!
-                </p>
-
-                <div class="flex flex-wrap items-center gap-2.5 pt-2">
-                    <a href="{{ route('topics.index') }}" 
-                       class="inline-flex items-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 text-xs sm:text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                        <span>Continue studying</span>
-                        <span aria-hidden="true">&rarr;</span>
-                    </a>
-
-                    <a href="{{ route('planner.index') }}" 
-                       class="inline-flex items-center space-x-1.5 px-4 py-2.5 bg-paper border border-[#D9D5C9] text-accent hover:bg-surface text-xs sm:text-sm font-semibold rounded-xl shadow-xs hover:-translate-y-0.5 transition-all">
-                        <span>Study Planner</span>
-                    </a>
-
-                    @if($activeMistakes->count() > 0)
-                        <a href="{{ route('mistakes.index') }}" 
-                           class="inline-flex items-center space-x-1.5 px-4 py-2.5 bg-wrong-surface border border-wrong/30 text-wrong hover:bg-wrong hover:text-surface text-xs sm:text-sm font-semibold rounded-xl shadow-xs hover:-translate-y-0.5 transition-all">
-                            <span>Mistake Bank</span>
-                            <span class="px-1.5 py-0.2 bg-wrong text-surface text-[10px] rounded-full font-bold">{{ $activeMistakes->count() }}</span>
-                        </a>
-                    @endif
-                </div>
             </div>
 
-            <!-- Paxi Hero Mascot -->
-            <div class="flex shrink-0 items-center justify-center lg:justify-end py-2">
-                <x-mascot variant="wave" :size="120" class="w-[90px] h-[90px] sm:w-[120px] sm:h-[120px]" />
+            <!-- Paxi Mascot (Enlarged) -->
+            <div class="flex shrink-0 items-center justify-center sm:justify-end">
+                <x-mascot variant="wave" :size="130" class="w-[100px] h-[100px] sm:w-[130px] sm:h-[130px] drop-shadow-sm hover:scale-105 transition-transform duration-300" />
             </div>
         </div>
+
+        @if(!$hasCompletedInitialAssessment)
+            <!-- Unassessed State: 12-column layout (7 cols left, 5 cols right) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2 border-t border-[#E3DFD5]/80">
+                <!-- Left: Explanation & Action -->
+                <div class="lg:col-span-7 space-y-4">
+                    <p class="text-sm sm:text-base text-stone leading-relaxed">
+                        Welcome to your IT Passport preparation! Take the initial pre-test assessment first so Paxi can diagnose your baseline across Strategy, Management, and Technology.
+                    </p>
+
+                    <div class="pt-2 flex flex-col sm:flex-row sm:items-center gap-3">
+                        <a href="{{ route('assessment.index') }}" 
+                           class="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-accent text-surface hover:bg-accent/90 text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all ring-2 ring-accent/30 ring-offset-2">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>Take Pre-Test Assessment</span>
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+
+                        <span class="inline-flex items-center space-x-1.5 px-4 py-3 bg-paper border border-[#D9D5C9] text-stone/60 text-xs sm:text-sm font-medium rounded-xl cursor-not-allowed self-start sm:self-auto" title="Complete pre-test to unlock study topics">
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            <span>Study Topics (Locked)</span>
+                        </span>
+                    </div>
+
+                    <div class="pt-1">
+                        <span class="text-xs font-mono text-stone inline-flex items-center space-x-1.5">
+                            <svg class="w-3.5 h-3.5 text-stone" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>Simulates Official Exam (100 Qs · 120 Mins)</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Right: Readiness Gauge Card -->
+                <div class="lg:col-span-5">
+                    <div class="bg-paper border border-[#E3DFD5] rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+                        <!-- Card Header -->
+                        <div class="flex items-center justify-between text-xs font-mono border-b border-[#E3DFD5] pb-3">
+                            <span class="font-bold text-ink uppercase tracking-wider">Readiness Gauge</span>
+                            <span class="text-accent font-semibold bg-surface px-2.5 py-0.5 rounded-full border border-[#D9D5C9]">Pass: 60%</span>
+                        </div>
+                        
+                        <!-- Overall Score Status -->
+                        <div class="text-center py-2 bg-surface rounded-xl border border-[#E3DFD5]/60">
+                            <div class="text-3xl sm:text-4xl font-extrabold text-stone/40 font-mono tracking-tight">--.-<span class="text-lg font-normal">%</span></div>
+                            <p class="text-[11px] font-mono text-stone mt-1">Pending initial assessment</p>
+                        </div>
+
+                        <!-- 3 ITPEC Syllabus Domains Breakdown -->
+                        <div class="space-y-3 pt-1">
+                            <div class="text-[11px] font-mono text-stone font-semibold uppercase tracking-wider flex items-center justify-between">
+                                <span>Exam Domains</span>
+                                <span>Min. 30% Pass</span>
+                            </div>
+
+                            <!-- Domain 1: Strategy -->
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="font-medium text-ink flex items-center space-x-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 shrink-0"></span>
+                                        <span>Strategy Field</span>
+                                    </span>
+                                    <span class="text-stone font-mono text-[11px]">~35 Qs · <span class="text-stone/60">--%</span></span>
+                                </div>
+                                <div class="w-full bg-[#E3DFD5] rounded-full h-2 overflow-hidden">
+                                    <div class="bg-blue-500 h-2 rounded-full w-0 transition-all duration-500"></div>
+                                </div>
+                            </div>
+
+                            <!-- Domain 2: Management -->
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="font-medium text-ink flex items-center space-x-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
+                                        <span>Management Field</span>
+                                    </span>
+                                    <span class="text-stone font-mono text-[11px]">~10 Qs · <span class="text-stone/60">--%</span></span>
+                                </div>
+                                <div class="w-full bg-[#E3DFD5] rounded-full h-2 overflow-hidden">
+                                    <div class="bg-amber-500 h-2 rounded-full w-0 transition-all duration-500"></div>
+                                </div>
+                            </div>
+
+                            <!-- Domain 3: Technology -->
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="font-medium text-ink flex items-center space-x-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                                        <span>Technology Field</span>
+                                    </span>
+                                    <span class="text-stone font-mono text-[11px]">~55 Qs · <span class="text-stone/60">--%</span></span>
+                                </div>
+                                <div class="w-full bg-[#E3DFD5] rounded-full h-2 overflow-hidden">
+                                    <div class="bg-emerald-500 h-2 rounded-full w-0 transition-all duration-500"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer Rule -->
+                        <div class="pt-2.5 border-t border-[#E3DFD5] flex items-center justify-between text-[10px] font-mono text-stone">
+                            <span>0%</span>
+                            <span class="font-semibold text-accent">Pass: Overall ≥60% & Each Field ≥30%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @else
+            <!-- Assessed State: Greeting, Action & Score Overview -->
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div class="max-w-xl space-y-4">
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-ink tracking-tight">
+                        Welcome back, {{ Auth::user()->name }}!
+                    </h1>
+                    
+                    <p class="text-sm sm:text-base text-stone leading-relaxed">
+                        Paxi is ready to study with you. Consistent daily practice is the fastest path to passing the IT Passport exam!
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-2.5 pt-2">
+                        <a href="{{ route('topics.index') }}" 
+                           class="inline-flex items-center space-x-2 px-5 py-2.5 bg-accent text-surface hover:bg-accent/90 text-xs sm:text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                            <span>Continue studying</span>
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+
+                        <a href="{{ route('planner.index') }}" 
+                           class="inline-flex items-center space-x-1.5 px-4 py-2.5 bg-paper border border-[#D9D5C9] text-accent hover:bg-surface text-xs sm:text-sm font-semibold rounded-xl shadow-xs hover:-translate-y-0.5 transition-all">
+                            <span>Study Planner</span>
+                        </a>
+
+                        @if($activeMistakes->count() > 0)
+                            <a href="{{ route('mistakes.index') }}" 
+                               class="inline-flex items-center space-x-1.5 px-4 py-2.5 bg-wrong-surface border border-wrong/30 text-wrong hover:bg-wrong hover:text-surface text-xs sm:text-sm font-semibold rounded-xl shadow-xs hover:-translate-y-0.5 transition-all">
+                                <span>Mistake Bank</span>
+                                <span class="px-1.5 py-0.2 bg-wrong text-surface text-[10px] rounded-full font-bold">{{ $activeMistakes->count() }}</span>
+                            </a>
+                        @endif
+
+                        <a href="{{ route('assessment.index') }}" class="inline-flex items-center space-x-1 text-xs font-semibold text-accent hover:underline px-2 py-1">
+                            <span>Retake Assessment &rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <!-- Hero Stats Row (matching mockup tiles) -->
         <div class="mt-8 pt-6 border-t border-[#E3DFD5] grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -101,134 +243,6 @@
         </div>
     </div>
 
-    <!-- Assessment Readiness Overview (Readiness for the Real Exam) -->
-    <div class="space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <div>
-                <h2 class="text-xl sm:text-2xl font-bold text-ink tracking-tight">Assessment Overview</h2>
-                <p class="text-xs sm:text-sm text-stone">Your score and benchmark readiness for the actual IT Passport exam.</p>
-            </div>
-            @if($hasCompletedInitialAssessment)
-                <a href="{{ route('assessment.index') }}" class="inline-flex items-center space-x-1.5 text-xs font-semibold text-accent hover:underline self-start sm:self-auto">
-                    <span>Retake assessment</span>
-                    <span>&rarr;</span>
-                </a>
-            @endif
-        </div>
-
-        @if(!$hasCompletedInitialAssessment)
-            <!-- Unassessed State: Invitation Banner with Benchmark Gauge -->
-            <div class="bg-surface border border-[#D9D5C9] rounded-3xl p-6 sm:p-8 shadow-xs">
-                <div class="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8">
-                    <div class="space-y-3 max-w-xl text-center sm:text-left">
-                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#D9D5C9] bg-paper text-accent font-mono text-xs font-medium shadow-xs">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-                            <span>OFFICIAL BENCHMARK: {{ $benchmark }}% PASSING SCORE</span>
-                        </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-ink tracking-tight">
-                            Measure your exam readiness
-                        </h3>
-                        <p class="text-xs sm:text-sm text-stone leading-relaxed">
-                            Take the assessment to measure your readiness against the official 60% IT Passport passing threshold. Paxi will diagnose your strengths and pinpoint high-yield focus areas.
-                        </p>
-                        <div class="pt-2 flex flex-wrap items-center justify-center sm:justify-start gap-3">
-                            <a href="{{ route('assessment.index') }}" 
-                               class="inline-flex items-center space-x-2 px-6 py-3 bg-accent text-surface hover:bg-accent/90 text-xs sm:text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                                <span>Take Assessment</span>
-                                <span aria-hidden="true">&rarr;</span>
-                            </a>
-                            <span class="text-xs font-mono text-stone">Takes ~10–15 mins</span>
-                        </div>
-                    </div>
-
-                    <!-- Readiness Benchmark Placeholder Gauge -->
-                    <div class="bg-paper/70 border border-[#E3DFD5] rounded-2xl p-5 sm:p-6 shrink-0 w-full sm:w-80 text-center space-y-3">
-                        <div class="flex items-center justify-between text-xs font-mono text-stone">
-                            <span>READINESS GAUGE</span>
-                            <span class="font-bold text-accent">TARGET: {{ $benchmark }}%</span>
-                        </div>
-                        <div class="py-2">
-                            <div class="text-4xl font-extrabold text-stone/50 font-mono">--.-<span class="text-xl">%</span></div>
-                            <p class="text-[11px] font-mono text-stone mt-1">Pending initial assessment</p>
-                        </div>
-                        <div class="w-full bg-[#E3DFD5] rounded-full h-2 overflow-hidden">
-                            <div class="bg-accent/30 h-2 rounded-full w-0"></div>
-                        </div>
-                        <div class="pt-1 flex items-center justify-between text-[10px] font-mono text-stone/80">
-                            <span>0%</span>
-                            <span class="font-bold text-accent">Pass: {{ $benchmark }}%</span>
-                            <span>100%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @else
-            <!-- Score Summary Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <!-- Current Score -->
-            <div class="bg-surface border border-[#E3DFD5] rounded-2xl p-6 shadow-xs hover:shadow-md transition-shadow">
-                <span class="text-xs font-mono uppercase tracking-wider text-stone font-semibold block mb-2">Your current score</span>
-                <div class="flex items-baseline">
-                    <span class="text-4xl font-extrabold text-accent tracking-tight">{{ number_format($currentScore ?? 0, 1) }}</span>
-                    <span class="text-xl text-stone ml-1 font-mono">%</span>
-                </div>
-                
-                <div class="mt-4">
-                    @if($currentScore >= $benchmark)
-                        <div class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-correct-surface text-correct border border-correct/20">
-                            <span>✓</span>
-                            <span>Above preparation benchmark</span>
-                        </div>
-                    @else
-                        <div class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-wrong-surface text-wrong border border-wrong/20">
-                            <span>⚠</span>
-                            <span>Below preparation benchmark</span>
-                        </div>
-                    @endif
-                </div>
-                
-                <p class="mt-3 text-xs text-stone">
-                    Target: {{ $benchmark }}% preparation benchmark
-                </p>
-            </div>
-
-            <!-- Recent Performance -->
-            <div class="bg-surface border border-[#E3DFD5] rounded-2xl p-6 shadow-xs hover:shadow-md transition-shadow">
-                <span class="text-xs font-mono uppercase tracking-wider text-stone font-semibold block mb-2">Recent assessments</span>
-                <div class="text-4xl font-extrabold text-ink tracking-tight mb-1">
-                    {{ $recentAssessments->count() }}
-                </div>
-                <p class="text-xs text-stone mb-4">Completed this month</p>
-                
-                @if($recentAssessments->count() > 0)
-                    <div class="text-xs font-mono text-stone bg-paper px-3 py-1.5 rounded-lg border border-[#E3DFD5] inline-block">
-                        Latest: <span class="font-bold text-ink">{{ number_format($recentAssessments->first()->score_percentage, 1) }}%</span>
-                        <span class="text-stone">({{ $recentAssessments->first()->submitted_at->format('M j') }})</span>
-                    </div>
-                @endif
-            </div>
-
-            <!-- Active Mistakes -->
-            <div class="bg-surface border border-[#E3DFD5] rounded-2xl p-6 shadow-xs hover:shadow-md transition-shadow">
-                <span class="text-xs font-mono uppercase tracking-wider text-stone font-semibold block mb-2">Active mistakes</span>
-                <div class="text-4xl font-extrabold text-wrong tracking-tight mb-1">
-                    {{ $activeMistakes->count() }}
-                </div>
-                <p class="text-xs text-stone mb-4">Questions to review</p>
-                
-                @if($activeMistakes->count() > 0)
-                    <a href="{{ route('mistakes.index') }}" class="inline-flex items-center space-x-1 text-xs font-semibold text-wrong bg-wrong-surface px-3 py-1.5 rounded-lg border border-wrong/30 hover:bg-wrong hover:text-surface transition-colors">
-                        <span>Review mistakes queue</span>
-                        <span>&rarr;</span>
-                    </a>
-                @else
-                    <span class="text-xs font-mono text-correct font-medium">No unresolved mistakes!</span>
-                @endif
-            </div>
-        </div>
-    </div>
 
         <!-- Paxi's Companion Hub (Tips & Recommendations) -->
         <div class="bg-paper border border-[#E3DFD5] rounded-3xl p-6 sm:p-7 shadow-xs">
@@ -345,5 +359,4 @@
                 @endif
             </div>
         </div>
-    @endif
 </div>

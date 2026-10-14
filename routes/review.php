@@ -13,27 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Browse all topics
-Route::get('/topics', [TopicController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('topics.index');
+Route::middleware(['auth', 'pretest.completed'])->group(function () {
+    // Browse all topics
+    Route::get('/topics', [TopicController::class, 'index'])
+        ->name('topics.index');
 
-// View specific topic with questions
-Route::get('/topics/{topic}', [TopicController::class, 'show'])
-    ->middleware(['auth'])
-    ->name('topics.show');
+    // View specific topic with questions
+    Route::get('/topics/{topic}', [TopicController::class, 'show'])
+        ->name('topics.show');
 
-// Practice a specific topic
-Route::get('/topics/{topic}/practice', [TopicController::class, 'practice'])
-    ->middleware(['auth'])
-    ->name('topics.practice');
+    // Practice a specific topic
+    Route::get('/topics/{topic}/practice', [TopicController::class, 'practice'])
+        ->name('topics.practice');
 
-// Start practice session (general)
-Route::get('/practice', function () {
-    return view('practice.index');
-})->middleware(['auth'])->name('practice.start');
+    // Start practice session (general)
+    Route::get('/practice', function () {
+        return view('practice.index');
+    })->name('practice.start');
 
-// Mistake review
-Route::get('/mistakes', function () {
-    return view('mistakes.index');
-})->middleware(['auth'])->name('mistakes.index');
+    // Mistake review
+    Route::get('/mistakes', function () {
+        return view('mistakes.index');
+    })->name('mistakes.index');
+});

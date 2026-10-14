@@ -30,34 +30,38 @@ class DatabaseSeeder extends Seeder
             'role' => 'learner',
         ]);
 
-        // Create sample topics based on PhilNITS IP Passport exam structure
+        // Create topics based on official ITPEC IP 3-Field exam structure
         $topics = [
             [
                 'name' => 'Information Technology Fundamentals',
+                'field' => 'technology',
                 'code' => 'ITF',
-                'description' => 'Basic IT concepts including computer systems, networks, and information security',
-                'color' => '#3B82F6',
+                'description' => 'Computer systems, hardware/software, networks, database systems, and information security',
+                'color' => '#1F3A5F',
                 'sort_order' => 1,
             ],
             [
                 'name' => 'Business and Management',
+                'field' => 'management',
                 'code' => 'BM',
-                'description' => 'IT governance, risk management, business continuity, and project management',
+                'description' => 'Project management, software development processes, service management, and quality control',
                 'color' => '#10B981',
                 'sort_order' => 2,
             ],
             [
                 'name' => 'Technology',
+                'field' => 'technology',
                 'code' => 'TECH',
-                'description' => 'Technical implementation including databases, AI, blockchain, and emerging technologies',
-                'color' => '#F59E0B',
+                'description' => 'Algorithms, programming logic, emerging technologies, and systems architecture',
+                'color' => '#3B82F6',
                 'sort_order' => 3,
             ],
             [
                 'name' => 'Legal and Compliance',
+                'field' => 'strategy',
                 'code' => 'LC',
-                'description' => 'Intellectual property, contracts, privacy laws, and regulatory compliance',
-                'color' => '#EC4899',
+                'description' => 'Corporate strategy, accounting, intellectual property, contracts, and compliance',
+                'color' => '#F59E0B',
                 'sort_order' => 4,
             ],
         ];

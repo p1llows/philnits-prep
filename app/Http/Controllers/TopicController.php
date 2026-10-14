@@ -25,6 +25,8 @@ class TopicController extends Controller
                 return [
                     'id' => $topic->id,
                     'name' => $topic->name,
+                    'field' => $topic->field ?? 'technology',
+                    'field_label' => $topic->field_label,
                     'code' => $topic->code,
                     'description' => $topic->description,
                     'color' => $topic->color,

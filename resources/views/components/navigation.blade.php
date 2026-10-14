@@ -21,30 +21,48 @@
                             {{ __('Dashboard') }}
                         </a>
 
-                        <a href="{{ route('topics.index') }}" 
-                           class="transition-colors duration-200 {{ request()->routeIs('topics.*', 'practice.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
-                            {{ __('Study') }}
-                        </a>
+                        @php
+                            $hasPretest = Auth::user()->hasCompletedInitialAssessment();
+                        @endphp
 
-                        <a href="{{ route('planner.index') }}" 
-                           class="transition-colors duration-200 {{ request()->routeIs('planner.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
-                            {{ __('Planner') }}
-                        </a>
+                        @if($hasPretest)
+                            <a href="{{ route('topics.index') }}" 
+                               class="transition-colors duration-200 {{ request()->routeIs('topics.*', 'practice.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
+                                {{ __('Study') }}
+                            </a>
 
-                        <a href="{{ route('mistakes.index') }}" 
-                           class="transition-colors duration-200 {{ request()->routeIs('mistakes.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
-                            {{ __('Mistake Bank') }}
-                        </a>
+                            <a href="{{ route('planner.index') }}" 
+                               class="transition-colors duration-200 {{ request()->routeIs('planner.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
+                                {{ __('Planner') }}
+                            </a>
+
+                            <a href="{{ route('mistakes.index') }}" 
+                               class="transition-colors duration-200 {{ request()->routeIs('mistakes.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
+                                {{ __('Mistake Bank') }}
+                            </a>
+                        @else
+                            <span class="text-stone/50 cursor-not-allowed inline-flex items-center space-x-1" title="Complete your pre-test assessment first to unlock study topics">
+                                <span>{{ __('Study') }}</span>
+                                <svg class="w-3 h-3 text-stone/50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            </span>
+
+                            <span class="text-stone/50 cursor-not-allowed inline-flex items-center space-x-1" title="Complete your pre-test assessment first to unlock study planner">
+                                <span>{{ __('Planner') }}</span>
+                                <svg class="w-3 h-3 text-stone/50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            </span>
+                        @endif
 
                         <a href="{{ route('assessments.index') }}" 
                            class="transition-colors duration-200 {{ request()->routeIs('assessment*', 'assessments*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
                             {{ __('Assessments') }}
                         </a>
 
-                        <a href="{{ route('analytics.index') }}" 
-                           class="transition-colors duration-200 {{ request()->routeIs('analytics.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
-                            {{ __('Analytics') }}
-                        </a>
+                        @if($hasPretest)
+                            <a href="{{ route('analytics.index') }}" 
+                               class="transition-colors duration-200 {{ request()->routeIs('analytics.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
+                                {{ __('Analytics') }}
+                            </a>
+                        @endif
 
                         @if(Auth::user()->isAdmin())
                             <a href="{{ route('admin.dashboard') }}" 
@@ -130,17 +148,43 @@
                 {{ __('Dashboard') }}
             </a>
 
-            <a href="{{ route('topics.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('topics.*', 'practice.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
-                {{ __('Study Topics') }}
-            </a>
+            @if($hasPretest)
+                <a href="{{ route('topics.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('topics.*', 'practice.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
+                    {{ __('Study Topics') }}
+                </a>
 
-            <a href="{{ route('planner.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('planner.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
-                {{ __('Study Planner') }}
-            </a>
+                <a href="{{ route('planner.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('planner.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
+                    {{ __('Study Planner') }}
+                </a>
 
-            <a href="{{ route('mistakes.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('mistakes.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
-                {{ __('Mistake Bank') }}
-            </a>
+                <a href="{{ route('mistakes.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('mistakes.*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
+                    {{ __('Mistake Bank') }}
+                </a>
+            @else
+                <div class="px-3.5 py-2 rounded-xl text-sm font-medium text-stone/50 flex items-center justify-between cursor-not-allowed">
+                    <span>{{ __('Study Topics') }}</span>
+                    <span class="inline-flex items-center space-x-1 text-xs text-stone/50">
+                        <span>Locked</span>
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    </span>
+                </div>
+
+                <div class="px-3.5 py-2 rounded-xl text-sm font-medium text-stone/50 flex items-center justify-between cursor-not-allowed">
+                    <span>{{ __('Study Planner') }}</span>
+                    <span class="inline-flex items-center space-x-1 text-xs text-stone/50">
+                        <span>Locked</span>
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    </span>
+                </div>
+
+                <div class="px-3.5 py-2 rounded-xl text-sm font-medium text-stone/50 flex items-center justify-between cursor-not-allowed">
+                    <span>{{ __('Mistake Bank') }}</span>
+                    <span class="inline-flex items-center space-x-1 text-xs text-stone/50">
+                        <span>Locked</span>
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    </span>
+                </div>
+            @endif
 
             <a href="{{ route('assessments.index') }}" class="block px-3.5 py-2 rounded-xl text-sm font-medium {{ request()->routeIs('assessment*', 'assessments*') ? 'bg-surface text-accent shadow-xs font-semibold' : 'text-stone hover:text-ink hover:bg-surface' }}">
                 {{ __('Assessments') }}

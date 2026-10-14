@@ -79,9 +79,9 @@
             </div>
 
             <!-- Question Text -->
-            <h2 class="font-serif text-lg md:text-xl text-ink mb-8 leading-relaxed font-normal">
-                {{ $currentQuestion['question_text'] }}
-            </h2>
+            <div class="font-serif text-lg md:text-xl text-ink mb-8 leading-relaxed font-normal">
+                <x-question-text :text="$currentQuestion['question_text']" />
+            </div>
 
             <!-- Choices Grid -->
             <div class="space-y-3">

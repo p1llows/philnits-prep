@@ -15,16 +15,16 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Main planner page
-Route::get('/planner', function () {
-    return view('study.planner');
-})->middleware(['auth'])->name('planner.index');
+Route::middleware(['auth', 'pretest.completed'])->group(function () {
+    // Main planner page
+    Route::get('/planner', function () {
+        return view('study.planner');
+    })->name('planner.index');
 
-// Planner Livewire components (embedded in views)
-Route::get('/planner/schedules', StudyPlanner::class)
-    ->middleware(['auth'])
-    ->name('planner.schedules');
+    // Planner Livewire components (embedded in views)
+    Route::get('/planner/schedules', StudyPlanner::class)
+        ->name('planner.schedules');
 
-Route::get('/planner/goals', StudyGoals::class)
-    ->middleware(['auth'])
-    ->name('planner.goals');
+    Route::get('/planner/goals', StudyGoals::class)
+        ->name('planner.goals');
+});

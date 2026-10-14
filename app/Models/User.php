@@ -79,6 +79,30 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Assessments taken by the user.
+     */
+    public function assessments()
+    {
+        return $this->hasMany(Assessment::class);
+    }
+
+    /**
+     * Check if the learner has completed their initial pre-test / baseline assessment.
+     */
+    public function hasCompletedInitialAssessment(): bool
+    {
+        // Admins bypass pre-test requirement
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        return $this->assessments()
+            ->whereNotNull('score_percentage')
+            ->whereIn('status', ['submitted', 'graded'])
+            ->exists();
+    }
+
+    /**
      * Get the user's initials for avatar rendering.
      */
     public function getInitialsAttribute(): string

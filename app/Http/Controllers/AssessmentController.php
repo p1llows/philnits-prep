@@ -145,6 +145,20 @@ class AssessmentController extends Controller
                 ? round(($correctCount / $totalQuestions) * 100, 2)
                 : 0;
 
+            // Calculate field performance across official ITPEC IP fields: Strategy, Management, Technology
+            $fieldPerformance = $this->calculateFieldPerformance($assessment);
+            
+            // Check official passing criteria: Overall >= 60% AND each field with questions >= 30%
+            $overallPass = $scorePercentage >= 60.0;
+            $allFieldsPass = true;
+            foreach ($fieldPerformance as $fieldData) {
+                if ($fieldData['total'] > 0 && $fieldData['percentage'] < 30.0) {
+                    $allFieldsPass = false;
+                    break;
+                }
+            }
+            $passedExam = $overallPass && $allFieldsPass;
+
             // Update assessment with results
             $assessment->update([
                 'submitted_at' => now(),
@@ -152,6 +166,8 @@ class AssessmentController extends Controller
                 'correct_count' => $correctCount,
                 'incorrect_count' => $incorrectCount,
                 'score_percentage' => $scorePercentage,
+                'passed_exam' => $passedExam,
+                'field_performance' => $fieldPerformance,
                 'status' => 'graded',
             ]);
 
@@ -188,6 +204,9 @@ class AssessmentController extends Controller
             'answers.question.topic',
         ]);
 
+        // Calculate field performance (Strategy, Management, Technology)
+        $fieldPerformance = $assessment->field_performance ?: $this->calculateFieldPerformance($assessment);
+
         // Calculate topic performance
         $topicPerformance = $this->calculateTopicPerformance($assessment);
 
@@ -202,6 +221,7 @@ class AssessmentController extends Controller
 
         return view('assessments.results', [
             'assessment' => $assessment,
+            'fieldPerformance' => $fieldPerformance,
             'topicPerformance' => $topicPerformance,
             'weakAreas' => $weakAreas,
             'recommendedTopics' => $recommendedTopics,
@@ -302,6 +322,75 @@ class AssessmentController extends Controller
         }
 
         return array_values($performance);
+    }
+
+    /**
+     * Calculate score breakdown across official ITPEC IP 3 fields: Strategy, Management, Technology.
+     */
+    protected function calculateFieldPerformance(Assessment $assessment): array
+    {
+        $fields = [
+            'strategy' => [
+                'field_key' => 'strategy',
+                'field_code' => 'S',
+                'field_name' => 'Strategy',
+                'description' => 'Business strategy, management, accounting, and legal compliance',
+                'total' => 0,
+                'correct' => 0,
+                'percentage' => 0.0,
+                'passed' => false,
+            ],
+            'management' => [
+                'field_key' => 'management',
+                'field_code' => 'M',
+                'field_name' => 'Management',
+                'description' => 'Project management, software development processes, and service operations',
+                'total' => 0,
+                'correct' => 0,
+                'percentage' => 0.0,
+                'passed' => false,
+            ],
+            'technology' => [
+                'field_key' => 'technology',
+                'field_code' => 'T',
+                'field_name' => 'Technology',
+                'description' => 'Computer systems, networks, security, databases, and algorithms',
+                'total' => 0,
+                'correct' => 0,
+                'percentage' => 0.0,
+                'passed' => false,
+            ],
+        ];
+
+        $answers = $assessment->answers()
+            ->with(['question.topic'])
+            ->get();
+
+        foreach ($answers as $answer) {
+            $topic = $answer->question?->topic;
+            $fieldKey = strtolower($topic?->field ?? 'technology');
+
+            if (!isset($fields[$fieldKey])) {
+                $fieldKey = 'technology';
+            }
+
+            $fields[$fieldKey]['total']++;
+            if ($answer->is_correct) {
+                $fields[$fieldKey]['correct']++;
+            }
+        }
+
+        foreach ($fields as &$field) {
+            if ($field['total'] > 0) {
+                $field['percentage'] = round(($field['correct'] / $field['total']) * 100, 1);
+                $field['passed'] = $field['percentage'] >= 30.0;
+            } else {
+                $field['percentage'] = 0.0;
+                $field['passed'] = true; // Neutral if no questions in field
+            }
+        }
+
+        return $fields;
     }
 
     /**

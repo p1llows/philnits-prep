@@ -21,39 +21,49 @@
                 </div>
             </div>
 
-            <!-- Paxi Score Card (matching Assessment Results mockup) -->
+            <!-- Paxi Score Card (Official ITPEC IP Standard: 60% Overall + 30% Per Field) -->
             <div class="bg-surface rounded-3xl border border-[#E3DFD5] overflow-hidden p-6 sm:p-10 shadow-xs text-center">
                 @php
                     $score = $assessment->score_percentage ?? 0;
-                    $isAboveBenchmark = $score >= 60;
+                    $passedExam = $assessment->passThreshold();
                     $timeFormatted = sprintf('%02d:%02d', floor(($assessment->time_spent_seconds ?? 0) / 60), ($assessment->time_spent_seconds ?? 0) % 60);
                 @endphp
 
-                <!-- Mascot (success or oops) -->
+                <!-- Mascot (passed or oops) -->
                 <div class="mb-5 flex justify-center">
-                    @if($isAboveBenchmark)
-                        <x-mascot variant="passed" :size="140" class="w-[105px] h-[105px] sm:w-[140px] sm:h-[140px] hover:scale-105 transition-transform" />
+                    @if($passedExam)
+                        <x-mascot variant="passed" :size="140" class="w-[105px] h-[105px] sm:w-[140px] sm:h-[140px] hover:scale-105 transition-transform drop-shadow-md" />
                     @else
-                        <x-mascot variant="oops" :size="140" class="w-[105px] h-[105px] sm:w-[140px] sm:h-[140px] hover:scale-105 transition-transform" />
+                        <x-mascot variant="oops" :size="140" class="w-[105px] h-[105px] sm:w-[140px] sm:h-[140px] hover:scale-105 transition-transform drop-shadow-md" />
                     @endif
                 </div>
 
                 <!-- Main Greeting & Feedback -->
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight mb-1.5">
-                    {{ $isAboveBenchmark ? 'Great job, you passed!' : 'Keep practicing, you can do it!' }}
+                    @if($passedExam)
+                        Great job, you met all passing criteria!
+                    @elseif($score >= 60)
+                        Overall score passed, but check field minimums!
+                    @else
+                        Keep practicing, you can do it!
+                    @endif
                 </h2>
                 
                 <p class="text-sm sm:text-base text-stone mb-8">
                     You got <strong class="text-ink font-bold">{{ $assessment->correct_count }}</strong> out of <strong class="text-ink font-bold">{{ $assessment->total_questions }}</strong> questions correct.
+                    @if($score >= 60 && !$passedExam)
+                        <span class="block text-wrong font-semibold text-xs mt-1">ITPEC requirement: You must score at least 30% in each of Strategy, Management, and Technology.</span>
+                    @endif
                 </p>
 
                 <!-- 3 Stats Tiles (mockup style: Score, Time, Correct) -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto mb-8">
                     <div class="bg-paper/70 border border-[#E3DFD5] rounded-2xl p-4 sm:p-5 text-center">
-                        <span class="text-xs font-mono uppercase tracking-wider text-stone block mb-1">Score</span>
-                        <div class="text-2xl sm:text-3xl font-extrabold text-accent">
+                        <span class="text-xs font-mono uppercase tracking-wider text-stone block mb-1">Overall Score</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold {{ $score >= 60 ? 'text-correct' : 'text-accent' }}">
                             {{ number_format($score, 0) }}%
                         </div>
+                        <span class="text-[10px] font-mono {{ $score >= 60 ? 'text-correct' : 'text-stone' }} mt-0.5 block">Pass: 60%</span>
                     </div>
 
                     <div class="bg-paper/70 border border-[#E3DFD5] rounded-2xl p-4 sm:p-5 text-center">
@@ -61,13 +71,15 @@
                         <div class="text-2xl sm:text-3xl font-extrabold text-ink font-mono">
                             {{ $timeFormatted }}
                         </div>
+                        <span class="text-[10px] font-mono text-stone mt-0.5 block">120m exam limit</span>
                     </div>
 
                     <div class="bg-paper/70 border border-[#E3DFD5] rounded-2xl p-4 sm:p-5 text-center">
-                        <span class="text-xs font-mono uppercase tracking-wider text-stone block mb-1">Correct</span>
-                        <div class="text-2xl sm:text-3xl font-extrabold text-correct font-mono">
+                        <span class="text-xs font-mono uppercase tracking-wider text-stone block mb-1">Correct Questions</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-ink font-mono">
                             {{ $assessment->correct_count }} / {{ $assessment->total_questions }}
                         </div>
+                        <span class="text-[10px] font-mono text-stone mt-0.5 block">{{ $assessment->incorrect_count }} missed</span>
                     </div>
                 </div>
 
@@ -75,7 +87,7 @@
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto">
                     <a href="#detailed-breakdown" 
                        class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-accent text-surface hover:bg-accent/90 text-xs sm:text-sm font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                        <span>View detailed answers</span>
+                        <span>View field & topic breakdown</span>
                     </a>
 
                     <a href="{{ route('dashboard') }}" 
@@ -86,6 +98,69 @@
             </div>
 
             <div id="detailed-breakdown"></div>
+
+            <!-- Official 3-Field Examination Requirement Breakdown -->
+            @if(!empty($fieldPerformance))
+                <div class="bg-surface rounded-3xl border border-[#D9D5C9] p-6 sm:p-8 shadow-xs space-y-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-[#E3DFD5] pb-4">
+                        <div>
+                            <div class="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-accent-tint text-accent text-[11px] font-mono font-semibold mb-1">
+                                <span>OFFICIAL ITPEC GRADING</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-ink tracking-tight">Field Requirement Breakdown</h3>
+                            <p class="text-xs text-stone">Official passing requirement: At least 30% in each of the three fields.</p>
+                        </div>
+                        <div class="text-xs font-mono text-stone sm:text-right">
+                            Threshold: <span class="font-bold text-accent">30% minimum</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+                        @foreach($fieldPerformance as $key => $f)
+                            @php
+                                $fieldPassed = ($f['total'] === 0) || ($f['percentage'] >= 30.0);
+                                $fieldLetter = match($key) {
+                                    'strategy' => 'S',
+                                    'management' => 'M',
+                                    'technology' => 'T',
+                                    default => 'T',
+                                };
+                            @endphp
+                            <div class="border {{ $fieldPassed ? 'border-[#E3DFD5] bg-paper/60' : 'border-wrong/40 bg-wrong-surface/40' }} rounded-2xl p-5 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2.5">
+                                        <span class="w-8 h-8 rounded-lg bg-accent text-surface font-mono font-bold text-xs flex items-center justify-center shrink-0">
+                                            {{ $fieldLetter }}
+                                        </span>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-ink">{{ $f['field_name'] }}</h4>
+                                            <span class="text-[10px] text-stone font-mono">{{ $f['correct'] }}/{{ $f['total'] }} questions</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded-md {{ $fieldPassed ? 'bg-correct-surface text-correct' : 'bg-wrong text-surface' }}">
+                                        {{ $fieldPassed ? 'Pass (>=30%)' : 'Fail (<30%)' }}
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <div class="flex items-baseline justify-between mb-1 text-xs font-mono">
+                                        <span class="text-stone">Score</span>
+                                        <span class="text-lg font-bold {{ $fieldPassed ? 'text-accent' : 'text-wrong' }}">{{ number_format($f['percentage'], 1) }}%</span>
+                                    </div>
+                                    <div class="w-full bg-[#E3DFD5] rounded-full h-2 overflow-hidden">
+                                        <div class="h-2 rounded-full transition-all duration-300 {{ $fieldPassed ? 'bg-accent' : 'bg-wrong' }}" 
+                                             style="width: {{ max(4, $f['percentage']) }}%"></div>
+                                    </div>
+                                </div>
+
+                                <p class="text-[11px] text-stone leading-relaxed">
+                                    {{ $f['description'] }}
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
 
             <!-- Topic Performance -->
             @if(count($topicPerformance) > 0)
