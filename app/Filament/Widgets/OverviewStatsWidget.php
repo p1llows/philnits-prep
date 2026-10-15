@@ -26,20 +26,20 @@ class OverviewStatsWidget extends BaseWidget
 
         // 1. Published questions
         $publishedCount = Question::published()->count();
-        $totalQuestions = Question::count();
+        $inReviewCount = Question::where('status', 'in_review')->count();
         $stats[] = Stat::make('Published questions', number_format($publishedCount))
-            ->description($totalQuestions > 0 ? number_format($totalQuestions) . ' total in database' : 'No questions yet')
-            ->icon('heroicon-o-document-text');
+            ->description($inReviewCount > 0 ? "{$inReviewCount} in review" : 'All questions published');
 
-        // Pre-test calculations (assessment_type = 'initial')
-        $finishedPretests = Assessment::where('assessment_type', 'initial')
+        // Pre-test calculations (assessment_type = 'pretest' or 'initial')
+        $finishedPretests = Assessment::whereNull('archived_at')
+            ->whereIn('assessment_type', ['pretest', 'initial'])
             ->whereIn('status', ['submitted', 'graded'])
             ->whereNotNull('score_percentage')
             ->get();
 
         $finishedCount = $finishedPretests->count();
 
-        // 2. Pre-test pass rate (only if finished pretests exist)
+        // 2. Pre-test pass rate
         if ($finishedCount > 0) {
             $passedCount = $finishedPretests->filter(function ($a) use ($settings) {
                 return $settings->checkPassRule((float) $a->score_percentage, (array) ($a->field_performance ?? []));
@@ -47,19 +47,21 @@ class OverviewStatsWidget extends BaseWidget
 
             $passRate = round(($passedCount / $finishedCount) * 100, 1);
             $stats[] = Stat::make('Pre-test pass rate', "{$passRate}%")
-                ->description("{$passedCount} of {$finishedCount} passed (min {$passMark}% overall, {$fieldMin}%/field)")
-                ->color($passRate >= 60 ? 'success' : 'danger')
-                ->icon('heroicon-o-check-badge');
+                ->description("{$passedCount} of {$finishedCount} finished");
 
             // 3. Average baseline score
             $avgScore = round($finishedPretests->avg('score_percentage'), 1);
             $stats[] = Stat::make('Average baseline score', "{$avgScore}%")
-                ->description("Across {$finishedCount} finished diagnostic tests")
-                ->icon('heroicon-o-chart-bar');
+                ->description("Passing score {$passMark}%");
+        } else {
+            $stats[] = Stat::make('Pre-test pass rate', '—')
+                ->description('0 finished');
+
+            $stats[] = Stat::make('Average baseline score', '—')
+                ->description("Passing score {$passMark}%");
         }
 
         // 4. Weakest field
-        // Computed from all finished pre-test field performances
         if ($finishedCount > 0) {
             $fieldTotals = [
                 'strategy' => ['correct' => 0, 'total' => 0],
@@ -95,10 +97,14 @@ class OverviewStatsWidget extends BaseWidget
                 ];
 
                 $stats[] = Stat::make('Weakest field', $fieldNames[$weakestKey] ?? ucfirst($weakestKey))
-                    ->description("{$weakestPct}% average cohort accuracy")
-                    ->color('danger')
-                    ->icon('heroicon-o-exclamation-triangle');
+                    ->description("Average {$weakestPct}%");
+            } else {
+                $stats[] = Stat::make('Weakest field', '—')
+                    ->description('No field data yet');
             }
+        } else {
+            $stats[] = Stat::make('Weakest field', '—')
+                ->description('No finished pre-tests');
         }
 
         return $stats;

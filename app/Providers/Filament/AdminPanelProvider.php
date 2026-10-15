@@ -10,6 +10,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
+use Filament\View\PanelsRenderHook;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -29,8 +30,17 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->brandLogo(fn () => view('filament.brand'))
             ->brandLogoHeight('28px')
+            ->renderHook(
+                PanelsRenderHook::TOPBAR_START,
+                fn () => view('filament.topbar-brand'),
+            )
+            ->renderHook(
+                PanelsRenderHook::SIDEBAR_NAV_START,
+                fn () => '<script>localStorage.removeItem("collapsedGroups")</script>',
+            )
             ->favicon('/favicon.svg')
             ->viteTheme('resources/css/filament/admin/theme.css')
+            ->darkMode(false)
             ->colors([
                 'primary' => [
                     50 => '#F0F4F9',
@@ -94,20 +104,15 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-academic-cap'),
             ])
             ->navigationGroups([
-                NavigationGroup::make('Overview'),
-                NavigationGroup::make('Content'),
-                NavigationGroup::make('People'),
-                NavigationGroup::make('Assessments'),
-                NavigationGroup::make('Insights'),
-                NavigationGroup::make('Configure'),
-                NavigationGroup::make('System'),
+                NavigationGroup::make('Overview')->collapsible(false),
+                NavigationGroup::make('Content')->collapsible(false),
+                NavigationGroup::make('People')->collapsible(false),
+                NavigationGroup::make('Assessments')->collapsible(false),
+                NavigationGroup::make('Insights')->collapsible(false),
+                NavigationGroup::make('Configure')->collapsible(false),
+                NavigationGroup::make('System')->collapsible(false),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->resources([
-                \App\Filament\Resources\SourcePackageResource::class,
-                \App\Filament\Resources\QuestionResource::class,
-                \App\Filament\Resources\TopicResource::class,
-            ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Dashboard::class,

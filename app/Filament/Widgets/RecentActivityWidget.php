@@ -13,7 +13,11 @@ class RecentActivityWidget extends Widget
 
     protected static string $view = 'filament.widgets.recent-activity-widget';
 
-    protected int | string | array $columnSpan = 'full';
+    protected int | string | array $columnSpan = [
+        'default' => 'full',
+        'md' => 1,
+        'xl' => 1,
+    ];
 
     public function getViewData(): array
     {
