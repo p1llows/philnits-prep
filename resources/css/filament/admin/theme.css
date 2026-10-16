@@ -33,8 +33,103 @@
     --tw-ring-shadow: 0 0 #0000;
 }
 
-.fi-sidebar-header {
-    border-bottom: 1px solid #E3DFD5;
-    box-shadow: none;
-    --tw-ring-shadow: 0 0 #0000;
+/* Paxi sidebar styling: white background, hairline border, full-height distribution without scrolling */
+.fi-sidebar {
+    background-color: #FFFFFF !important;
+    border-right: 1px solid #E3DFD5 !important;
 }
+
+.fi-sidebar-header {
+    background-color: #FFFFFF !important;
+    border-bottom: 1px solid #E3DFD5 !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+}
+
+.fi-sidebar-nav {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    padding: 1.25rem 0.875rem !important;
+    scrollbar-gutter: auto !important;
+    scrollbar-width: thin;
+    overflow-y: auto !important;
+}
+
+.fi-sidebar-nav-groups {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    flex: 1 1 auto !important;
+    gap: 0.75rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    min-height: 0 !important;
+}
+
+.fi-sidebar-group {
+    row-gap: 0.25rem !important;
+}
+
+.fi-sidebar-group-button {
+    padding: 0.25rem 0.5rem !important;
+}
+
+.fi-sidebar-group-label {
+    font-size: 0.875rem !important; /* Retain original text-sm (14px) */
+    font-weight: 500 !important;
+    line-height: 1.5rem !important;
+    color: #64748B !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+}
+
+.fi-sidebar-item-button {
+    padding: 0.5rem 0.625rem !important;
+    border-radius: 0.5rem !important;
+    column-gap: 0.75rem !important;
+}
+
+.fi-sidebar-item-icon {
+    height: 1.5rem !important; /* Retain original h-6 (24px) */
+    width: 1.5rem !important;  /* Retain original w-6 (24px) */
+}
+
+.fi-sidebar-item-label {
+    font-size: 0.875rem !important; /* Retain original text-sm (14px) */
+    line-height: 1.25rem !important;
+    font-weight: 500 !important;
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-button {
+    background-color: #F0F4F9 !important;
+    color: #1F3A5F !important;
+    font-weight: 600 !important;
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-button .fi-sidebar-item-icon {
+    color: #1F3A5F !important;
+}
+
+.fi-sidebar-item:not(.fi-active) .fi-sidebar-item-button:hover {
+    background-color: #F6F4EF !important;
+}
+
+/* Subtle scrollbar behavior if screen height is constrained */
+.fi-sidebar-nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.fi-sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.fi-sidebar-nav::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.fi-sidebar-nav:hover::-webkit-scrollbar-thumb {
+    background: #E3DFD5;
+}
+
