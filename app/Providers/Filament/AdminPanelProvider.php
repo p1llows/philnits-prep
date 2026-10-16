@@ -40,6 +40,7 @@ class AdminPanelProvider extends PanelProvider
             ->font('Inter')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->darkMode(false)
+            ->profile(isSimple: false)
             ->colors([
                 'primary' => [
                     50 => '#F0F4F9',
@@ -97,15 +98,9 @@ class AdminPanelProvider extends PanelProvider
                 ],
             ])
             ->renderHook(
-                PanelsRenderHook::USER_MENU_BEFORE,
-                fn () => view('filament.topbar-learner-link'),
+                PanelsRenderHook::BODY_END,
+                fn () => view('filament.shortcuts'),
             )
-            ->userMenuItems([
-                'learner' => MenuItem::make()
-                    ->label('View as learner')
-                    ->url('/dashboard')
-                    ->icon('heroicon-o-arrow-top-right-on-square'),
-            ])
             ->navigationGroups([
                 NavigationGroup::make('Overview')->collapsible(false),
                 NavigationGroup::make('Content')->collapsible(false),

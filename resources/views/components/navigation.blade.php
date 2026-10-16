@@ -66,13 +66,6 @@
                                 {{ __('Analytics') }}
                             </a>
                         @endif
-
-                        @if(Auth::user()->isAdmin())
-                            <a href="/admin" 
-                               class="transition-colors duration-200 {{ request()->is('admin*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
-                                {{ __('Admin') }}
-                            </a>
-                        @endif
                     @endif
                 </div>
             </div>
@@ -197,11 +190,6 @@
                 {{ __('Analytics') }}
             </a>
 
-            @if(Auth::user()->isAdmin())
-                <a href="/admin" class="block px-3.5 py-2 rounded-xl text-sm font-semibold {{ request()->is('admin*') ? 'bg-accent text-surface shadow-xs' : 'text-accent hover:bg-surface' }}">
-                    {{ __('Admin Area') }}
-                </a>
-            @endif
 
             <div class="pt-3 border-t border-[#E3DFD5]">
                 <div class="flex items-center px-2 py-1 mb-2">

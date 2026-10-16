@@ -151,3 +151,18 @@
     background: #E3DFD5;
 }
 
+/* User menu dropdown card and avatar ring matching learner design */
+.fi-user-menu button:focus,
+.fi-user-menu button[aria-expanded="true"] {
+    outline: none !important;
+    box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #1F3A5F !important;
+}
+
+.fi-user-menu .fi-dropdown-panel {
+    border-radius: 1rem !important;
+    border: 1px solid #E3DFD5 !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04) !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+

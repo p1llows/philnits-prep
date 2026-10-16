@@ -38,8 +38,22 @@ class AdminPanelTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Paxi');
         $response->assertSee('paxi-mark.svg');
+        $response->assertSee('Profile Settings');
+        $response->assertSee('Log Out');
         $response->assertSee('Learner funnel');
         $response->assertSee('Overview');
+    }
+
+    public function test_admin_can_access_admin_profile_page(): void
+    {
+        $admin = User::factory()->create([
+            'role' => 'admin',
+            'email_verified_at' => now(),
+        ]);
+
+        $response = $this->actingAs($admin)->get('/admin/profile');
+        $response->assertStatus(200);
+        $response->assertSee('Profile');
     }
 
     public function test_admin_can_access_pretest_and_rules_page(): void
