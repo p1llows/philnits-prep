@@ -117,6 +117,22 @@
     background-color: #F6F4EF !important;
 }
 
+/* Collapsed sidebar rail styling on desktop */
+.fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-nav {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+.fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-button {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    justify-content: center !important;
+}
+
+.fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-button {
+    display: none !important;
+}
+
 /* Subtle scrollbar behavior if screen height is constrained */
 .fi-sidebar-nav::-webkit-scrollbar {
     width: 4px;
