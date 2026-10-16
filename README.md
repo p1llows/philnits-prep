@@ -50,20 +50,23 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-### 2. Database Setup
+### 2. Database & Application Setup
 
-Using Docker (Recommended):
+**Using Docker (Zero-Config / One-Step):**
+
+Just start Docker — everything (database migrations, permissions, asset compilation, and web server) starts automatically:
 
 ```bash
-# Start Docker containers
-docker-compose up -d
-
-# Run migrations
-docker-compose exec app php artisan migrate
-
-# Seed database with test users
-docker-compose exec app php artisan db:seed
+docker compose up -d
 ```
+
+Your application is immediately live at **`http://localhost:8000`**!
+
+To stop containers when done:
+```bash
+docker compose down
+```
+
 
 Without Docker:
 
