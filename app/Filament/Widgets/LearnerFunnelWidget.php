@@ -8,7 +8,7 @@ use Filament\Widgets\Widget;
 
 class LearnerFunnelWidget extends Widget
 {
-    protected static ?int $sort = 1;
+    protected static ?int $sort = 2;
 
     protected static bool $isLazy = false;
 
@@ -21,17 +21,21 @@ class LearnerFunnelWidget extends Widget
         $totalRegistered = User::count();
         $verifiedEmail = User::whereNotNull('email_verified_at')->count();
 
+        $registeredUserIds = User::pluck('id')->toArray();
+
         // Step 3: Started pre-test
-        $startedPretestUserIds = Assessment::where('assessment_type', 'initial')
-            ->distinct('user_id')
+        $startedPretestUserIds = Assessment::whereIn('assessment_type', ['initial', 'pretest'])
+            ->whereIn('user_id', $registeredUserIds)
+            ->distinct()
             ->pluck('user_id')
             ->toArray();
         $startedPretest = count($startedPretestUserIds);
 
         // Step 4: Finished pre-test
-        $finishedPretestUserIds = Assessment::where('assessment_type', 'initial')
+        $finishedPretestUserIds = Assessment::whereIn('assessment_type', ['initial', 'pretest'])
             ->whereIn('status', ['submitted', 'graded'])
-            ->distinct('user_id')
+            ->whereIn('user_id', $registeredUserIds)
+            ->distinct()
             ->pluck('user_id')
             ->toArray();
         $finishedPretest = count($finishedPretestUserIds);
@@ -85,7 +89,7 @@ class LearnerFunnelWidget extends Widget
         // Compute percentages of registered
         foreach ($steps as &$step) {
             $step['percent_of_registered'] = $totalRegistered > 0
-                ? round(($step['count'] / $totalRegistered) * 100, 1)
+                ? min(100.0, round(($step['count'] / $totalRegistered) * 100, 1))
                 : 0.0;
         }
 
@@ -95,9 +99,9 @@ class LearnerFunnelWidget extends Widget
 
         for ($i = 0; $i < count($steps) - 1; $i++) {
             $drop = $steps[$i]['count'] - $steps[$i + 1]['count'];
-            if ($drop > $maxDropCount && $drop > 0) {
+            if ($steps[$i]['count'] >= 10 && $drop > $maxDropCount && $drop > 0) {
                 $maxDropCount = $drop;
-                $pctLoss = $steps[$i]['count'] > 0 ? round(($drop / $steps[$i]['count']) * 100, 1) : 0;
+                $pctLoss = round(($drop / $steps[$i]['count']) * 100, 1);
                 $biggestDrop = [
                     'from' => $steps[$i]['name'],
                     'to' => $steps[$i + 1]['name'],

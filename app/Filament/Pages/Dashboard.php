@@ -55,8 +55,8 @@ class Dashboard extends BaseDashboard
     public function getWidgets(): array
     {
         return [
-            LearnerFunnelWidget::class,
             OverviewStatsWidget::class,
+            LearnerFunnelWidget::class,
             NeedsAttentionWidget::class,
             \App\Filament\Widgets\RecentActivityWidget::class,
         ];

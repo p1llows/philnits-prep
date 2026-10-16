@@ -13,7 +13,11 @@ class HardestQuestionsWidget extends BaseWidget
 {
     protected static ?string $heading = 'Hardest questions';
 
-    protected static ?int $sort = 3;
+    protected static ?string $pollingInterval = null;
+
+    protected static ?int $sort = 4;
+
+    protected static bool $isLazy = false;
 
     protected int | string | array $columnSpan = 'full';
 
@@ -29,30 +33,37 @@ class HardestQuestionsWidget extends BaseWidget
                             $query->where('is_correct', true);
                         },
                     ])
-                    ->having('assessment_answers_count', '>=', 10)
-                    ->orderByRaw('(CAST(correct_answers_count AS FLOAT) / assessment_answers_count) ASC')
+                    ->has('assessmentAnswers', '>=', 5)
+                    ->orderByRaw('CASE WHEN (SELECT count(*) FROM assessment_answers WHERE assessment_answers.question_id = questions.id) > 0 THEN (CAST((SELECT count(*) FROM assessment_answers WHERE assessment_answers.question_id = questions.id AND assessment_answers.is_correct = 1) AS FLOAT) / (SELECT count(*) FROM assessment_answers WHERE assessment_answers.question_id = questions.id)) ELSE 0 END ASC')
             )
             ->columns([
                 Tables\Columns\TextColumn::make('source_question_number')
                     ->label('Question')
-                    ->formatStateUsing(fn ($record) => "Q{$record->source_question_number}"),
+                    ->formatStateUsing(fn ($record) => "Q{$record->source_question_number}")
+                    ->width('80px'),
 
                 Tables\Columns\TextColumn::make('sourcePackage.name')
                     ->label('Source')
                     ->description(fn (Question $record) => $record->sourcePackage?->exam_session_label)
-                    ->default('—'),
+                    ->default('—')
+                    ->wrap(),
 
                 Tables\Columns\TextColumn::make('topic.name')
                     ->label('Topic')
                     ->description(fn (Question $record) => ucfirst($record->topic?->field ?? ''))
-                    ->default('—'),
+                    ->default('—')
+                    ->wrap(),
 
                 Tables\Columns\TextColumn::make('assessment_answers_count')
                     ->label('Attempts')
+                    ->alignCenter()
+                    ->width('90px')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('correct_rate')
                     ->label('Correct rate')
+                    ->alignCenter()
+                    ->width('110px')
                     ->badge()
                     ->color(function (Question $record) {
                         $total = $record->assessment_answers_count;
@@ -68,6 +79,7 @@ class HardestQuestionsWidget extends BaseWidget
                     }),
             ])
             ->emptyStateHeading('No questions with sufficient attempts')
-            ->emptyStateDescription('Questions will appear here once they have at least 10 learner attempts.');
+            ->emptyStateDescription('Questions will appear here once they have at least 5 learner attempts.')
+            ->emptyStateIcon('heroicon-o-chart-bar');
     }
 }

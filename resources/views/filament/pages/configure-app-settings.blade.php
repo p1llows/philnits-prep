@@ -1,11 +1,10 @@
 <x-filament-panels::page>
-    <form wire:submit="save">
+    <x-filament-panels::form wire:submit="save">
         {{ $this->form }}
 
-        <div class="mt-6 flex justify-end">
-            <x-filament::button type="submit" size="md">
-                Save settings
-            </x-filament::button>
-        </div>
-    </form>
+        <x-filament-panels::form.actions
+            :actions="$this->getFormActions()"
+            :are-sticky="true"
+        />
+    </x-filament-panels::form>
 </x-filament-panels::page>

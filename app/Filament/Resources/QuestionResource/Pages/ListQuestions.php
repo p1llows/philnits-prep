@@ -13,7 +13,13 @@ class ListQuestions extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('New question'),
         ];
+    }
+
+    public function getSubheading(): ?string
+    {
+        return 'Manage PhilNITS exam question bank, syllabus classifications, and publication states.';
     }
 }

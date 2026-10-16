@@ -12,9 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class OverviewStatsWidget extends BaseWidget
 {
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 1;
 
     protected static bool $isLazy = false;
+
+    protected static ?string $pollingInterval = null;
+
+    protected int | string | array $columnSpan = 'full';
 
     protected function getStats(): array
     {
@@ -28,7 +32,9 @@ class OverviewStatsWidget extends BaseWidget
         $publishedCount = Question::published()->count();
         $inReviewCount = Question::where('status', 'in_review')->count();
         $stats[] = Stat::make('Published questions', number_format($publishedCount))
-            ->description($inReviewCount > 0 ? "{$inReviewCount} in review" : 'All questions published');
+            ->description($inReviewCount > 0 ? "{$inReviewCount} pending review" : 'All questions published')
+            ->descriptionIcon($inReviewCount > 0 ? 'heroicon-m-clock' : 'heroicon-m-check-circle')
+            ->color($inReviewCount > 0 ? 'warning' : 'success');
 
         // Pre-test calculations (assessment_type = 'pretest' or 'initial')
         $finishedPretests = Assessment::whereNull('archived_at')
@@ -47,18 +53,26 @@ class OverviewStatsWidget extends BaseWidget
 
             $passRate = round(($passedCount / $finishedCount) * 100, 1);
             $stats[] = Stat::make('Pre-test pass rate', "{$passRate}%")
-                ->description("{$passedCount} of {$finishedCount} finished");
+                ->description("{$passedCount} of {$finishedCount} completed")
+                ->descriptionIcon('heroicon-m-academic-cap')
+                ->color($passRate >= $passMark ? 'success' : 'warning');
 
             // 3. Average baseline score
             $avgScore = round($finishedPretests->avg('score_percentage'), 1);
             $stats[] = Stat::make('Average baseline score', "{$avgScore}%")
-                ->description("Passing score {$passMark}%");
+                ->description("Pass threshold: {$passMark}%")
+                ->descriptionIcon('heroicon-m-chart-bar')
+                ->color($avgScore >= $passMark ? 'success' : 'warning');
         } else {
             $stats[] = Stat::make('Pre-test pass rate', '—')
-                ->description('0 finished');
+                ->description('No completed attempts')
+                ->descriptionIcon('heroicon-m-academic-cap')
+                ->color('gray');
 
             $stats[] = Stat::make('Average baseline score', '—')
-                ->description("Passing score {$passMark}%");
+                ->description("Pass threshold: {$passMark}%")
+                ->descriptionIcon('heroicon-m-chart-bar')
+                ->color('gray');
         }
 
         // 4. Weakest field
@@ -97,14 +111,18 @@ class OverviewStatsWidget extends BaseWidget
                 ];
 
                 $stats[] = Stat::make('Weakest field', $fieldNames[$weakestKey] ?? ucfirst($weakestKey))
-                    ->description("Average {$weakestPct}%");
+                    ->description("Curriculum average {$weakestPct}%")
+                    ->descriptionIcon('heroicon-m-exclamation-triangle')
+                    ->color('warning');
             } else {
                 $stats[] = Stat::make('Weakest field', '—')
-                    ->description('No field data yet');
+                    ->description('No field data yet')
+                    ->color('gray');
             }
         } else {
             $stats[] = Stat::make('Weakest field', '—')
-                ->description('No finished pre-tests');
+                ->description('Awaiting diagnostic results')
+                ->color('gray');
         }
 
         return $stats;

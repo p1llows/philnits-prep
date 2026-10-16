@@ -54,6 +54,48 @@ class AdminPanelTest extends TestCase
         $response->assertSee('Study roadmap');
     }
 
+    public function test_admin_panel_navigation_groups_and_subheadings(): void
+    {
+        $admin = User::factory()->create([
+            'role' => 'admin',
+            'email_verified_at' => now(),
+        ]);
+
+        $response = $this->actingAs($admin)->get('/admin');
+        $response->assertStatus(200);
+        $response->assertSee('Overview');
+        $response->assertSee('Content');
+        $response->assertSee('People');
+        $response->assertSee('Assessments');
+        $response->assertSee('Insights');
+        $response->assertSee('Configure');
+        $response->assertSee('System');
+        $response->assertSee('How Paxi is doing and what needs your attention.');
+    }
+
+    public function test_admin_can_access_analytics_and_review_queue(): void
+    {
+        $admin = User::factory()->create([
+            'role' => 'admin',
+            'email_verified_at' => now(),
+        ]);
+
+        $response = $this->actingAs($admin)->get('/admin/analytics');
+        $response->assertStatus(200);
+        $response->assertSee('Analytics');
+        $response->assertSee('Overall examination performance, field mastery comparisons, and difficulty diagnostics.');
+        $response->assertSee('Completed pre-tests');
+        $response->assertSee('Examination pass rate');
+        $response->assertSee('Average score by field');
+        $response->assertSee('Pre-test score spread');
+        $response->assertSee('Hardest questions');
+
+        $responseQueue = $this->actingAs($admin)->get('/admin/review-queue');
+        $responseQueue->assertStatus(200);
+        $responseQueue->assertSee('Review queue');
+        $responseQueue->assertSee('Verify AI-extracted questions, confirm answer keys, and approve syllabus topics.');
+    }
+
     public function test_dashboard_is_strictly_learner_facing_and_never_shows_admin_content(): void
     {
         $admin = User::factory()->create([

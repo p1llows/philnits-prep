@@ -10,9 +10,9 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
-use Filament\View\PanelsRenderHook;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -28,17 +28,16 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->brandLogo(fn () => view('filament.brand'))
-            ->brandLogoHeight('28px')
-            ->renderHook(
-                PanelsRenderHook::TOPBAR_START,
-                fn () => view('filament.topbar-brand'),
-            )
-            ->renderHook(
-                PanelsRenderHook::SIDEBAR_NAV_START,
-                fn () => '<script>localStorage.removeItem("collapsedGroups")</script>',
-            )
-            ->favicon('/favicon.svg')
+            ->brandName('Paxi')
+            ->brandLogo(asset('paxi-mark.svg'))
+            ->brandLogoHeight('1.75rem')
+            ->favicon(asset('favicon.svg'))
+            ->sidebarCollapsibleOnDesktop(false)
+            ->sidebarWidth('16rem')
+            ->maxContentWidth('7xl')
+            ->topNavigation(false)
+            ->breadcrumbs(false)
+            ->font('Inter')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->darkMode(false)
             ->colors([
@@ -97,11 +96,15 @@ class AdminPanelProvider extends PanelProvider
                     950 => '#0A1423',
                 ],
             ])
+            ->renderHook(
+                PanelsRenderHook::USER_MENU_BEFORE,
+                fn () => view('filament.topbar-learner-link'),
+            )
             ->userMenuItems([
                 'learner' => MenuItem::make()
                     ->label('View as learner')
                     ->url('/dashboard')
-                    ->icon('heroicon-o-academic-cap'),
+                    ->icon('heroicon-o-arrow-top-right-on-square'),
             ])
             ->navigationGroups([
                 NavigationGroup::make('Overview')->collapsible(false),

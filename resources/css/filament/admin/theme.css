@@ -1,134 +1,18 @@
-@import '../../../../vendor/filament/filament/resources/css/theme.css';
-
-/* stylelint-disable-next-line at-rule-no-unknown */
+@import '/vendor/filament/filament/resources/css/theme.css';
 @config 'tailwind.config.js';
 
-/* Paxi warm paper background & clean hairline borders */
-body {
-    background-color: #F6F4EF !important;
-    color: #1B1A17;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
-
-.fi-body {
-    background-color: #F6F4EF !important;
-}
-
-.fi-sidebar {
-    background-color: #FFFFFF !important;
-    border-right: 1px solid #E3DFD5 !important;
-}
-
-.fi-topbar {
-    background-color: #FFFFFF !important;
-    border-bottom: 1px solid #E3DFD5 !important;
-}
-
-/* Pull avatar away from the viewport edge */
-.fi-topbar > nav {
-    padding-right: 1.5rem !important;
-}
-
-.fi-user-menu {
-    margin-right: 0.5rem !important;
-}
-
-.fi-main {
-    background-color: #F6F4EF !important;
-}
-
-/* Hairline borders on cards, sections, widgets */
+/* Paxi additions: cards with a 1px gray-200 border and no shadow, radius 0.75rem on cards and 0.5rem on inputs */
 .fi-section,
-.fi-card,
 .fi-ta-ctn,
-.fi-wi-widget > div,
+.fi-wi-card,
 .fi-wi-stats-overview-stat {
-    border: 1px solid #E3DFD5 !important;
-    border-radius: 12px !important;
-    background-color: #FFFFFF !important;
-    box-shadow: none !important;
+    border: 1px solid #E3DFD5;
+    border-radius: 0.75rem;
+    box-shadow: none;
 }
 
-/* Stat card typography matching proposed UI */
-.fi-wi-stats-overview-stat-label {
-    font-size: 0.75rem !important;
-    font-weight: 500 !important;
-    color: #6E6A60 !important;
-}
-
-.fi-wi-stats-overview-stat-value {
-    font-size: 1.5rem !important;
-    font-weight: 700 !important;
-    color: #1B1A17 !important;
-    letter-spacing: -0.02em !important;
-}
-
-.fi-wi-stats-overview-stat-description {
-    font-size: 0.75rem !important;
-    color: #A29D91 !important;
-}
-
-/* Hide stat icons to match clean flat text design */
-.fi-wi-stats-overview-stat-icon {
-    display: none !important;
-}
-
-/*
- * Force sidebar group items visible.
- * Alpine x-show sets display:none and x-collapse sets height:0.
- * Override both so non-collapsible groups always show their items.
- */
-.fi-sidebar-group .fi-sidebar-group-items {
-    display: flex !important;
-    flex-direction: column !important;
-    height: auto !important;
-    overflow: visible !important;
-    opacity: 1 !important;
-}
-
-/* Active navigation item styling matching proposed UI */
-.fi-sidebar-item-active > a {
-    background-color: #E6ECF4 !important;
-    color: #1F3A5F !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-}
-
-.fi-sidebar-item > a {
-    border-radius: 8px !important;
-    color: #57534A !important;
-}
-
-.fi-sidebar-item > a:hover {
-    background-color: #F0F4F9 !important;
-    color: #1F3A5F !important;
-}
-
-.fi-sidebar-group-label {
-    text-transform: capitalize !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.025em !important;
-    color: #6E6A60 !important;
-}
-
-/* Buttons matching proposed UI */
-.fi-btn-color-primary {
-    background-color: #1F3A5F !important;
-    color: #FFFFFF !important;
-    border-radius: 8px !important;
-}
-
-.fi-btn-color-primary:hover {
-    background-color: #1A3253 !important;
-}
-
-.fi-btn-color-gray.fi-btn-outlined {
-    border-color: #CBD7E7 !important;
-    background-color: #FFFFFF !important;
-    color: #1F3A5F !important;
-    border-radius: 8px !important;
-}
-
-.fi-btn-color-gray.fi-btn-outlined:hover {
-    background-color: #F0F4F9 !important;
+.fi-input,
+.fi-select-input,
+.fi-fo-textarea {
+    border-radius: 0.5rem;
 }

@@ -38,6 +38,11 @@ class PreTestAndRules extends Page implements HasForms
         return auth()->check() && auth()->user()->isAdmin();
     }
 
+    public function getSubheading(): ?string
+    {
+        return 'Configure mandatory diagnostic exam criteria, passing thresholds, and personal study roadmap rules.';
+    }
+
     public ?array $data = [];
 
     public function mount(AppSettings $settings): void
@@ -65,7 +70,7 @@ class PreTestAndRules extends Page implements HasForms
     {
         return $form
             ->schema([
-                Grid::make(['default' => 1, 'lg' => 2])
+                Grid::make(['default' => 1, 'xl' => 2])
                     ->schema([
                         // Left Column: Baseline pre-test
                         Section::make('Baseline pre-test')
@@ -79,7 +84,7 @@ class PreTestAndRules extends Page implements HasForms
                                 Select::make('pretest_source_package_id')
                                     ->label('Pre-test source package')
                                     ->options(fn () => SourcePackage::pluck('name', 'id')->toArray())
-                                    ->placeholder('Select source package (optional)')
+                                    ->placeholder('Choose a package')
                                     ->searchable(),
 
                                 Grid::make(2)->schema([
@@ -88,14 +93,16 @@ class PreTestAndRules extends Page implements HasForms
                                         ->numeric()
                                         ->minValue(1)
                                         ->required()
-                                        ->default(100),
+                                        ->default(100)
+                                        ->extraInputAttributes(['style' => 'max-width: 12rem;']),
 
                                     TextInput::make('time_limit_minutes')
                                         ->label('Time limit (minutes)')
                                         ->numeric()
                                         ->minValue(1)
                                         ->required()
-                                        ->default(120),
+                                        ->default(120)
+                                        ->extraInputAttributes(['style' => 'max-width: 12rem;']),
                                 ]),
 
                                 Toggle::make('allow_pause_resume')
@@ -109,7 +116,8 @@ class PreTestAndRules extends Page implements HasForms
                                     ->minValue(1)
                                     ->visible(fn (Get $get) => (bool) $get('allow_pause_resume'))
                                     ->required(fn (Get $get) => (bool) $get('allow_pause_resume'))
-                                    ->default(7),
+                                    ->default(7)
+                                    ->extraInputAttributes(['style' => 'max-width: 12rem;']),
 
                                 Toggle::make('shuffle_choices')
                                     ->label('Shuffle answer choices')
@@ -134,7 +142,8 @@ class PreTestAndRules extends Page implements HasForms
                                                 ->minValue(1)
                                                 ->maxValue(100)
                                                 ->required()
-                                                ->default(60),
+                                                ->default(60)
+                                                ->extraInputAttributes(['style' => 'max-width: 12rem;']),
 
                                             TextInput::make('field_minimum_percent')
                                                 ->label('Minimum per field (%)')
@@ -142,7 +151,8 @@ class PreTestAndRules extends Page implements HasForms
                                                 ->minValue(1)
                                                 ->maxValue(100)
                                                 ->required()
-                                                ->default(30),
+                                                ->default(30)
+                                                ->extraInputAttributes(['style' => 'max-width: 12rem;']),
                                         ]),
 
                                         Select::make('retake_policy')
@@ -165,7 +175,8 @@ class PreTestAndRules extends Page implements HasForms
                                             ->minValue(1)
                                             ->maxValue(100)
                                             ->required()
-                                            ->default(50),
+                                            ->default(50)
+                                            ->extraInputAttributes(['style' => 'max-width: 12rem;']),
 
                                         Select::make('roadmap_order')
                                             ->label('Order topics by')
@@ -237,5 +248,14 @@ class PreTestAndRules extends Page implements HasForms
             ->title('Settings saved successfully')
             ->success()
             ->send();
+    }
+
+    protected function getFormActions(): array
+    {
+        return [
+            \Filament\Actions\Action::make('save')
+                ->label('Save changes')
+                ->submit('save'),
+        ];
     }
 }

@@ -102,15 +102,18 @@ class SourcePackageResource extends Resource
                     ->label('Package')
                     ->description(fn (SourcePackage $record) => $record->exam_session_label)
                     ->searchable()
+                    ->wrap()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
+                    ->width('120px')
+                    ->alignCenter()
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'published' => 'primary',
-                        'in_review' => 'gray',
-                        'parsing' => 'gray',
+                        'published' => 'success',
+                        'in_review' => 'warning',
+                        'parsing' => 'info',
                         'failed' => 'danger',
                         default => 'gray',
                     })
@@ -125,6 +128,8 @@ class SourcePackageResource extends Resource
 
                 Tables\Columns\TextColumn::make('questions_progress')
                     ->label('Questions')
+                    ->width('110px')
+                    ->alignCenter()
                     ->getStateUsing(function (SourcePackage $record) {
                         $approved = $record->questions()->whereIn('status', ['approved', 'published'])->count();
                         $total = $record->questions()->count();
@@ -133,6 +138,8 @@ class SourcePackageResource extends Resource
 
                 Tables\Columns\TextColumn::make('use')
                     ->label('Use')
+                    ->width('90px')
+                    ->alignCenter()
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'pretest' => 'primary',
@@ -142,9 +149,13 @@ class SourcePackageResource extends Resource
 
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Updated')
+                    ->width('120px')
                     ->dateTime('M j, Y')
                     ->sortable(),
             ])
+            ->emptyStateHeading('No source packages uploaded')
+            ->emptyStateDescription('Upload past paper booklets and answer keys in PDF format to build the question bank.')
+            ->emptyStateIcon('heroicon-o-archive-box')
             ->actions([
                 Tables\Actions\Action::make('open')
                     ->label('Open')
@@ -158,6 +169,8 @@ class SourcePackageResource extends Resource
                     ->modalHeading('Publish approved questions')
                     ->modalDescription('Are you sure you want to publish all approved questions in this package to learners? Questions without an official answer key or pending review will not be published.')
                     ->visible(fn (SourcePackage $record) => !empty($record->answer_key_path))
+                    ->disabled(fn (SourcePackage $record) => $record->questions()->where('status', 'approved')->count() === 0)
+                    ->tooltip(fn (SourcePackage $record) => $record->questions()->where('status', 'approved')->count() === 0 ? 'Approve at least one question first' : null)
                     ->action(function (SourcePackage $record) {
                         if (empty($record->answer_key_path)) {
                             Notification::make()
@@ -195,7 +208,9 @@ class SourcePackageResource extends Resource
                     }),
 
                 Tables\Actions\EditAction::make(),
-            ]);
+            ])
+            ->defaultPaginationPageOption(25)
+            ->paginationPageOptions([10, 25, 50]);
     }
 
     public static function getRelations(): array

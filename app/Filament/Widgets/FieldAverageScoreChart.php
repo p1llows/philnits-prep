@@ -9,23 +9,59 @@ class FieldAverageScoreChart extends ChartWidget
 {
     protected static ?string $heading = 'Average score by field';
 
-    protected static ?int $sort = 1;
+    protected static ?string $description = 'Average performance across Strategy, Management, and Technology';
 
-    protected static ?string $maxHeight = '280px';
+    protected static ?int $sort = 2;
+
+    protected static bool $isLazy = false;
+
+    protected static ?string $maxHeight = '240px';
+
+    protected int | string | array $columnSpan = [
+        'default' => 'full',
+        'md' => 1,
+        'lg' => 1,
+    ];
+
+    protected static ?string $pollingInterval = null;
+
+    public function render(): \Illuminate\Contracts\View\View
+    {
+        $hasData = Assessment::whereNull('archived_at')
+            ->whereIn('assessment_type', ['pretest', 'initial'])
+            ->whereIn('status', ['submitted', 'graded'])
+            ->whereNotNull('field_performance')
+            ->exists();
+
+        if (! $hasData) {
+            return view('filament.widgets.chart-empty-card', [
+                'heading' => $this->getHeading(),
+                'description' => 'No finished pre-tests yet',
+            ]);
+        }
+
+        return parent::render();
+    }
 
     protected function getData(): array
     {
         // Calculate average scores from completed pre-tests
         $assessments = Assessment::whereNull('archived_at')
-            ->where('assessment_type', 'pretest')
+            ->whereIn('assessment_type', ['pretest', 'initial'])
             ->whereIn('status', ['submitted', 'graded'])
             ->whereNotNull('field_performance')
             ->get();
 
         if ($assessments->isEmpty()) {
             return [
-                'datasets' => [],
-                'labels' => [],
+                'datasets' => [
+                    [
+                        'label' => 'Average score (%)',
+                        'data' => [0, 0, 0],
+                        'backgroundColor' => ['#CBD7E7', '#CBD7E7', '#CBD7E7'],
+                    ],
+                ],
+                'labels' => ['Strategy', 'Management', 'Technology'],
             ];
         }
 

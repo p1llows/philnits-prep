@@ -28,6 +28,11 @@ class ReviewQueue extends Page implements HasForms
 
     protected static string $view = 'filament.pages.review-queue';
 
+    public function getSubheading(): ?string
+    {
+        return 'Verify AI-extracted questions, confirm answer keys, and approve syllabus topics.';
+    }
+
     public ?int $selectedPackageId = null;
 
     public int $currentIndex = 0;

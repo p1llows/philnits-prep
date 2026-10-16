@@ -40,6 +40,11 @@ class ConfigureAppSettings extends Page implements HasForms
         return auth()->check() && auth()->user()->isAdmin();
     }
 
+    public function getSubheading(): ?string
+    {
+        return 'Global branding, learner registration access, verification limits, and announcement notices.';
+    }
+
     public function mount(AppSettings $settings): void
     {
         $this->form->fill([
@@ -87,22 +92,24 @@ class ConfigureAppSettings extends Page implements HasForms
                                 ->maxLength(255),
 
                             FileUpload::make('app_logo_path')
-                                ->label('Replace logo')
+                                ->label('Logo')
                                 ->disk('public')
                                 ->directory('brand')
                                 ->image()
+                                ->imagePreviewHeight('64px')
                                 ->acceptedFileTypes(['image/svg+xml', 'image/png'])
                                 ->maxSize(2048)
-                                ->helperText('Falls back to /paxi-mark.svg if empty.'),
+                                ->helperText('Current default: /paxi-mark.svg'),
 
                             FileUpload::make('app_favicon_path')
-                                ->label('Replace favicon')
+                                ->label('Favicon')
                                 ->disk('public')
                                 ->directory('brand')
                                 ->image()
+                                ->imagePreviewHeight('48px')
                                 ->acceptedFileTypes(['image/svg+xml', 'image/png', 'image/x-icon'])
                                 ->maxSize(1024)
-                                ->helperText('Falls back to /favicon.svg if empty.'),
+                                ->helperText('Current default: /favicon.svg'),
                         ]),
                     ]),
 
@@ -140,30 +147,6 @@ class ConfigureAppSettings extends Page implements HasForms
                         ]),
                     ]),
 
-                Section::make('Welcome page content')
-                    ->description('Custom FAQ items and footer disclaimer')
-                    ->schema([
-                        Repeater::make('welcome_faq_items')
-                            ->label('FAQ items')
-                            ->schema([
-                                TextInput::make('question')
-                                    ->label('Question')
-                                    ->required(),
-                                Textarea::make('answer')
-                                    ->label('Answer')
-                                    ->required()
-                                    ->rows(3),
-                            ])
-                            ->defaultItems(0)
-                            ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => $state['question'] ?? null),
-
-                        Textarea::make('welcome_disclaimer_text')
-                            ->label('Disclaimer text')
-                            ->rows(3)
-                            ->helperText('Custom disclaimer displayed above the footer on the welcome page.'),
-                    ]),
-
                 Section::make('Verification email')
                     ->description('Email notification sender and subject settings')
                     ->schema([
@@ -191,6 +174,30 @@ class ConfigureAppSettings extends Page implements HasForms
                             ->label('Banner message')
                             ->maxLength(255)
                             ->helperText('Plain text shown in a hairline border paper background.'),
+                    ]),
+
+                Section::make('Welcome page content')
+                    ->description('Custom FAQ items and footer disclaimer')
+                    ->schema([
+                        Repeater::make('welcome_faq_items')
+                            ->label('FAQ items')
+                            ->schema([
+                                TextInput::make('question')
+                                    ->label('Question')
+                                    ->required(),
+                                Textarea::make('answer')
+                                    ->label('Answer')
+                                    ->required()
+                                    ->rows(3),
+                            ])
+                            ->defaultItems(0)
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['question'] ?? null),
+
+                        Textarea::make('welcome_disclaimer_text')
+                            ->label('Disclaimer text')
+                            ->rows(3)
+                            ->helperText('Custom disclaimer displayed above the footer on the welcome page.'),
                     ]),
             ])
             ->statePath('data');
@@ -251,5 +258,14 @@ class ConfigureAppSettings extends Page implements HasForms
             ->title('App settings saved successfully')
             ->success()
             ->send();
+    }
+
+    protected function getFormActions(): array
+    {
+        return [
+            \Filament\Actions\Action::make('save')
+                ->label('Save changes')
+                ->submit('save'),
+        ];
     }
 }

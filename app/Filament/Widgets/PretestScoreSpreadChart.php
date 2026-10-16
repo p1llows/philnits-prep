@@ -9,22 +9,58 @@ class PretestScoreSpreadChart extends ChartWidget
 {
     protected static ?string $heading = 'Pre-test score spread';
 
-    protected static ?int $sort = 2;
+    protected static ?string $description = 'Distribution of overall learner baseline assessment scores';
 
-    protected static ?string $maxHeight = '280px';
+    protected static ?int $sort = 3;
+
+    protected static bool $isLazy = false;
+
+    protected static ?string $maxHeight = '240px';
+
+    protected int | string | array $columnSpan = [
+        'default' => 'full',
+        'md' => 1,
+        'lg' => 1,
+    ];
+
+    protected static ?string $pollingInterval = null;
+
+    public function render(): \Illuminate\Contracts\View\View
+    {
+        $hasData = Assessment::whereNull('archived_at')
+            ->whereIn('assessment_type', ['pretest', 'initial'])
+            ->whereIn('status', ['submitted', 'graded'])
+            ->whereNotNull('score_percentage')
+            ->exists();
+
+        if (! $hasData) {
+            return view('filament.widgets.chart-empty-card', [
+                'heading' => $this->getHeading(),
+                'description' => 'No finished pre-tests yet',
+            ]);
+        }
+
+        return parent::render();
+    }
 
     protected function getData(): array
     {
         $scores = Assessment::whereNull('archived_at')
-            ->where('assessment_type', 'pretest')
+            ->whereIn('assessment_type', ['pretest', 'initial'])
             ->whereIn('status', ['submitted', 'graded'])
             ->whereNotNull('score_percentage')
             ->pluck('score_percentage');
 
         if ($scores->isEmpty()) {
             return [
-                'datasets' => [],
-                'labels' => [],
+                'datasets' => [
+                    [
+                        'label' => 'Learners',
+                        'data' => [0, 0, 0, 0, 0],
+                        'backgroundColor' => '#CBD7E7',
+                    ],
+                ],
+                'labels' => ['< 40%', '40-59%', '60-69%', '70-79%', '80-100%'],
             ];
         }
 

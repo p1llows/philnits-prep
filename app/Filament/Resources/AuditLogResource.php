@@ -23,7 +23,7 @@ class AuditLogResource extends Resource
 
     protected static ?string $modelLabel = 'audit log';
 
-    protected static ?string $pluralModelLabel = 'audit logs';
+    protected static ?string $pluralModelLabel = 'Audit log';
 
     protected static ?int $navigationSort = 1;
 
@@ -58,21 +58,24 @@ class AuditLogResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('When')
+                    ->width('150px')
                     ->dateTime('M j, Y H:i:s')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Who')
+                    ->width('130px')
                     ->default('System')
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('action')
                     ->label('Action')
+                    ->width('150px')
                     ->badge()
                     ->color(fn (string $state): string => match (true) {
                         str_contains($state, 'rejected') || str_contains($state, 'deactivated') => 'danger',
-                        str_contains($state, 'approved') || str_contains($state, 'published') || str_contains($state, 'reactivated') => 'primary',
+                        str_contains($state, 'approved') || str_contains($state, 'published') || str_contains($state, 'reactivated') => 'success',
                         default => 'gray',
                     })
                     ->formatStateUsing(fn ($state) => ucwords(str_replace(['.', '_'], ' ', $state)))
@@ -80,6 +83,7 @@ class AuditLogResource extends Resource
 
                 Tables\Columns\TextColumn::make('target')
                     ->label('Target')
+                    ->width('130px')
                     ->getStateUsing(function (AuditLog $record) {
                         if (empty($record->target_type)) {
                             return '—';
@@ -91,7 +95,9 @@ class AuditLogResource extends Resource
 
                 Tables\Columns\TextColumn::make('detail')
                     ->label('Detail')
-                    ->limit(60)
+                    ->wrap()
+                    ->limit(80)
+                    ->fontFamily(\Filament\Support\Enums\FontFamily::Mono)
                     ->getStateUsing(function (AuditLog $record) {
                         if (empty($record->detail)) {
                             return '—';
@@ -101,6 +107,9 @@ class AuditLogResource extends Resource
                     })
                     ->tooltip(fn (AuditLog $record) => !empty($record->detail) ? json_encode($record->detail, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) : null),
             ])
+            ->emptyStateHeading('No audit events logged')
+            ->emptyStateDescription('System security, content changes, and user management events will appear here.')
+            ->emptyStateIcon('heroicon-o-shield-check')
             ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('category')
@@ -190,7 +199,9 @@ class AuditLogResource extends Resource
                             ->rows(6)
                             ->formatStateUsing(fn ($record) => json_encode($record?->detail, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)),
                     ]),
-            ]);
+            ])
+            ->defaultPaginationPageOption(25)
+            ->paginationPageOptions([10, 25, 50]);
     }
 
     public static function getPages(): array

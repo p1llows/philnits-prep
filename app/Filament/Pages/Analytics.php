@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\AnalyticsStatsWidget;
 use App\Filament\Widgets\FieldAverageScoreChart;
 use App\Filament\Widgets\HardestQuestionsWidget;
 use App\Filament\Widgets\PretestScoreSpreadChart;
@@ -28,6 +29,20 @@ class Analytics extends Page
         return auth()->check() && auth()->user()->isAdmin();
     }
 
+    public function getSubheading(): ?string
+    {
+        return 'Overall examination performance, field mastery comparisons, and difficulty diagnostics.';
+    }
+
+    public function getHeaderWidgetsColumns(): int | string | array
+    {
+        return [
+            'default' => 1,
+            'md' => 2,
+            'lg' => 2,
+        ];
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -37,7 +52,7 @@ class Analytics extends Page
                 ->action(function () {
                     $assessments = Assessment::with('user')
                         ->whereNull('archived_at')
-                        ->where('assessment_type', 'pretest')
+                        ->whereIn('assessment_type', ['pretest', 'initial'])
                         ->whereIn('status', ['submitted', 'graded'])
                         ->latest('completed_at')
                         ->get();
@@ -87,6 +102,7 @@ class Analytics extends Page
     protected function getHeaderWidgets(): array
     {
         return [
+            AnalyticsStatsWidget::class,
             FieldAverageScoreChart::class,
             PretestScoreSpreadChart::class,
             HardestQuestionsWidget::class,

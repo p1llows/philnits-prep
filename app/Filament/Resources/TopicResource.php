@@ -80,22 +80,39 @@ class TopicResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Name')
+                    ->wrap()
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('field_label')
                     ->label('Field')
+                    ->width('130px')
                     ->badge()
-                    ->color('gray')
+                    ->color(fn (string $state): string => match (true) {
+                        str_starts_with($state, 'Strategy') => 'info',
+                        str_starts_with($state, 'Management') => 'warning',
+                        str_starts_with($state, 'Technology') => 'primary',
+                        default => 'gray',
+                    })
                     ->sortable(query: fn ($query, $direction) => $query->orderBy('field', $direction)),
 
                 Tables\Columns\TextColumn::make('questions_count')
                     ->label('Questions')
                     ->counts('questions')
+                    ->width('100px')
+                    ->alignCenter()
                     ->sortable(),
 
                 Tables\Columns\ToggleColumn::make('is_active')
-                    ->label('Active'),
+                    ->label('Active')
+                    ->width('90px')
+                    ->alignCenter(),
+            ])
+            ->emptyStateHeading('No curriculum topics defined')
+            ->emptyStateDescription('Create syllabus topics mapped to Strategy, Management, or Technology fields.')
+            ->emptyStateIcon('heroicon-o-academic-cap')
+            ->emptyStateActions([
+                Tables\Actions\CreateAction::make()->label('Create topic'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('field')
@@ -115,7 +132,9 @@ class TopicResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultPaginationPageOption(25)
+            ->paginationPageOptions([10, 25, 50]);
     }
 
     public static function getRelations(): array

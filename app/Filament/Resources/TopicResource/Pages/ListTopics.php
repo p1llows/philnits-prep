@@ -18,6 +18,11 @@ class ListTopics extends ListRecords
         ];
     }
 
+    public function getSubheading(): ?string
+    {
+        return 'IT Passport syllabus fields, topic categories, and question distribution.';
+    }
+
     protected function getHeaderWidgets(): array
     {
         return [

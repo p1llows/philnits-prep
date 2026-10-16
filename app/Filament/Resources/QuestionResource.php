@@ -164,33 +164,45 @@ class QuestionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('source_question_number')
                     ->label('#')
+                    ->width('60px')
+                    ->alignCenter()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('question_text')
                     ->label('Question')
-                    ->limit(65)
+                    ->wrap()
+                    ->limit(90)
+                    ->tooltip(fn (Question $record) => $record->question_text)
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('topic.field_label')
                     ->label('Field')
+                    ->width('120px')
                     ->badge()
-                    ->color('gray'),
+                    ->color(fn (?string $state): string => match (true) {
+                        str_starts_with($state ?? '', 'Strategy') => 'info',
+                        str_starts_with($state ?? '', 'Management') => 'warning',
+                        str_starts_with($state ?? '', 'Technology') => 'primary',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('topic.name')
                     ->label('Topic')
+                    ->wrap()
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('sourcePackage.name')
                     ->label('Source')
-                    ->formatStateUsing(function (Question $record) {
-                        $label = $record->sourcePackage?->exam_session_label ?: $record->sourcePackage?->name;
-                        return $label ? "{$label} (Q{$record->source_question_number})" : "Q{$record->source_question_number}";
-                    })
-                    ->searchable(),
+                    ->getStateUsing(fn (Question $record) => $record->sourcePackage?->name ?? 'Manual')
+                    ->wrap()
+                    ->searchable()
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('correct_rate')
                     ->label('Correct rate')
+                    ->width('110px')
+                    ->alignCenter()
                     ->getStateUsing(function (Question $record) {
                         $total = $record->assessmentAnswers()->count();
                         if ($total < 10) {
@@ -224,12 +236,14 @@ class QuestionResource extends Resource
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
+                    ->width('110px')
+                    ->alignCenter()
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'published' => 'primary',
-                        'approved' => 'success',
+                        'published' => 'success',
+                        'approved' => 'info',
+                        'in_review' => 'warning',
                         'rejected' => 'danger',
-                        'in_review' => 'gray',
                         default => 'gray',
                     })
                     ->formatStateUsing(fn ($state) => match ($state) {
@@ -241,6 +255,13 @@ class QuestionResource extends Resource
                         default => ucfirst($state),
                     }),
             ])
+            ->emptyStateHeading('No questions found')
+            ->emptyStateDescription('Start building your question bank by creating a new question or importing a source package.')
+            ->emptyStateIcon('heroicon-o-document-text')
+            ->emptyStateActions([
+                Tables\Actions\CreateAction::make()->label('Create question'),
+            ])
+            ->defaultPaginationPageOption(25)
             ->filters([
                 Tables\Filters\SelectFilter::make('field')
                     ->label('Field')
@@ -329,7 +350,9 @@ class QuestionResource extends Resource
 
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultPaginationPageOption(25)
+            ->paginationPageOptions([10, 25, 50]);
     }
 
     public static function getRelations(): array
