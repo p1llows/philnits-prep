@@ -16,10 +16,10 @@
                 </div>
             </div>
 
-            @if(data_get($this->getCurrentMistake(), 'topic'))
+            @if(data_get($this->getCurrentMistake(), 'question.topic') || data_get($this->getCurrentMistake(), 'topic'))
                 <div class="mb-4">
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono bg-paper border border-[#D9D5C9] text-stone">
-                        {{ data_get($this->getCurrentMistake(), 'topic.name') }}
+                        {{ data_get($this->getCurrentMistake(), 'question.topic.name', data_get($this->getCurrentMistake(), 'topic.name')) }}
                     </span>
                 </div>
             @endif
@@ -41,7 +41,7 @@
         <div class="p-6 md:p-8">
             <!-- Question Text (Source Serif 4) -->
             <h4 class="font-serif text-xl md:text-2xl font-normal text-ink mb-6 leading-relaxed">
-                {{ $this->getCurrentMistake()['question_text'] }}
+                {{ $this->getCurrentMistake()['question']['question_text'] ?? $this->getCurrentMistake()['question_text'] ?? '' }}
             </h4>
 
             @if(!empty($this->getCurrentMistake()['question']['image_path'] ?? null))
@@ -59,7 +59,7 @@
             @if(!$showingFeedback)
                 <!-- Answer Selection State -->
                 <div class="space-y-3 mb-6">
-                    @foreach($this->getCurrentMistake()['question']['choices'] as $choice)
+                    @foreach($this->getCurrentMistake()['question']['choices'] ?? [] as $choice)
                         <button
                             wire:click="selectAnswer('{{ $choice['code'] }}')"
                             class="w-full text-left p-4 border border-[#E3DFD5] rounded-xl bg-surface hover:bg-accent-tint/40 hover:border-accent transition-all group focus:outline-none focus:ring-2 focus:ring-accent shadow-xs"
@@ -113,7 +113,7 @@
                         <div class="mb-6 p-5 bg-correct-surface/30 border border-correct/30 rounded-xl text-correct">
                             <h5 class="font-serif font-semibold text-sm mb-2 text-ink">Understanding the correct answer</h5>
                             
-                            @foreach($this->getCurrentMistake()['question']['choices'] as $choice)
+                            @foreach($this->getCurrentMistake()['question']['choices'] ?? [] as $choice)
                                 @if($choice['code'] === $this->getCurrentMistake()['correct_answer_code'])
                                     <div class="bg-surface p-3.5 rounded-xl border border-[#E3DFD5] mb-3 text-ink text-sm font-medium shadow-xs">
                                         <span class="font-mono font-bold text-correct mr-2">{{ $choice['code'] }}:</span>
@@ -122,7 +122,7 @@
                                 @endif
                             @endforeach
 
-                            @if($this->getCurrentMistake()['question']['explanation'])
+                            @if(!empty($this->getCurrentMistake()['question']['explanation'] ?? null))
                                 <div class="bg-paper/80 p-4 rounded-xl border border-[#E3DFD5] text-xs text-stone leading-relaxed">
                                     <h6 class="font-mono font-bold text-ink uppercase tracking-wider mb-1">Explanation:</h6>
                                     <p class="leading-relaxed">
