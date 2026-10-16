@@ -238,7 +238,7 @@
             </div>
             <div class="w-full bg-[#E3DFD5] rounded-full h-2.5 overflow-hidden">
                 <div class="bg-accent h-2.5 rounded-full transition-all duration-500 ease-out" 
-                     style="width: {{ max(4, $progressPercentage) }}%"></div>
+                     style="width: {{ $progressPercentage }}%"></div>
             </div>
         </div>
     </div>
