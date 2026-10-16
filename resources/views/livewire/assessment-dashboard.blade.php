@@ -73,67 +73,76 @@
                     </div>
                 </div>
 
-                <!-- Right: Readiness Gauge Card showing Official ITPEC Syllabus -->
+                <!-- Right: Readiness Gauge Card -->
                 <div class="lg:col-span-5">
                     <div class="bg-paper border border-[#E3DFD5] rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
                         <!-- Card Header -->
                         <div class="flex items-center justify-between text-xs font-mono border-b border-[#E3DFD5] pb-3">
-                            <div>
-                                <span class="font-bold text-ink uppercase tracking-wider block">Official ITPEC Syllabus</span>
-                                <span class="text-[10px] text-stone">April 2024 Exam Alignment</span>
-                            </div>
-                            <span class="text-accent font-semibold bg-surface px-2.5 py-1 rounded-full border border-[#D9D5C9] text-[11px]">Pass: ≥60%</span>
+                            <span class="font-bold text-ink uppercase tracking-wider">Readiness Gauge</span>
+                            <span class="text-accent font-semibold bg-surface px-2.5 py-0.5 rounded-full border border-[#D9D5C9]">Pass: 60%</span>
                         </div>
                         
                         <!-- Overall Score Status -->
-                        <div class="text-center py-2.5 bg-surface rounded-xl border border-[#E3DFD5]/60">
+                        <div class="text-center py-2 bg-surface rounded-xl border border-[#E3DFD5]/60">
                             <div class="text-3xl sm:text-4xl font-extrabold text-stone/40 font-mono tracking-tight">--.-<span class="text-lg font-normal">%</span></div>
-                            <p class="text-[11px] font-mono text-stone mt-0.5">Pending pre-test assessment</p>
+                            <p class="text-[11px] font-mono text-stone mt-1">Pending initial assessment</p>
                         </div>
 
-                        <!-- 3 ITPEC Syllabus Domains Breakdown with Real Topics -->
-                        @php
-                            $dashSettings = app(\App\Services\AppSettings::class);
-                        @endphp
-                        <div class="space-y-3.5 pt-1">
+                        <!-- 3 ITPEC Syllabus Domains Breakdown -->
+                        <div class="space-y-3 pt-1">
                             <div class="text-[11px] font-mono text-stone font-semibold uppercase tracking-wider flex items-center justify-between">
-                                <span>3 Exam Fields & Topics</span>
-                                <span>Min. {{ $dashSettings->fieldMinimumPercent() }}% Pass</span>
+                                <span>Exam Domains</span>
+                                <span>Min. 30% Pass</span>
                             </div>
 
-                            @foreach($syllabusFields as $fieldKey => $field)
-                                <div class="bg-surface/70 border border-[#E3DFD5] rounded-xl p-3 space-y-2">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-2">
-                                            <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded {{ $field['badge_color'] }}">
-                                                {{ $field['field_code'] }}
-                                            </span>
-                                            <span class="text-xs font-bold text-ink">{{ $field['name'] }}</span>
-                                        </div>
-                                        <span class="text-[10px] font-mono text-stone">{{ $field['official_weight'] }}</span>
-                                    </div>
-
-                                    <!-- Topics under this field -->
-                                    <div class="flex flex-wrap gap-1.5 pt-1">
-                                        @foreach($field['topics'] as $topic)
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] bg-paper text-stone border border-[#E3DFD5]/70" title="{{ $topic->description }}">
-                                                {{ $topic->name }}
-                                            </span>
-                                        @endforeach
-                                    </div>
-
-                                    <!-- Score indicator bar -->
-                                    <div class="w-full bg-[#E3DFD5] rounded-full h-1.5 overflow-hidden mt-1">
-                                        <div class="{{ $field['bar_color'] }} h-1.5 rounded-full w-0 transition-all duration-500"></div>
-                                    </div>
+                            <!-- Domain 1: Strategy -->
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="font-medium text-ink flex items-center space-x-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 shrink-0"></span>
+                                        <span>Strategy Field</span>
+                                    </span>
+                                    <span class="text-stone font-mono text-[11px]">~35 Qs · <span class="text-stone/60">--%</span></span>
                                 </div>
-                            @endforeach
+                                <div class="w-full bg-[#E3DFD5] rounded-full h-2 overflow-hidden">
+                                    <div class="bg-blue-500 h-2 rounded-full w-0 transition-all duration-500"></div>
+                                </div>
+                            </div>
+
+                            <!-- Domain 2: Management -->
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="font-medium text-ink flex items-center space-x-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
+                                        <span>Management Field</span>
+                                    </span>
+                                    <span class="text-stone font-mono text-[11px]">~25 Qs · <span class="text-stone/60">--%</span></span>
+                                </div>
+                                <div class="w-full bg-[#E3DFD5] rounded-full h-2 overflow-hidden">
+                                    <div class="bg-amber-500 h-2 rounded-full w-0 transition-all duration-500"></div>
+                                </div>
+                            </div>
+
+                            <!-- Domain 3: Technology -->
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="font-medium text-ink flex items-center space-x-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                                        <span>Technology Field</span>
+                                    </span>
+                                    <span class="text-stone font-mono text-[11px]">~40 Qs · <span class="text-stone/60">--%</span></span>
+                                </div>
+                                <div class="w-full bg-[#E3DFD5] rounded-full h-2 overflow-hidden">
+                                    <div class="bg-emerald-500 h-2 rounded-full w-0 transition-all duration-500"></div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Footer Rule -->
-                        <div class="pt-2 border-t border-[#E3DFD5] flex items-center justify-between text-[10px] font-mono text-stone">
-                            <span>{{ $dashSettings->pretestQuestionCount() }} Qs · {{ $dashSettings->timeLimitMinutes() }} Mins</span>
-                            <span class="font-semibold text-accent">Pass: Overall ≥{{ $dashSettings->passMarkPercent() }}% & Each Field ≥{{ $dashSettings->fieldMinimumPercent() }}%</span>
+                        <div class="pt-2.5 border-t border-[#E3DFD5] flex items-center justify-between text-[10px] font-mono text-stone">
+                            <span>0%</span>
+                            <span class="font-semibold text-accent">Pass: Overall ≥60% & Each Field ≥30%</span>
+                            <span>100%</span>
                         </div>
                     </div>
                 </div>
