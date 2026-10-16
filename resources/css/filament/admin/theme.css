@@ -16,3 +16,25 @@
 .fi-fo-textarea {
     border-radius: 0.5rem;
 }
+
+/* Paxi topbar & header alignment */
+.fi-topbar {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E3DFD5;
+}
+
+.fi-topbar > nav {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    background-color: transparent;
+    box-shadow: none;
+    --tw-ring-shadow: 0 0 #0000;
+}
+
+.fi-sidebar-header {
+    border-bottom: 1px solid #E3DFD5;
+    box-shadow: none;
+    --tw-ring-shadow: 0 0 #0000;
+}

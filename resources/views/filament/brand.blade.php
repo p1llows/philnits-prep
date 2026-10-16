@@ -1,5 +1,4 @@
-<div class="flex items-center gap-x-2">
-    <img src="/paxi-mark.svg" alt="Paxi" style="height: 28px; width: auto;" class="shrink-0" />
-    <span class="font-extrabold text-xl tracking-tight text-[#1F3A5F] dark:text-[#E6ECF4]">Paxi</span>
-    <span class="text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#E6ECF4] text-[#1F3A5F] font-bold">Admin</span>
+<div class="flex items-center gap-x-2.5 h-full">
+    <img src="{{ asset('paxi-mark.svg') }}" alt="Paxi" class="h-7 w-auto shrink-0" />
+    <span class="text-xl font-bold tracking-tight text-[#1F3A5F] leading-none">Paxi</span>
 </div>

@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->brandName('Paxi')
-            ->brandLogo(asset('paxi-mark.svg'))
+            ->brandLogo(fn () => view('filament.brand'))
             ->brandLogoHeight('1.75rem')
             ->favicon(asset('favicon.svg'))
             ->sidebarCollapsibleOnDesktop(false)

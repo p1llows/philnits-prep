@@ -36,6 +36,8 @@ class AdminPanelTest extends TestCase
 
         $response = $this->actingAs($admin)->get('/admin');
         $response->assertStatus(200);
+        $response->assertSee('Paxi');
+        $response->assertSee('paxi-mark.svg');
         $response->assertSee('Learner funnel');
         $response->assertSee('Overview');
     }
