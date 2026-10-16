@@ -145,6 +145,7 @@ class AssessmentDashboard extends Component
 
         foreach ($fields as $key => $meta) {
             $topics = \App\Models\Topic::where('field', $key)
+                ->where('is_active', true)
                 ->withCount('questions')
                 ->orderBy('sort_order')
                 ->get();

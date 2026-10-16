@@ -37,6 +37,18 @@
                 <h2 class="text-base sm:text-lg font-bold text-ink leading-relaxed">
                     <x-question-text :text="$this->getCurrentQuestion()['question_text']" />
                 </h2>
+
+                @if(!empty($this->getCurrentQuestion()['image_path']))
+                    <div class="mt-4 rounded-xl overflow-hidden border border-[#E3DFD5] bg-paper/50 flex justify-center p-2">
+                        <img src="{{ asset('storage/' . $this->getCurrentQuestion()['image_path']) }}" alt="Question illustration" class="max-h-96 w-auto object-contain rounded-lg" />
+                    </div>
+                @endif
+
+                @if(!empty($this->getCurrentQuestion()['code_block']))
+                    <div class="mt-4 rounded-xl bg-gray-900 text-gray-100 p-4 font-mono text-xs md:text-sm overflow-x-auto border border-gray-800 shadow-inner">
+                        <pre><code>{{ $this->getCurrentQuestion()['code_block'] }}</code></pre>
+                    </div>
+                @endif
             </div>
 
             <!-- Choices Radio Cards -->

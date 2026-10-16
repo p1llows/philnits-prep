@@ -1,0 +1,168 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+@config 'tailwind.config.js';
+
+/* Paxi additions: cards with a 1px gray-200 border and no shadow, radius 0.75rem on cards and 0.5rem on inputs */
+.fi-section,
+.fi-ta-ctn,
+.fi-wi-card,
+.fi-wi-stats-overview-stat {
+    border: 1px solid #E3DFD5;
+    border-radius: 0.75rem;
+    box-shadow: none;
+}
+
+.fi-input,
+.fi-select-input,
+.fi-fo-textarea {
+    border-radius: 0.5rem;
+}
+
+/* Paxi topbar & header alignment */
+.fi-topbar {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E3DFD5;
+}
+
+.fi-topbar > nav {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    background-color: transparent;
+    box-shadow: none;
+    --tw-ring-shadow: 0 0 #0000;
+}
+
+/* Paxi sidebar styling: white background, hairline border, full-height distribution without scrolling */
+.fi-sidebar {
+    background-color: #FFFFFF !important;
+    border-right: none !important;
+}
+
+.fi-sidebar-header {
+    background-color: #FFFFFF !important;
+    border-bottom: 1px solid #E3DFD5 !important;
+    border-right: none !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+}
+
+.fi-sidebar-nav {
+    border-right: 1px solid #E3DFD5 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    padding: 1.25rem 0.875rem !important;
+    scrollbar-gutter: auto !important;
+    scrollbar-width: thin;
+    overflow-y: auto !important;
+}
+
+.fi-sidebar-nav-groups {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    flex: 1 1 auto !important;
+    gap: 0.75rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    min-height: 0 !important;
+}
+
+.fi-sidebar-group {
+    row-gap: 0.25rem !important;
+}
+
+.fi-sidebar-group-button {
+    padding: 0.25rem 0.5rem !important;
+}
+
+.fi-sidebar-group-label {
+    font-size: 0.875rem !important; /* Retain original text-sm (14px) */
+    font-weight: 500 !important;
+    line-height: 1.5rem !important;
+    color: #64748B !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+}
+
+.fi-sidebar-item-button {
+    padding: 0.5rem 0.625rem !important;
+    border-radius: 0.5rem !important;
+    column-gap: 0.75rem !important;
+}
+
+.fi-sidebar-item-icon {
+    height: 1.5rem !important; /* Retain original h-6 (24px) */
+    width: 1.5rem !important;  /* Retain original w-6 (24px) */
+}
+
+.fi-sidebar-item-label {
+    font-size: 0.875rem !important; /* Retain original text-sm (14px) */
+    line-height: 1.25rem !important;
+    font-weight: 500 !important;
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-button {
+    background-color: #F0F4F9 !important;
+    color: #1F3A5F !important;
+    font-weight: 600 !important;
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-button .fi-sidebar-item-icon {
+    color: #1F3A5F !important;
+}
+
+.fi-sidebar-item:not(.fi-active) .fi-sidebar-item-button:hover {
+    background-color: #F6F4EF !important;
+}
+
+/* Collapsed sidebar rail styling on desktop */
+.fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-nav {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+.fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-button {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    justify-content: center !important;
+}
+
+.fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-button {
+    display: none !important;
+}
+
+/* Subtle scrollbar behavior if screen height is constrained */
+.fi-sidebar-nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.fi-sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.fi-sidebar-nav::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.fi-sidebar-nav:hover::-webkit-scrollbar-thumb {
+    background: #E3DFD5;
+}
+
+/* User menu dropdown card and avatar ring matching learner design */
+.fi-user-menu button:focus,
+.fi-user-menu button[aria-expanded="true"] {
+    outline: none !important;
+    box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #1F3A5F !important;
+}
+
+.fi-user-menu .fi-dropdown-panel {
+    border-radius: 1rem !important;
+    border: 1px solid #E3DFD5 !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04) !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+

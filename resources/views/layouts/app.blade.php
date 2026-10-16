@@ -8,8 +8,13 @@
 
     <title>{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Paxi') }}</title>
 
+    @php
+        $appSettings = app(\App\Services\AppSettings::class);
+        $announcement = $appSettings->announcementBanner();
+    @endphp
+
     <!-- Favicon & PWA -->
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="{{ $appSettings->faviconUrl() }}" type="image/svg+xml">
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="/icon-192.png">
     <meta name="theme-color" content="#1F3A5F">
@@ -45,6 +50,12 @@
 
     <div class="relative z-10 flex-grow flex flex-col">
         <x-navigation :user="$user ?? null" />
+
+        @if(!empty($announcement['enabled']) && !empty($announcement['text']))
+            <div class="bg-paper border-b border-[#E3DFD5] px-4 py-2 text-center text-xs text-stone tracking-wide">
+                <span>{{ $announcement['text'] }}</span>
+            </div>
+        @endif
 
         <main class="py-6 sm:py-8 flex-grow">
             {{ $slot }}
@@ -83,6 +94,24 @@
             });
         </script>
     @endif
+
+    @auth
+        @if(Auth::user()->isAdmin() || Auth::user()->isEditor())
+            <script>
+                document.addEventListener('keydown', function (e) {
+                    if (e.altKey && (e.key === 'a' || e.key === 'A' || e.code === 'KeyA')) {
+                        var target = document.activeElement;
+                        if (target && (['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) || target.isContentEditable)) {
+                            return;
+                        }
+                        e.preventDefault();
+                        window.location.href = '/admin';
+                    }
+                });
+            </script>
+        @endif
+    @endauth
+
     @livewireScripts
 </body>
 </html>

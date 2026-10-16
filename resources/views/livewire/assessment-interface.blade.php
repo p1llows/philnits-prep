@@ -94,7 +94,7 @@
                             <div wire:key="m-ellipsis-{{ $loop->index }}" class="w-7 h-7 flex items-center justify-center text-stone font-mono select-none text-xs shrink-0">
                                 <span>...</span>
                             </div>
-                        @else
+                        @elseif(isset($questions[$p]))
                             @php
                                 $qId = $questions[$p]['id'];
                                 $isCurrent = ($p === $curr);
@@ -123,7 +123,7 @@
                             <div wire:key="d-ellipsis-{{ $loop->index }}" class="w-8 h-8 flex items-center justify-center text-stone font-mono select-none text-xs shrink-0">
                                 <span>...</span>
                             </div>
-                        @else
+                        @elseif(isset($questions[$p]))
                             @php
                                 $qId = $questions[$p]['id'];
                                 $isCurrent = ($p === $curr);
@@ -199,9 +199,21 @@
             </div>
 
             <!-- Question Text -->
-            <div class="font-serif text-lg md:text-xl text-ink mb-8 leading-relaxed font-normal">
+            <div class="font-serif text-lg md:text-xl text-ink mb-6 leading-relaxed font-normal">
                 <x-question-text :text="$currentQuestion['question_text']" />
             </div>
+
+            @if(!empty($currentQuestion['image_path']))
+                <div class="mb-6 rounded-xl overflow-hidden border border-line bg-paper/50 flex justify-center p-2">
+                    <img src="{{ asset('storage/' . $currentQuestion['image_path']) }}" alt="Question illustration" class="max-h-96 w-auto object-contain rounded-lg" />
+                </div>
+            @endif
+
+            @if(!empty($currentQuestion['code_block']))
+                <div class="mb-6 rounded-xl bg-gray-900 text-gray-100 p-4 font-mono text-xs md:text-sm overflow-x-auto border border-gray-800 shadow-inner">
+                    <pre><code>{{ $currentQuestion['code_block'] }}</code></pre>
+                </div>
+            @endif
 
             <!-- Choices Grid -->
             <div class="space-y-3">

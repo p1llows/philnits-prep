@@ -18,17 +18,26 @@ require __DIR__.'/admin.php';
 // Import study planning routes
 require __DIR__.'/study.php';
 
+Route::get('/admin/pdf-preview/{sourcePackage}', function (\App\Models\SourcePackage $sourcePackage) {
+    if (!auth()->check() || !auth()->user()->isAdmin()) {
+        abort(403);
+    }
+    $path = $sourcePackage->paper_path;
+    if (!$path || !\Illuminate\Support\Facades\Storage::disk('local')->exists($path)) {
+        abort(404, 'PDF file not found');
+    }
+    return response()->file(\Illuminate\Support\Facades\Storage::disk('local')->path($path), [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'inline; filename="paper.pdf"',
+    ]);
+})->middleware(['signed'])->name('admin.pdf.preview');
+
 // Main routes (load after assessment routes for fallback)
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    // Check if user is admin to show admin dashboard widget
-    $user = auth()->user();
-    if ($user && $user->role === 'admin') {
-        return view('admin.dashboard');
-    }
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 

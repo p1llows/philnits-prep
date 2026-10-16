@@ -24,6 +24,24 @@ class OtpService
     public const MAX_ATTEMPTS = 5;
 
     /**
+     * Get OTP settings dynamically from AppSettings service with backward-compatible defaults.
+     */
+    public static function getExpirationMinutes(): int
+    {
+        return (int) app(AppSettings::class)->get('otp_expiration_minutes', self::EXPIRATION_MINUTES);
+    }
+
+    public static function getCooldownSeconds(): int
+    {
+        return (int) app(AppSettings::class)->get('otp_resend_cooldown_seconds', self::RESEND_COOLDOWN_SECONDS);
+    }
+
+    public static function getMaxAttempts(): int
+    {
+        return (int) app(AppSettings::class)->get('otp_max_attempts', self::MAX_ATTEMPTS);
+    }
+
+    /**
      * Generate a new 6-digit OTP for an email address.
      *
      * @param string $email
@@ -32,16 +50,18 @@ class OtpService
      */
     public function generate(string $email, string $purpose = 'email_verification'): array
     {
+        $cooldown = static::getCooldownSeconds();
+
         $existing = EmailOtp::where('email', $email)
             ->where('purpose', $purpose)
             ->latest()
             ->first();
 
         if ($existing) {
-            $nextAllowedAt = $existing->created_at->copy()->addSeconds(self::RESEND_COOLDOWN_SECONDS);
+            $nextAllowedAt = $existing->created_at->copy()->addSeconds($cooldown);
             if (Carbon::now()->lt($nextAllowedAt)) {
                 $cooldownRemaining = (int) max(1, ceil(Carbon::now()->diffInSeconds($nextAllowedAt, false)));
-                if ($cooldownRemaining <= self::RESEND_COOLDOWN_SECONDS) {
+                if ($cooldownRemaining <= $cooldown) {
                     return [
                         'success' => false,
                         'message' => "Please wait {$cooldownRemaining} seconds before requesting a new code.",
@@ -62,7 +82,7 @@ class OtpService
             'code' => Hash::make($rawCode),
             'purpose' => $purpose,
             'attempts' => 0,
-            'expires_at' => Carbon::now()->addMinutes(self::EXPIRATION_MINUTES),
+            'expires_at' => Carbon::now()->addMinutes(static::getExpirationMinutes()),
         ]);
 
         return [
@@ -101,7 +121,9 @@ class OtpService
             ];
         }
 
-        if ($otp->hasMaxAttemptsReached(self::MAX_ATTEMPTS)) {
+        $maxAttempts = static::getMaxAttempts();
+
+        if ($otp->hasMaxAttemptsReached($maxAttempts)) {
             $otp->delete();
             return [
                 'success' => false,
@@ -111,7 +133,7 @@ class OtpService
 
         if (!Hash::check($inputCode, $otp->code)) {
             $otp->increment('attempts');
-            $remaining = self::MAX_ATTEMPTS - $otp->attempts;
+            $remaining = $maxAttempts - $otp->attempts;
 
             if ($remaining <= 0) {
                 $otp->delete();

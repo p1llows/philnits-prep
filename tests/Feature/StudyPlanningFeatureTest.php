@@ -33,6 +33,16 @@ class StudyPlanningFeatureTest extends TestCase
 
     public function test_authenticated_user_can_access_planner(): void
     {
+        \App\Models\Assessment::create([
+            'user_id' => $this->user->id,
+            'status' => 'submitted',
+            'score_percentage' => 75.0,
+            'total_questions' => 100,
+            'correct_answers' => 75,
+            'started_at' => now()->subHours(2),
+            'completed_at' => now(),
+        ]);
+
         $response = $this->get('/planner');
         
         $response->assertStatus(200);

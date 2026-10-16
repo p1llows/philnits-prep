@@ -68,6 +68,18 @@
                                     {{ $question->question_text }}
                                 </p>
 
+                                @if($question->image_path)
+                                    <div class="mb-4 rounded-xl overflow-hidden border border-[#E3DFD5] bg-paper/50 flex justify-center p-2">
+                                        <img src="{{ asset('storage/' . $question->image_path) }}" alt="Question illustration" class="max-h-96 w-auto object-contain rounded-lg" />
+                                    </div>
+                                @endif
+
+                                @if($question->code_block)
+                                    <div class="mb-4 rounded-xl bg-gray-900 text-gray-100 p-4 font-mono text-xs md:text-sm overflow-x-auto border border-gray-800 shadow-inner">
+                                        <pre><code>{{ $question->code_block }}</code></pre>
+                                    </div>
+                                @endif
+
                                 <!-- Options List -->
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                                     @foreach($question->choices as $choice)

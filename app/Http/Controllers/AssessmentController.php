@@ -148,16 +148,9 @@ class AssessmentController extends Controller
             // Calculate field performance across official ITPEC IP fields: Strategy, Management, Technology
             $fieldPerformance = $this->calculateFieldPerformance($assessment);
             
-            // Check official passing criteria: Overall >= 60% AND each field with questions >= 30%
-            $overallPass = $scorePercentage >= 60.0;
-            $allFieldsPass = true;
-            foreach ($fieldPerformance as $fieldData) {
-                if ($fieldData['total'] > 0 && $fieldData['percentage'] < 30.0) {
-                    $allFieldsPass = false;
-                    break;
-                }
-            }
-            $passedExam = $overallPass && $allFieldsPass;
+            // Check official passing criteria using AppSettings
+            $settings = app(\App\Services\AppSettings::class);
+            $passedExam = $settings->checkPassRule($scorePercentage, $fieldPerformance);
 
             // Update assessment with results
             $assessment->update([
@@ -210,9 +203,10 @@ class AssessmentController extends Controller
         // Calculate topic performance
         $topicPerformance = $this->calculateTopicPerformance($assessment);
 
-        // Identify weak areas (below 50% correct)
+        // Identify weak areas (below weak topic threshold percentage)
+        $weakThreshold = app(\App\Services\AppSettings::class)->weakTopicThresholdPercent();
         $weakAreas = collect($topicPerformance)
-            ->filter(fn($perf) => $perf['percentage'] < 50 && $perf['total'] > 0)
+            ->filter(fn($perf) => $perf['percentage'] < $weakThreshold && $perf['total'] > 0)
             ->sortBy('percentage')
             ->values();
 

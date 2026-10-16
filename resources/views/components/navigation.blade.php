@@ -6,10 +6,13 @@
         <div class="flex justify-between items-center h-16">
             <div class="flex items-center space-x-8">
                 <!-- Logo Matching Brand -->
+                @php
+                    $appSettings = app(\App\Services\AppSettings::class);
+                @endphp
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="Paxi Dashboard">
-                        <img src="/paxi-mark.svg" width="24" height="24" alt="" class="h-6 w-auto shrink-0 transition-transform duration-200 group-hover:scale-105">
-                        <span class="font-extrabold text-accent text-xl leading-none tracking-tight">Paxi</span>
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 text-accent font-medium text-base shrink-0 group" aria-label="{{ $appSettings->appName() }} Dashboard">
+                        <img src="{{ $appSettings->logoUrl() }}" width="24" height="24" alt="" class="h-6 w-auto shrink-0 transition-transform duration-200 group-hover:scale-105">
+                        <span class="font-extrabold text-accent text-xl leading-none tracking-tight">{{ $appSettings->appName() }}</span>
                     </a>
                 </div>
 
@@ -61,13 +64,6 @@
                             <a href="{{ route('analytics.index') }}" 
                                class="transition-colors duration-200 {{ request()->routeIs('analytics.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
                                 {{ __('Analytics') }}
-                            </a>
-                        @endif
-
-                        @if(Auth::user()->isAdmin())
-                            <a href="{{ route('admin.dashboard') }}" 
-                               class="transition-colors duration-200 {{ request()->routeIs('admin.*') ? 'text-accent font-semibold' : 'text-stone hover:text-ink' }}">
-                                {{ __('Admin') }}
                             </a>
                         @endif
                     @endif
@@ -194,11 +190,6 @@
                 {{ __('Analytics') }}
             </a>
 
-            @if(Auth::user()->isAdmin())
-                <a href="{{ route('admin.dashboard') }}" class="block px-3.5 py-2 rounded-xl text-sm font-semibold {{ request()->routeIs('admin.*') ? 'bg-accent text-surface shadow-xs' : 'text-accent hover:bg-surface' }}">
-                    {{ __('Admin Area') }}
-                </a>
-            @endif
 
             <div class="pt-3 border-t border-[#E3DFD5]">
                 <div class="flex items-center px-2 py-1 mb-2">

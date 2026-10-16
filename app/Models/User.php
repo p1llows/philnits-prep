@@ -2,14 +2,24 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
     use HasFactory, Notifiable;
+
+    /**
+     * Determine if the user can access the given Filament panel.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->is_active && in_array($this->role, ['admin', 'editor']);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +31,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'role',
+        'is_active',
+        'last_active_at',
     ];
 
     /**
@@ -43,6 +55,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
+            'last_active_at' => 'datetime',
         ];
     }
 
@@ -68,6 +82,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAdmin(): bool
     {
         return $this->hasRole('admin');
+    }
+
+    /**
+     * Check if the user is an editor.
+     */
+    public function isEditor(): bool
+    {
+        return $this->hasRole('editor');
     }
 
     /**
@@ -97,6 +119,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $this->assessments()
+            ->whereNull('archived_at')
             ->whereNotNull('score_percentage')
             ->whereIn('status', ['submitted', 'graded'])
             ->exists();

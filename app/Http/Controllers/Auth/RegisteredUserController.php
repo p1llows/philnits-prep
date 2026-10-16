@@ -22,6 +22,11 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
+        if (!app(\App\Services\AppSettings::class)->get('open_registration', true)) {
+            return redirect()->route('login')
+                ->with('status', 'Registration is currently closed by the administrator.');
+        }
+
         return view('auth.register');
     }
 
@@ -30,6 +35,9 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request, OtpService $otpService)
     {
+        if (!app(\App\Services\AppSettings::class)->get('open_registration', true)) {
+            abort(403, 'Registration is currently closed.');
+        }
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],

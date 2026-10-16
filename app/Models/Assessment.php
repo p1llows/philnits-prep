@@ -43,12 +43,14 @@ class Assessment extends Model
         'field_performance',
         'topic_performance',
         'status',
+        'archived_at',
     ];
 
     protected $casts = [
         'started_at' => 'datetime',
         'submitted_at' => 'datetime',
         'completed_at' => 'datetime',
+        'archived_at' => 'datetime',
         'topic_performance' => 'array',
         'field_performance' => 'array',
         'passed_exam' => 'boolean',
@@ -184,21 +186,8 @@ class Assessment extends Model
             return (bool) $this->passed_exam;
         }
 
-        $overallPass = ($this->score ?? 0) >= 60.0;
-        if (!$overallPass) {
-            return false;
-        }
-
-        // If field performance is available, check 30% minimum per field
-        if (!empty($this->field_performance)) {
-            foreach ($this->field_performance as $field) {
-                if (($field['total'] ?? 0) > 0 && ($field['percentage'] ?? 0) < 30.0) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        $settings = app(\App\Services\AppSettings::class);
+        return $settings->checkPassRule((float) ($this->score ?? 0), $this->field_performance ?? []);
     }
 
     public function getScoreAttribute(): float
